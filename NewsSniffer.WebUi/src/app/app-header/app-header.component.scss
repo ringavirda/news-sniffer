@@ -1,0 +1,40 @@
+.header-container {
+    background-color: darkgray;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+
+    a {
+        text-decoration: none;
+        color: white;
+    }
+
+    .logo {
+        font-size: xx-large;
+        color: black;
+    }
+
+    .items-container {
+        margin-left: auto;
+        padding-right: 1rem;
+        display: flex;
+
+        .item {
+            margin-inline: 1rem;
+            border-radius: 1em;
+            padding: 0.5em;
+
+            &:hover {
+                background-color: dimgray;
+            }
+
+            .item-link {
+                font-size: x-large;
+            }
+        }
+    }
+}
+
+.active-route {
+    background-color: orangered;
+}

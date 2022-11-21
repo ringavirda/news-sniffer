@@ -1,0 +1,14 @@
+<div class="list-container">
+    <div *ngFor="let article of articles" class="news-container">
+        <div class="prefix-container">
+            <div class="news-outlet">{{article.outletCode}}</div>
+            <div class="news-date">{{article.date}}</div>
+        </div>
+        <div class="body-container">
+            <div class="news-title">{{article.title}}</div>
+        </div>
+        <div class="affix-container">
+            <div [routerLink]="['/articles', article.id]" class="detail-link">Full</div>
+        </div>
+    </div>
+</div>

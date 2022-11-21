@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsSniffer.Core", "NewsSniffer.Core\NewsSniffer.Core.csproj", "{2FFC053D-C761-4E9D-A599-9C568CC85152}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsSniffer.Api", "NewsSniffer.Api\NewsSniffer.Api.csproj", "{9B3EBD30-2CFF-482D-81E8-077C768C14A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsSniffer.Common", "NewsSniffer.Common\NewsSniffer.Common.csproj", "{DB5C66E2-AED3-4223-9DAD-AB52B2DBD6D2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2FFC053D-C761-4E9D-A599-9C568CC85152}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FFC053D-C761-4E9D-A599-9C568CC85152}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FFC053D-C761-4E9D-A599-9C568CC85152}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FFC053D-C761-4E9D-A599-9C568CC85152}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B3EBD30-2CFF-482D-81E8-077C768C14A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B3EBD30-2CFF-482D-81E8-077C768C14A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B3EBD30-2CFF-482D-81E8-077C768C14A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B3EBD30-2CFF-482D-81E8-077C768C14A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB5C66E2-AED3-4223-9DAD-AB52B2DBD6D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB5C66E2-AED3-4223-9DAD-AB52B2DBD6D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB5C66E2-AED3-4223-9DAD-AB52B2DBD6D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB5C66E2-AED3-4223-9DAD-AB52B2DBD6D2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

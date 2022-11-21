@@ -1,0 +1,12 @@
+C:\Users\tugan\Desktop\NewsSniffer\NewsSniffer.Core\bin\Debug\net6.0\NewsSniffer.Core.deps.json
+C:\Users\tugan\Desktop\NewsSniffer\NewsSniffer.Core\bin\Debug\net6.0\NewsSniffer.Core.dll
+C:\Users\tugan\Desktop\NewsSniffer\NewsSniffer.Core\bin\Debug\net6.0\NewsSniffer.Core.pdb
+C:\Users\tugan\Desktop\NewsSniffer\NewsSniffer.Core\obj\Debug\net6.0\NewsSniffer.Core.csproj.AssemblyReference.cache
+C:\Users\tugan\Desktop\NewsSniffer\NewsSniffer.Core\obj\Debug\net6.0\NewsSniffer.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\tugan\Desktop\NewsSniffer\NewsSniffer.Core\obj\Debug\net6.0\NewsSniffer.Core.AssemblyInfoInputs.cache
+C:\Users\tugan\Desktop\NewsSniffer\NewsSniffer.Core\obj\Debug\net6.0\NewsSniffer.Core.AssemblyInfo.cs
+C:\Users\tugan\Desktop\NewsSniffer\NewsSniffer.Core\obj\Debug\net6.0\NewsSniffer.Core.csproj.CoreCompileInputs.cache
+C:\Users\tugan\Desktop\NewsSniffer\NewsSniffer.Core\obj\Debug\net6.0\NewsSniffer.Core.dll
+C:\Users\tugan\Desktop\NewsSniffer\NewsSniffer.Core\obj\Debug\net6.0\refint\NewsSniffer.Core.dll
+C:\Users\tugan\Desktop\NewsSniffer\NewsSniffer.Core\obj\Debug\net6.0\NewsSniffer.Core.pdb
+C:\Users\tugan\Desktop\NewsSniffer\NewsSniffer.Core\obj\Debug\net6.0\ref\NewsSniffer.Core.dll

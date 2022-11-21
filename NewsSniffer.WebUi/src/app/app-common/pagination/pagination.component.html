@@ -1,0 +1,11 @@
+<div class="pagination-container">
+    <div class="controls-container">
+        <div class="page-button" (click)="onPrev()">Prev</div>
+        <div class="page-button" (click)="onNext()">Next</div>
+    </div>
+    <div class="select-container">
+        <select [(ngModel)]="currentPage" (change)="onPageChange()" name="pages" id="pages">
+            <option *ngFor="let pageNumber of pageNumbers" [ngValue]="pageNumber">{{pageNumber}}</option>
+        </select>
+    </div>
+</div>
