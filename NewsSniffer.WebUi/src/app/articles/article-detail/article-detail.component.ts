@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Article } from '../article';
@@ -15,16 +16,25 @@ export class ArticleDetailComponent implements OnInit, OnDestroy  {
 
   constructor(
     private articlesService: ArticlesService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
     this.routeSub = this.route.params.subscribe(params => {
-      this.article = this.articlesService.getArticleById(params['id']);
+      this.article = this.articlesService.getLoadedArticleById(params['id']);
     });
   }
   
   ngOnDestroy(): void {
     this.routeSub.unsubscribe();
+  }
+
+  onBack(): void {
+    this.location.back();
+  }
+
+  articleExists(): boolean {
+    return this.article == null ? false : true;
   }
 }

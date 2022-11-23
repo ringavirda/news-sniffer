@@ -1,0 +1,21 @@
+.controls-container {
+    display: flex;
+    padding: 0.4rem;
+    background-color: grey;
+
+    .control-item {
+        margin: 0.2rem;
+        padding: 0.5rem;
+        border-radius: 0.4rem;
+        background-color: lightblue;
+        &:hover {
+            background-color: aqua;
+            cursor: pointer;
+        }
+    }
+}
+
+.disabled {
+    background-color: black;
+    pointer-events: none;
+}

@@ -1,0 +1,71 @@
+.list-container {
+    display: flex;
+    flex-direction: column;
+
+    .outlet-container {
+        display: flex;
+        align-items: center;
+        background-color: lightblue;
+        margin: 1rem;
+        border-radius: 0.5em;
+
+        .body-container {
+            display: flex;
+            align-items: center;
+            width: 100%;
+
+            .name-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 0.5rem;
+                min-width: 10%;
+                background-color: darkorange;
+                color: white;
+                border-right: 2pt solid black;
+
+                .outlet-name {
+                    margin: 0.5rem 0 0.25rem 0;
+                    font-weight: bold;
+                    font-size: x-large;
+                }
+                .outlet-code {
+                    margin: 0 0 0.5rem 0;
+                }
+            }
+            .outlet-link {
+                margin-inline: 1rem;
+                
+                &:hover {
+                    cursor: pointer;
+                    color: blue;
+                }
+            }
+        }
+
+        .affix-container {
+            display: flex;
+            background-color: lightskyblue;
+            width: 8%;
+            min-width: 3rem;
+            justify-self: right;
+            align-self: stretch;
+            align-items: center;
+            border-left: 5pt double black;
+            border-radius: 0 0.5em 0.5em 0;
+
+            .detail-text {
+                text-align: center;
+                font-weight: bold;
+                font-size: large;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            &:hover {
+                background-color: aqua;
+                cursor: pointer;
+            }
+        }
+    }
+}

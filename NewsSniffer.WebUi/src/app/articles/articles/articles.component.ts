@@ -15,7 +15,7 @@ export class ArticlesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.articlesService.getAllArticles().subscribe(data => 
+    this.articlesService.getLoadedArticles().subscribe(data => 
       this.pageNumbers = [...Array(Math.ceil(data.length / this.itemsPerPage) + 2).keys()]
       .slice(1, -1)
       )

@@ -1,0 +1,130 @@
+.outlet-container {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+
+    .outlet-header {
+        background-color: gray;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        display: flex;
+
+        .header-info {
+            .outlet-name {
+                color: white;
+                font-size: xx-large;
+                font-weight: bold;
+                margin: 1rem;
+            }
+
+            .description-container {
+                display: flex;
+                flex-direction: row;
+
+                .outlet-code {
+                    padding-inline: 1rem;
+                    font-size: large;
+                    color: lightblue;
+                    border-right: 1pt solid black;
+
+                }
+
+                .outlet-link {
+                    padding-inline: 1rem;
+
+                    &:hover {
+                        cursor: pointer;
+                        color: deepskyblue;
+                    }
+                }
+            }
+        }
+
+        .header-controls {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            margin-left: auto;
+            padding: 0.2rem;
+
+            .header-control-item {
+                margin: 0.25rem 0 0.25rem 0;
+                padding: 0.5rem;
+                border-radius: 0.5rem;
+                background-color: lightblue;
+                font-size: larger;
+                min-width: 5rem;
+                text-align: center;
+
+                &:hover {
+                    background-color: aqua;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+
+    .outlet-body {
+        margin: 2rem 0 2rem 0;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        background-color: lightgray;
+
+        .configs-container {
+            display: flex;
+            flex-direction: column;
+
+            .configs-item {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-evenly;
+                background-color: gray;
+                margin: 0.5rem 0 0.5rem 0;
+                padding: 0.5rem;
+                border-radius: 0.4rem;
+                color: white;
+
+                .config-name {
+                    padding-inline: 1rem;
+                    border-right: 1pt solid black;
+                    font-size: larger;
+                    min-width: 30%;
+                }
+
+                .config-display {
+                    padding: 0.5rem;
+                    margin-inline: 1rem;
+                    background-color: white;
+                    min-width: 5%;
+                    min-height: 1rem;
+                    text-align: center;
+                    color: black;
+                    border-radius: 0.4rem;
+                }
+
+                input:focus {
+                    outline: none;
+                }
+
+                .config-apply {
+                    padding: 0.5rem;
+                    padding-inline: 1rem;
+                    border-radius: 0.5rem;
+                    background-color: lightblue;
+                    color: black;
+
+                    &:hover {
+                        background-color: aqua;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.disabled {
+    background-color: gray !important;
+    pointer-events: none;
+}

@@ -1,0 +1,58 @@
+.test-container {
+    background-color: lightgray;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+
+    .test-controls-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        background-color: gray;
+        padding: 0.5rem;
+        margin: 0.5rem;
+        border-radius: 0.5rem;
+
+        .test-info-container {
+            display: flex;
+            flex-direction: column;
+            margin-left: 2rem;
+
+            .test-info {
+                color: white;
+                margin-top: 0.25rem;
+                margin-bottom: 0.25rem;
+                font-size: larger;
+            }
+        }
+
+        .test-execute {
+            margin-right: 2rem;
+            font-size: x-large;
+            color: black;
+            background-color: lightblue;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            &:hover {
+                background-color: aqua;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .test-results-container {
+        background-color: white;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        margin: 0.5rem;
+
+        .test-results {
+            text-decoration: none;
+        }
+    }
+}
+
+.disabled {
+    background-color: gray !important;
+    pointer-events: none;
+}

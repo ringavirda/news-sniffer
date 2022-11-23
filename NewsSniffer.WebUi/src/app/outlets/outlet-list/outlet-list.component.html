@@ -1,0 +1,22 @@
+<div class="list-container">
+    <div *ngFor="let outlet of outlets" class="outlet-container">
+        <div class="body-container">
+            <div class="name-container">
+                <div class="outlet-name">
+                    {{outlet.name}}
+                </div>
+                <div class="outlet-code">
+                    {{outlet.code}}
+                </div>
+            </div>
+            <div (click)="onLink(outlet.link)" class="outlet-link">
+                {{outlet.link}}
+            </div>
+        </div>
+        <div routerLink="{{outlet.id}}" class="affix-container">
+            <div class="detail-text">
+                Full
+            </div>
+        </div>
+    </div>
+</div>

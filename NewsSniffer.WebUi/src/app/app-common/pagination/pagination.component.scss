@@ -8,26 +8,27 @@
     .select-container {
         padding: 0.2rem;
         margin-inline: 1rem;
-        select {
-            :focus {
-                border: none;
-            }
+
+        select:focus {
+            outline: none;
         }
     }
+
     .controls-container {
         display: flex;
         border-right: 2pt solid black;
-        
+
         .page-button {
             margin-inline: 0.2rem;
             padding: 0.2rem;
             border-radius: 0.2rem;
+
             &:hover {
                 background-color: dimgray;
                 cursor: pointer;
             }
         }
-        
+
         .wildcard {
             font-size: larger;
 

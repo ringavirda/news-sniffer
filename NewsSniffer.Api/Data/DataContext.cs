@@ -11,7 +11,7 @@ public class DataContext : DbContext
         : base(options) { }
 
     public DbSet<Article> Articles => Set<Article>();
-    public DbSet<OutletConfig> OutletConfigs => Set<OutletConfig>();
+    public DbSet<Outlet> Outlets => Set<Outlet>();
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
         => options.UseSqlite($"Data Source=./Data/news.db");

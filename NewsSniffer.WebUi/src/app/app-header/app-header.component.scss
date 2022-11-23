@@ -23,18 +23,18 @@
             margin-inline: 1rem;
             border-radius: 1em;
             padding: 0.5em;
+            font-size: x-large;
 
             &:hover {
                 background-color: dimgray;
-            }
-
-            .item-link {
-                font-size: x-large;
+                color: white;
+                cursor: pointer;
             }
         }
     }
 }
 
-.active-route {
+.active {
     background-color: orangered;
+    color: white;
 }

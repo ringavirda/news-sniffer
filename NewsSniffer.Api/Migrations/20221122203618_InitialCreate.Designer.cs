@@ -11,7 +11,7 @@ using NewsSniffer.Api.Data;
 namespace NewsSniffer.Api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221121205206_InitialCreate")]
+    [Migration("20221122203618_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -50,35 +50,39 @@ namespace NewsSniffer.Api.Migrations
                     b.ToTable("Articles");
                 });
 
-            modelBuilder.Entity("NewsSniffer.Common.Models.OutletConfig", b =>
+            modelBuilder.Entity("NewsSniffer.Common.Models.Outlet", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("BaseUri")
+                    b.Property<string>("Code")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("FLCC")
+                    b.Property<string>("FLCS")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("OutletCode")
+                    b.Property<string>("Link")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("SLCC")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("SLTC")
+                    b.Property<string>("SLCS")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("SLTS")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.ToTable("OutletConfigs");
+                    b.ToTable("Outlets");
                 });
 #pragma warning restore 612, 618
         }

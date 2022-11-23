@@ -7,8 +7,8 @@
         <div class="body-container">
             <div class="news-title">{{article.title}}</div>
         </div>
-        <div class="affix-container">
-            <div [routerLink]="['/articles', article.id]" class="detail-link">Full</div>
+        <div class="affix-container" [routerLink]="['/articles', article.id]">
+            <div class="detail-text">Full</div>
         </div>
     </div>
 </div>

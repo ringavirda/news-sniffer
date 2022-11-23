@@ -33,8 +33,9 @@ internal class Program
 
 
         builder.Services.AddSingleton<IHttpService, HttpService>();
-        builder.Services.AddScoped<IOutletConfigService, OutletConfigService>();
+        builder.Services.AddScoped<IOutletsService, OutletsService>();
         builder.Services.AddScoped<IArticleService, ArticleService>();
+        builder.Services.AddSingleton<IParserService, ParserService>();
 
         var app = builder.Build();
 

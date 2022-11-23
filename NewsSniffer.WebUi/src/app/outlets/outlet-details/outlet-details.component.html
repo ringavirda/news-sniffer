@@ -1,0 +1,69 @@
+<div *ngIf="outletExists()" class="outlet-container">
+    <div class="outlet-header">
+        <div class="header-info">
+            <div class="outlet-name">
+                {{outlet.name}}
+            </div>
+            <div class="description-container">
+                <div class="outlet-code">
+                    {{outlet.code}}
+                </div>
+                <div (click)="onHeaderLink()" class="outlet-link">
+                    {{outlet.link}}
+                </div>
+            </div>
+        </div>
+        <div class="header-controls">
+            <div [ngClass]="{'disabled': (updateRunning | async)}" (click)="onUpdate()" class="header-control-item">
+                Update
+            </div>
+            <div [ngClass]="{'disabled': deleteRunning}" (click)="onDelete()" class="header-control-item">
+                Delete
+            </div>
+        </div>
+    </div>
+    <div class="outlet-body">
+        <div class="configs-container">
+            <div class="configs-item">
+                <div class="config-name">
+                    First Level Content Selector
+                </div>
+                <div class="config-display">
+                    {{outlet.flcs}}
+                </div>
+                <input [(ngModel)]="newFlcs" type="text" class="config-change">
+                <div (click)="onFlcsApply()" class="config-apply">
+                    Apply
+                </div>
+            </div>
+            <div class="configs-item">
+                <div class="config-name">
+                    Second Level Content Selector
+                </div>
+                <div class="config-display">
+                    {{outlet.slcs}}
+                </div>
+                <input [(ngModel)]="newSlcs" type="text" class="config-change">
+                <div (click)="onSlcsApply()" class="config-apply">
+                    Apply
+                </div>
+            </div>
+            <div class="configs-item">
+                <div class="config-name">
+                    Second Level Time Selector
+                </div>
+                <div class="config-display">
+                    {{outlet.slts}}
+                </div>
+                <input [(ngModel)]="newSlts" type="text" class="config-change">
+                <div (click)="onSltsApply()" class="config-apply">
+                    Apply
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-outlet-test [outlet]="outlet"></app-outlet-test>
+</div>
+<div *ngIf="!outletExists()">
+    <app-page-not-found></app-page-not-found>
+</div>

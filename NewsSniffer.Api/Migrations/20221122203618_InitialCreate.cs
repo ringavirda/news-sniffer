@@ -29,20 +29,21 @@ namespace NewsSniffer.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "OutletConfigs",
+                name: "Outlets",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    OutletCode = table.Column<string>(type: "TEXT", nullable: false),
-                    BaseUri = table.Column<string>(type: "TEXT", nullable: false),
-                    FLCC = table.Column<string>(type: "TEXT", nullable: false),
-                    SLTC = table.Column<string>(type: "TEXT", nullable: false),
-                    SLCC = table.Column<string>(type: "TEXT", nullable: false)
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Code = table.Column<string>(type: "TEXT", nullable: false),
+                    Link = table.Column<string>(type: "TEXT", nullable: false),
+                    FLCS = table.Column<string>(type: "TEXT", nullable: false),
+                    SLTS = table.Column<string>(type: "TEXT", nullable: false),
+                    SLCS = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OutletConfigs", x => x.Id);
+                    table.PrimaryKey("PK_Outlets", x => x.Id);
                 });
         }
 
@@ -53,7 +54,7 @@ namespace NewsSniffer.Api.Migrations
                 name: "Articles");
 
             migrationBuilder.DropTable(
-                name: "OutletConfigs");
+                name: "Outlets");
         }
     }
 }

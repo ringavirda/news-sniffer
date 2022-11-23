@@ -1,3 +1,7 @@
 <app-articles-controls></app-articles-controls>
 <router-outlet></router-outlet>
-<app-pagination [itemsPerPage]="itemsPerPage" [pageNumbers]="pageNumbers"></app-pagination>
+<app-pagination 
+    *ngIf="pageNumbers.length > 1" 
+    [itemsPerPage]="itemsPerPage" 
+    [pageNumbers]="pageNumbers">
+</app-pagination>

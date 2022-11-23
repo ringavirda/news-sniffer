@@ -1,0 +1,18 @@
+<div class="test-container">
+    <div class="test-controls-container">
+        <div class="test-info-container">
+            <div class="test-info">
+                Consider trying out applied data before irreversably damaging the database.
+            </div>
+            <div class="test-info">
+                This test pulls first article or displays errors.
+            </div>
+        </div>
+        <div (click)="onExecute()" [ngClass]="{'disabled': (testRunning | async)}" class="test-execute">
+            Execute
+        </div>
+    </div>
+    <div class="test-results-container">
+        <div class="test-results">{{testResults}}</div>
+    </div>
+</div>

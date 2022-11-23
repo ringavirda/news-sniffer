@@ -1,0 +1,53 @@
+<div class="add-outlet-container">
+    <div class="add-outlet-controls">
+        <div class="add-outlet-info">
+            Specify configuration neccessary for parsing of the outlet.
+        </div>
+        <div [ngClass]="{'disabled': isOutletReady()}" (click)="onCreateNew()" class="add-outlet">
+            Create New
+        </div>
+    </div>
+    <div class="add-outlet-configuration">
+        <div class="configuration-item">
+            <div class="configuration-info">
+                Name of the Outlet
+            </div>
+            <input [ngModel]="newName | async" (ngModelChange)="newName.next($event)" class="configuration-input" type="text">
+        </div>
+        <div class="configuration-item">
+            <div class="configuration-info">
+                Unique Code of the Outlet
+            </div>
+            <input [ngModel]="newCode | async" (ngModelChange)="newCode.next($event)" class="configuration-input" type="text">
+        </div>
+        <div class="configuration-item">
+            <div class="configuration-info">
+                Link to the Outlet
+            </div>
+            <input [ngModel]="newLink | async" (ngModelChange)="newLink.next($event)" class="configuration-input"
+                type="text">
+        </div>
+        <div class="configuration-item">
+            <div class="configuration-info">
+                First Level Content Selector
+            </div>
+            <input [ngModel]="newFLCS | async" (ngModelChange)="newFLCS.next($event)" class="configuration-input"
+                type="text">
+        </div>
+        <div class="configuration-item">
+            <div class="configuration-info">
+                Second Level Content Selector
+            </div>
+            <input [ngModel]="newSLCS | async" (ngModelChange)="newSLCS.next($event)" class="configuration-input"
+                type="text">
+        </div>
+        <div class="configuration-item">
+            <div class="configuration-info">
+                Second Level Time Selector
+            </div>
+            <input [ngModel]="newSLTS | async" (ngModelChange)="newSLTS.next($event)" class="configuration-input"
+                type="text" b>
+        </div>
+    </div>
+</div>
+<app-outlet-test [outlet]="outlet"></app-outlet-test>

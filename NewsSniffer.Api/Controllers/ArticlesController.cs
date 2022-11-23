@@ -19,13 +19,27 @@ public class ArticlesController : ControllerBase
     [Route("all")]
     public async Task<ActionResult<List<Article>>> GetAllArticles()
     {
-        return Ok(await _articleService.ReadAllArticlesAsync());
+        try
+        {
+            return Ok(await _articleService.ReadAllArticlesAsync());
+        }
+        catch (Exception exception)
+        {
+            return BadRequest(exception.Message);
+        }
     }
 
     [HttpPost]
     [Route("update")]
     public async Task<ActionResult<List<Article>>> UpdateArticles()
     {
-        return Ok(await _articleService.UpdateArticlesAsync());
+        try
+        {
+            return Ok(await _articleService.UpdateArticlesAsync());
+        }
+        catch (Exception exception)
+        {
+            return BadRequest(exception.Message);
+        }
     }
 }

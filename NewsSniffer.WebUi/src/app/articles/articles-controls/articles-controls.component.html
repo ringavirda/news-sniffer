@@ -1,5 +1,8 @@
 <div class="controls-container">
-    <div (click)="onUpdateArticles()" class="control-item">
+    <div (click)="onUpdateArticles()" [ngClass]="{'disabled': updateRunning}" class="control-item">
         Update Articles
+    </div>
+    <div (click)="onGetAll()" [ngClass]="{'disabled': getAllRunning}" class="control-item">
+        GetAll Request
     </div>
 </div>

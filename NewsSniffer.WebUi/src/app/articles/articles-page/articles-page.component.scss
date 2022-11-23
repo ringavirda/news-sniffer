@@ -1,3 +1,14 @@
 .page-container {
     margin: 1rem;
 }
+
+.fail-container {
+    padding: 1rem;
+    
+    .fail-message {
+        margin-top: 0.5rem;
+        font-size: larger;
+        font-weight: bold;
+        color: darkorange;
+    }
+}
