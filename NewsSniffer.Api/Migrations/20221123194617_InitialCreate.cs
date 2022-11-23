@@ -21,7 +21,9 @@ namespace NewsSniffer.Api.Migrations
                     Date = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Title = table.Column<string>(type: "TEXT", nullable: false),
                     ArticleHref = table.Column<string>(type: "TEXT", nullable: false),
-                    Body = table.Column<string>(type: "TEXT", nullable: false)
+                    Body = table.Column<string>(type: "TEXT", nullable: false),
+                    Marker = table.Column<string>(type: "TEXT", nullable: false),
+                    Impression = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -38,8 +40,8 @@ namespace NewsSniffer.Api.Migrations
                     Code = table.Column<string>(type: "TEXT", nullable: false),
                     Link = table.Column<string>(type: "TEXT", nullable: false),
                     FLCS = table.Column<string>(type: "TEXT", nullable: false),
-                    SLTS = table.Column<string>(type: "TEXT", nullable: false),
-                    SLCS = table.Column<string>(type: "TEXT", nullable: false)
+                    SLCS = table.Column<string>(type: "TEXT", nullable: false),
+                    SLTS = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Article } from '../article';
+import { Article } from '../../models/article';
 import { ArticlesService } from '../articles.service';
 
 @Component({
@@ -24,6 +24,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy  {
     this.routeSub = this.route.params.subscribe(params => {
       this.article = this.articlesService.getLoadedArticleById(params['id']);
     });
+    console.log(this.article)
   }
   
   ngOnDestroy(): void {

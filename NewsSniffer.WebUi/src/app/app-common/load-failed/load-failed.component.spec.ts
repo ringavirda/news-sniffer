@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OutletControlsComponent } from './outlet-controls.component';
+import { LoadFailedComponent } from './load-failed.component';
 
-describe('OutletControlsComponent', () => {
-  let component: OutletControlsComponent;
-  let fixture: ComponentFixture<OutletControlsComponent>;
+describe('LoadFailedComponent', () => {
+  let component: LoadFailedComponent;
+  let fixture: ComponentFixture<LoadFailedComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OutletControlsComponent ]
+      declarations: [ LoadFailedComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(OutletControlsComponent);
+    fixture = TestBed.createComponent(LoadFailedComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

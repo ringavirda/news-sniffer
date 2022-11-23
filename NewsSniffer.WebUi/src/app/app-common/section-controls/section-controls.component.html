@@ -1,0 +1,28 @@
+<div class="controls-container">
+    <div *ngFor="let control of controls">
+        <div *ngIf="control.type === 'info'" 
+            [ngClass]="control.style"
+            class="control-info">
+            {{control.text[0]}}
+        </div>
+        <div *ngIf="control.type === 'button'" 
+            (click)="control.action.call(this, control.stage)" 
+            [ngClass]="{
+                'disabled': (control.stage | async),
+                'normal': control.style === 'normal' ? true : false,
+                'large': control.style === 'large' ? true : false
+            }" 
+            class="control-button">
+            {{control.text[0]}}
+        </div>
+        <div *ngIf="control.type === 'select'" class="control-select">
+            <select [ngModel]="(control.stage | async)"
+                (ngModelChange)="control.action.call(this, $event)">
+                <option *ngFor="let option of control.text"
+                    [ngValue]="option">
+                    {{option}}
+                </option>
+            </select>
+        </div>
+    </div>
+</div>

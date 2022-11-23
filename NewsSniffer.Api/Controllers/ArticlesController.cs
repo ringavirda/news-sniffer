@@ -42,4 +42,19 @@ public class ArticlesController : ControllerBase
             return BadRequest(exception.Message);
         }
     }
+
+    [HttpPut]
+    [Route("update")]
+    public async Task<ActionResult> UpdateArticle([FromBody] Article article)
+    {
+        try
+        {
+            await this._articleService.UpdateArticleAsync(article);
+            return Ok();
+        }
+        catch (Exception exception)
+        {
+            return BadRequest(exception.Message);
+        }
+    }
 }

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Outlet } from '../outlet';
+import { Outlet } from '../../models/outlet';
 import { OutletsService } from '../outlets.service';
 
 @Component({
@@ -19,7 +19,9 @@ export class OutletListComponent implements OnInit, OnDestroy {
   
   ngOnInit(): void {
     this.outletsSub = this.outletsService.getLoadedOutlets().subscribe(
-      data => this.outlets = data
+      data => {
+        this.outlets = data;
+      }
     );
   }
   
@@ -29,5 +31,9 @@ export class OutletListComponent implements OnInit, OnDestroy {
 
   onLink(url: string) {
     window.open(url);
+  }
+
+  outletsExist(): boolean {
+    return this.outlets.length > 0 ? true : false;
   }
 }

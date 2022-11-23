@@ -2,7 +2,6 @@ using System.Text.RegularExpressions;
 using AngleSharp;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
-using Microsoft.VisualBasic;
 using NewsSniffer.Api.Exceptions;
 using NewsSniffer.Common.Models;
 
@@ -33,8 +32,9 @@ public class ParserService : IParserService
         try
         {
             var flElement = (await ParseElementsAsync(rawHtml, outlet.FLCS)).FirstOrDefault();
+            if (flElement == null) throw new Exception();
             var aElement = (IHtmlAnchorElement)flElement;
-            
+
             article.OutletCode = outlet.Code;
             article.Title = FilterOut(aElement.Text);
             article.ArticleHref = aElement.Href;
@@ -64,7 +64,8 @@ public class ParserService : IParserService
 
             article.Body = FilterOut(article.Body);
         }
-        catch ( Exception) {
+        catch (Exception)
+        {
             throw new OutletParserException("Nothing was parsed with SLC selector");
         }
 
@@ -78,6 +79,9 @@ public class ParserService : IParserService
             throw new OutletParserException("Failed to parse time with SLTS");
         }
 
+        article.Marker = TrainingMarkers.Unmarked;
+        article.Impression = Impressions.None;
+        
         return article;
     }
 
@@ -93,7 +97,7 @@ public class ParserService : IParserService
             var article = new Article()
             {
                 OutletCode = config.Code,
-                Title = FilterOut(aElement.TextContent),
+                Title = FilterOut(aElement.TextContent.Trim()),
                 ArticleHref = aElement.Href
             };
 
@@ -103,7 +107,7 @@ public class ParserService : IParserService
             var slTime = await ParseElementsAsync(rawHtml, config.SLTS);
 
             article.Body = slElement.Any() ? slElement.First().QuerySelectorAll("p")
-                .Select(el => el.TextContent)
+                .Select(el => el.TextContent.Trim())
                 .Aggregate((str1, str2) => $"{str1}\n{str2}")
                 : "None";
 
@@ -112,10 +116,13 @@ public class ParserService : IParserService
 
             article.Date = DateTime.Parse(slTime.First().TextContent);
 
+            article.Marker = TrainingMarkers.Unmarked;
+            article.Impression = Impressions.None;
+
             articles.Add(article);
         }
 
-        return articles;
+        return articles.DistinctBy(article => article.Title).ToList();
     }
 
     private string FilterOut(string unfiltered)

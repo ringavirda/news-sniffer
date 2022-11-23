@@ -10,7 +10,7 @@ import { map, Subscription } from 'rxjs';
 export class PaginationComponent implements OnInit {
   @Input() itemsPerPage: number = 0;
   @Input() pageNumbers: number[] = [];
-  
+
   currentPage!: number;
   lastPageNumber!: number;
 
@@ -21,13 +21,18 @@ export class PaginationComponent implements OnInit {
 
   ngOnInit(): void {
     this.lastPageNumber = this.pageNumbers.length != 1 ? this.pageNumbers[this.pageNumbers.length - 1] : 1;
-    this.route.children[0].paramMap.subscribe(params => {
+    this.route.paramMap.subscribe(params => {
       this.currentPage = Number(params.get("id"));
     });
   }
-  
+
   onNext(): void {
-    this.route.url.pipe(map(segments => segments.join(''))).subscribe(url =>
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+    this.route.parent?.url.pipe(map(segments => segments.join(''))).subscribe(url =>
       this.router.navigate([url, "page", this.currentPage < this.lastPageNumber
         ? this.currentPage + 1
         : this.lastPageNumber])
@@ -35,7 +40,12 @@ export class PaginationComponent implements OnInit {
   }
 
   onPrev(): void {
-    this.route.url.pipe(map(segments => segments.join(''))).subscribe(url =>
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+    this.route.parent?.url.pipe(map(segments => segments.join(''))).subscribe(url =>
       this.router.navigate([url, "page", this.currentPage > 1
         ? this.currentPage - 1
         : 1])
@@ -43,7 +53,12 @@ export class PaginationComponent implements OnInit {
   }
 
   onPageChange(): void {
-    this.route.url.pipe(map(segments => segments.join(''))).subscribe(url => 
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+    this.route.url.pipe(map(segments => segments.join(''))).subscribe(url =>
       this.router.navigate([url, "page", this.currentPage]));
   }
 }

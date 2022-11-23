@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Location } from '@angular/common'
-import { Outlet } from '../outlet';
+import { Outlet } from '../../models/outlet';
 import { ActivatedRoute } from '@angular/router';
 import { OutletsService } from '../outlets.service';
 import { BehaviorSubject, Subject, Subscription } from 'rxjs';
@@ -14,15 +14,15 @@ export class OutletDetailsComponent implements OnInit, OnDestroy {
   outlet!: Outlet;
   deleteRunning!: boolean;
   updateRunning: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  
+
   newFlcs: string = "";
   newSlcs: string = "";
   newSlts: string = "";
-  
+
   private routeSub!: Subscription;
   private deleteSub!: Subscription;
   private deleteSubj: BehaviorSubject<string> = new BehaviorSubject<string>("inactive");
-  
+
   constructor(
     private location: Location,
     private route: ActivatedRoute,
@@ -64,15 +64,18 @@ export class OutletDetailsComponent implements OnInit, OnDestroy {
   }
 
   onUpdate(): void {
-    this.outletsService.UpdateOutlet(this.outlet, this.updateRunning);
+    if (confirm(`A you sure: Updating outlet ${this.outlet.name}?`)) {
+      this.outletsService.updateOutlet(this.outlet, this.updateRunning);
+    }
   }
 
   onDelete(): void {
-    this.outletsService.DeleteOutlet(this.outlet, this.deleteSubj);
+    if (confirm(`A you sure: Deleting outlet ${this.outlet.name}?`)) {
+      this.outletsService.deleteOutlet(this.outlet, this.deleteSubj);
+    }
   }
 
   onFlcsApply(): void {
-    console.log(this.newFlcs)
     this.outlet.flcs = this.newFlcs;
     this.newFlcs = "";
   }

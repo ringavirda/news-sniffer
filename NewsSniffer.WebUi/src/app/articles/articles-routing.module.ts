@@ -5,15 +5,18 @@ import { ArticlesPageComponent } from './articles-page/articles-page.component';
 import { ArticlesComponent } from './articles/articles.component';
 
 const routes: Routes = [
-  { path: "articles", redirectTo: "articles/page/1", pathMatch: "full" },
   {
-    path: "articles", 
-    component: ArticlesComponent,
-    children: [
-      {path: "page/:id", component: ArticlesPageComponent },
-    ]
+    path: "articles",
+    redirectTo: "articles/page/1",
+    pathMatch: "full",
   },
-  { path: "articles/:id", component: ArticleDetailComponent },
+  {
+    path: "articles",
+    children: [
+      { path: "page/:id", component: ArticlesComponent },
+      { path: ":id", component: ArticleDetailComponent },
+    ]
+  }
 ];
 
 @NgModule({

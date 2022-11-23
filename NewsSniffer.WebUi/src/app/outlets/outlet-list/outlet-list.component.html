@@ -1,4 +1,4 @@
-<div class="list-container">
+<div *ngIf="outletsExist()" class="list-container">
     <div *ngFor="let outlet of outlets" class="outlet-container">
         <div class="body-container">
             <div class="name-container">

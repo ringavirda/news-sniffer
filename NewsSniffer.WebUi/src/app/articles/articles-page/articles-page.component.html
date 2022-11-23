@@ -1,11 +1,8 @@
 <div *ngIf="articlesExist()" class="page-container">
     <app-article-list [articles]="articles"></app-article-list>
 </div>
-<div *ngIf="showFailed" class="fail-container">
-    <div class="fail-message">
-        There are no articles loaded! 
-    </div>
-    <div class="fail-message">
-        Backend is pobably down, check the server and try to load them again. Or maybe there are no outlets in the database.
-    </div>
-</div>
+<app-load-failed *ngIf="showFailed.show" 
+    [caller]="'articles'" 
+    [showBackend]="showFailed.backendFailed"
+    [filtering]="showFailed.filtering">
+</app-load-failed>

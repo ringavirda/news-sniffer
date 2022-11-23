@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { Outlet } from '../outlet';
+import { Outlet } from '../../models/outlet';
 import { OutletsService } from '../outlets.service';
 
 @Component({
@@ -9,7 +9,15 @@ import { OutletsService } from '../outlets.service';
   styleUrls: ['./outlet-add.component.scss']
 })
 export class OutletAddComponent implements OnInit, OnDestroy {
-  outlet: Outlet;
+  outlet: Outlet = {
+    id: 0,
+    name: "",
+    code: "",
+    link: "",
+    flcs: "",
+    slcs: "",
+    slts: ""
+  };
 
   newName: BehaviorSubject<string> = new BehaviorSubject<string>("");
   newCode: BehaviorSubject<string> = new BehaviorSubject<string>("");
@@ -29,17 +37,7 @@ export class OutletAddComponent implements OnInit, OnDestroy {
 
   constructor(
     private outletsService: OutletsService
-  ) {
-    this.outlet = {
-      id: 0,
-      name: "",
-      code: "",
-      link: "",
-      flcs: "",
-      slcs: "",
-      slts: ""
-    };
-  }
+  ) { }
 
   ngOnInit(): void {
     this.newNameSub = this.newName.subscribe(data => this.outlet.name = data);
@@ -70,5 +68,15 @@ export class OutletAddComponent implements OnInit, OnDestroy {
 
   onCreateNew(): void {
     this.outletsService.createOutlet(this.outlet, this.createRunning);
+    this.blankOutlet();
+  }
+
+  private blankOutlet(): void {
+    this.newName.next("");
+    this.newLink.next("");
+    this.newCode.next("");
+    this.newFLCS.next("");
+    this.newSLCS.next("");
+    this.newSLTS.next("");
   }
 }

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Subject } from 'rxjs';
-import { Outlet } from '../outlet';
+import { Outlet } from '../../models/outlet';
 import { OutletsService } from '../outlets.service';
 
 @Component({

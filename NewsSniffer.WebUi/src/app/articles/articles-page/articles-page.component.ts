@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { Article } from '../article';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { Article } from '../../models/article';
 import { ArticlesService } from '../articles.service';
 
 @Component({
@@ -9,14 +9,20 @@ import { ArticlesService } from '../articles.service';
   templateUrl: './articles-page.component.html',
   styleUrls: ['./articles-page.component.scss']
 })
-export class ArticlesPageComponent implements OnInit, OnDestroy {
-  itemsPerPage: number = 30;
-  articles: Article[] = [];
-  showFailed: boolean = false;
+export class ArticlesPageComponent implements OnInit {
+  @Input() itemsPerPage!: number;
+  @Input() markFilter!: BehaviorSubject<string>;
+  @Input() impressionFilter!: BehaviorSubject<string>;
 
-  private pageNumber: number = 0;
-  private routeSub!: Subscription;
-  private articlesSub!: Subscription;
+  articles: Article[] = [];
+
+  showFailed = {
+    show: true,
+    filtering: false,
+    backendFailed: true
+  };
+
+  private pageNumber: number = 1;
 
   constructor(
     private articlesService: ArticlesService,
@@ -24,28 +30,49 @@ export class ArticlesPageComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.routeSub = this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe(params => {
       this.pageNumber = Number(params.get("id"));
-    })
 
-    this.articlesSub = this.articlesService.getLoadedArticles().subscribe(data => {
-      if (data.length > 0) {
-        this.showFailed = false;
-        this.articles = data.slice (
-          (this.pageNumber - 1) * this.itemsPerPage,
-          this.pageNumber * this.itemsPerPage);
-      } else {
-        this.showFailed = true;
-      }
+      this.articlesService.getLoadedArticles().subscribe(data => {
+        if (data.length > 0) {
+          this.showFailed.show = false;
+          this.showFailed.backendFailed = false;
+        } else {
+          this.showFailed.show = true;
+          this.showFailed.backendFailed = true;
+        }
+      });
+
+      this.articlesService.getFilteredLoadedArticles().subscribe(data => {
+        if (data.length > 0) {
+          this.showFailed.show = false;
+          this.showFailed.filtering = false;
+          this.articles = this.getArticlesForCurrentPage(data);
+        } else {
+          this.showFailed.show = true;
+          this.showFailed.filtering = true;
+          this.articles = [];
+        }
+      });
     });
-  }
 
-  ngOnDestroy(): void {
-    this.routeSub.unsubscribe();
-    this.articlesSub.unsubscribe();
+    this.markFilter.subscribe(data => {
+      this.articlesService.applyFilters(this.markFilter.getValue(), null);
+    });
+    
+    this.impressionFilter.subscribe(data => {
+      this.articlesService.applyFilters(null, this.impressionFilter.getValue());
+    });
   }
 
   articlesExist(): boolean {
     return this.articles.length == 0 ? false : true;
   }
+
+  private getArticlesForCurrentPage(articles: Article[]): Article[] {
+    return articles.slice(
+      (this.pageNumber - 1) * this.itemsPerPage,
+      this.pageNumber * this.itemsPerPage);
+  }
+
 }

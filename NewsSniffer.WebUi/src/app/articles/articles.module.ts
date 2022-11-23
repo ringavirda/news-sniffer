@@ -5,9 +5,10 @@ import { ArticlesRoutingModule } from './articles-routing.module';
 import { ArticleListComponent } from './article-list/article-list.component';
 import { ArticleDetailComponent } from './article-detail/article-detail.component';
 import { ArticlesComponent } from './articles/articles.component';
-import { ArticlesControlsComponent } from './articles-controls/articles-controls.component';
 import { ArticlesPageComponent } from './articles-page/articles-page.component';
 import { AppCommonModule } from '../app-common/common.module';
+import { ArticleListItemComponent } from './article-list-item/article-list-item.component';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -16,13 +17,14 @@ import { AppCommonModule } from '../app-common/common.module';
     ArticleListComponent,
     ArticleDetailComponent,
     ArticlesComponent,
-    ArticlesControlsComponent,
-    ArticlesPageComponent
+    ArticlesPageComponent,
+    ArticleListItemComponent
   ],
   imports: [
     CommonModule,
     AppCommonModule,
-    ArticlesRoutingModule
+    ArticlesRoutingModule,
+    FormsModule
   ]
 })
 export class ArticlesModule { }

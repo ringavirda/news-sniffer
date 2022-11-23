@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using NewsSniffer.Api.Data;
+using NewsSniffer.Api.Exceptions;
 using NewsSniffer.Common.Models;
 
 namespace NewsSniffer.Api.Services;
@@ -56,5 +57,16 @@ public class ArticleService : IArticleService
     }
 
     private List<Article> FilterNew(List<Article> articles, List<string> titles)
-    => articles.Where(article => !titles.Contains(article.Title)).ToList();
+        => articles.Where(article => !titles.Contains(article.Title)).ToList();
+
+    public async Task UpdateArticleAsync(Article article)
+    {
+        var maybeArticle = await _dataContext.Articles.SingleOrDefaultAsync(o => o.Id == article.Id);
+        if (maybeArticle == null) {
+            throw new ArticlesException("There is no such article in the database to update");
+        } else {
+            _dataContext.Articles.Entry(maybeArticle).CurrentValues.SetValues(article);
+            await _dataContext.SaveChangesAsync();
+        }
+    }
 }

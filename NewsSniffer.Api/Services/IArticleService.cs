@@ -11,4 +11,5 @@ public interface IArticleService
     public Task<List<Article>> UpdateArticlesAsync();
     public Task<Article> ReadArticleByTitleAsync(string title);
     public Task WriteArticleAsync(Article article);
+    public Task UpdateArticleAsync(Article article);
 }

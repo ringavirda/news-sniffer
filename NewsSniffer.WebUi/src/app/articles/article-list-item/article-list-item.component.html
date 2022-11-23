@@ -1,0 +1,41 @@
+<div class="news-container">
+    <div class="prefix-container">
+        <div class="news-outlet">{{article.outletCode}}</div>
+        <div class="news-date">{{article.date}}</div>
+    </div>
+    <div class="body-container">
+        <div class="news-title">{{article.title}}</div>
+        <div class="selector-container">
+            <select [ngModel]="(impressionSelector | async)" (ngModelChange)="impressionSelector.next($event)">
+                <option [ngValue]="'none'">None</option>
+                <option [ngValue]="'neuteral'">Neuteral</option>
+                <option [ngValue]="'good'">Good</option>
+                <option [ngValue]="'bad'">Bad</option>
+            </select>
+            <select *ngIf="(impressionSelector | async) !== 'none'" [ngModel]="(markerSelector | async)"
+                (ngModelChange)="markerSelector.next($event)">
+                <option [ngValue]="'unmarked'">Unmarked</option>
+                <option [ngValue]="'training'">Training</option>
+                <option [ngValue]="'testing'">Testing</option>
+            </select>
+        </div>
+        <div class="flags-container">
+            <div [ngClass]="{
+                'none': impressionSelector.getValue() === 'none',
+                'neuteral': impressionSelector.getValue() === 'neuteral',
+                'good': impressionSelector.getValue() === 'good',
+                'bad': impressionSelector.getValue() === 'bad'
+            }" class="impression-flag"></div>
+            <div [ngClass]="{
+                'unmarked': markerSelector.getValue() === 'unmarked',
+                'training': markerSelector.getValue() === 'training',
+                'testing': markerSelector.getValue() === 'testing'
+            }" class="marker-flag"></div>
+        </div>
+    </div>
+    <div [ngClass]="{'affix-apply': isApply()}" class="affix-container">
+        <div *ngIf="!isApply()" [routerLink]="['/articles', article.id]" class="affix-text">Full</div>
+        <div *ngIf="isApply()" (click)="onApply()" [ngClass]="{'disabled': (applyRunning | async)}" class="affix-text">
+            Apply</div>
+    </div>
+</div>

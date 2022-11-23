@@ -4,13 +4,17 @@ import { PaginationComponent } from './pagination/pagination.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { LoadFailedComponent } from './load-failed/load-failed.component';
+import { SectionControlsComponent } from './section-controls/section-controls.component';
 
 
 
 @NgModule({
   declarations: [
     PaginationComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    LoadFailedComponent,
+    SectionControlsComponent
   ],
   imports: [
     CommonModule,
@@ -19,7 +23,9 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
   ],
   exports: [
     PaginationComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    SectionControlsComponent,
+    LoadFailedComponent
   ]
 })
 export class AppCommonModule { }

@@ -11,7 +11,7 @@ using NewsSniffer.Api.Data;
 namespace NewsSniffer.Api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221122203618_InitialCreate")]
+    [Migration("20221123194617_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -35,6 +35,14 @@ namespace NewsSniffer.Api.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("Date")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Impression")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Marker")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("OutletCode")

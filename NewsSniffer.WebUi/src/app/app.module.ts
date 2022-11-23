@@ -8,6 +8,7 @@ import { ArticlesModule } from './articles/articles.module';
 import { AppCommonModule } from './app-common/common.module';
 import { HttpClientModule} from '@angular/common/http';
 import { OutletsModule } from './outlets/outlets.module';
+import { TrainingModule } from './training/training.module';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { OutletsModule } from './outlets/outlets.module';
     HttpClientModule,
     ArticlesModule,
     OutletsModule,
+    TrainingModule,
     AppCommonModule,
     AppRoutingModule,
   ],

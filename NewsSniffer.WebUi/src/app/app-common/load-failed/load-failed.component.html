@@ -1,0 +1,11 @@
+<div class="fail-container">
+    <div class="fail-message">
+        There are no {{caller}} loaded! 
+    </div>
+    <div *ngIf="showBackend" class="fail-message">
+        Backend is pobably down, check the server and try to load them again. Or maybe there are no outlets in the database.
+    </div>
+    <div *ngIf="filtering" class="fail-message">
+        Nothing was filtered with specified specs. 
+    </div>
+</div>

@@ -1,0 +1,150 @@
+.news-container {
+    display: flex;
+    align-items: center;
+    background-color: lightblue;
+    margin: 0.2em 0 0.2em 0;
+    border-radius: 0.5em;
+
+    .prefix-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background-color: darkorange;
+        color: white;
+        width: 12%;
+        padding: 0.5em;
+        text-align: center;
+        align-self: stretch;
+
+        .news-outlet {
+            border-bottom: 2pt solid white;
+            padding: 0.1em;
+        }
+
+        .news-date {
+            color: aliceblue;
+            padding: 0.1em;
+        }
+    }
+
+    .body-container {
+        padding-inline: 0.5rem;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        align-self: stretch;
+
+        @media only screen and (max-width: 1200px) {
+            flex-direction: column;
+        }
+
+        .news-title {
+            font-size: medium;
+            margin-inline-end: 1rem;
+        }
+
+        .selector-container {
+            display: flex;
+            flex-direction: column;
+            margin-inline-start: auto;
+            margin-inline-end: 1.5rem;
+
+            select {
+                padding: 0.5rem;
+                margin-top: 0.5rem;
+                margin-bottom: 0.5rem;
+                border-radius: 0.5rem;
+                font-size: large;
+
+                &:focus {
+                    outline: none;
+                }
+            }
+        }
+
+        .flags-container {
+            display: flex;
+            flex-direction: row;
+            
+            min-width: 12%;
+            align-self: stretch;
+
+            .impression-flag {
+                border-right: 5pt solid black;
+                min-width: 3rem;
+            }
+            
+            .marker-flag {
+                min-width: 3rem;
+            }
+        }
+    }
+
+    .affix-container {
+        display: flex;
+        background-color: lightskyblue;
+        width: 8%;
+        min-width: 3rem;
+        justify-self: right;
+        align-self: stretch;
+        align-items: center;
+        border-left: 5pt double black;
+        border-radius: 0 0.5em 0.5em 0;
+
+        .affix-text {
+            text-align: center;
+            font-weight: bold;
+            font-size: large;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        &:hover {
+            background-color: aqua;
+            cursor: pointer;
+        }
+    }
+}
+
+.unmarked {
+    background-color: lightgray;
+}
+
+.training {
+    background-color: blue;
+}
+
+.testing {
+    background-color: lightgreen;
+}
+
+.none {
+    background-color: lightgray;
+}
+
+.neuteral {
+    background-color: orange;
+}
+
+.good {
+    background-color: green;
+}
+
+.bad {
+    background-color: brown;
+}
+
+.affix-apply {
+    background-color: darkorange !important;
+    color: white;
+
+    &:hover {
+        background-color: orangered !important;
+    }
+}
+
+.disabled {
+    background-color: lightblue !important;
+    color: black !important;
+}

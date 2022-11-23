@@ -34,6 +34,14 @@ namespace NewsSniffer.Api.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Impression")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Marker")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("OutletCode")
                         .IsRequired()
                         .HasColumnType("TEXT");
