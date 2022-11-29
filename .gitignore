@@ -1,6 +1,12 @@
+# VS Code
+.vscode
+
 # .Net
 **/bin
 **/obj
+
 NewsSniffer.Api/Data/training-conf.json
+NewsSniffer.Api/Data/analytics.json
 
 # Angular
+**/node_modules
