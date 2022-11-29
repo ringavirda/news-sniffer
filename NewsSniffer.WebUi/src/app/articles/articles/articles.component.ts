@@ -11,27 +11,39 @@ import { ArticlesService } from '../articles.service';
   templateUrl: './articles.component.html',
   styleUrls: ['./articles.component.scss']
 })
-export class ArticlesComponent implements OnInit, OnDestroy {
+export class ArticlesComponent implements OnInit {
   controls: ControlItem[] = [{
     type: "button",
-    text: ["Update"],
-    style: "large",
+    text: ["Update Backend"],
+    style: "x-large bold",
     action: (stage) => {
-      this.articlesService.updateRequest(stage as BehaviorSubject<boolean>);
+      if (confirm("Are you sure: { Update Backend }\nThis process involves fetching and processing articles from known outlets. It may take some time.")) {
+        this.articlesService.updateBackend(stage);
+      }
     },
     stage: new BehaviorSubject<boolean>(false)
   }, {
     type: "button",
-    text: ["GetAll"],
-    style: "normal",
+    text: ["Get All"],
+    style: "large",
     action: (stage) => {
-      this.articlesService.getAllRequest(stage as BehaviorSubject<boolean>);
+      this.articlesService.getAll(stage);
+    },
+    stage: new BehaviorSubject<boolean>(false)
+  }, {
+    type: "button",
+    text: ["Delete All"],
+    style: "large",
+    action: (stage) => {
+      if (confirm("Are you sure: { Delete All Artiles }")) {
+        this.articlesService.deleteAll(stage);
+      }
     },
     stage: new BehaviorSubject<boolean>(false)
   }, {
     type: "info",
     text: ["Filter by training marker:"],
-    style: "large",
+    style: "",
     action: () => { },
     stage: new BehaviorSubject("")
   }, {
@@ -50,7 +62,7 @@ export class ArticlesComponent implements OnInit, OnDestroy {
   }, {
     type: "info",
     text: ["Filter by Impression:"],
-    style: "large",
+    style: "",
     action: () => { },
     stage: new BehaviorSubject("")
   }, {
@@ -59,8 +71,8 @@ export class ArticlesComponent implements OnInit, OnDestroy {
       "all",
       Impressions.none,
       Impressions.neuteral,
-      Impressions.good,
-      Impressions.bad
+      Impressions.positive,
+      Impressions.negative
     ],
     style: "",
     action: (stage) => {
@@ -71,26 +83,19 @@ export class ArticlesComponent implements OnInit, OnDestroy {
 
   itemsPerPage: number = 30;
   pageNumbers: number[] = [];
+  section: string = "articles";
 
   markFilter: BehaviorSubject<string> = new BehaviorSubject<string>("all");
   impressionFilter: BehaviorSubject<string> = new BehaviorSubject<string>("all");
-
-  private articleSub!: Subscription;
 
   constructor(
     private articlesService: ArticlesService
   ) { }
 
   ngOnInit(): void {
-    this.articleSub = this.articlesService.getFilteredLoadedArticles().subscribe(data =>
+    this.articlesService.getAllFiltered().subscribe(data =>
       this.pageNumbers = [...Array(Math.ceil(data.length / this.itemsPerPage) + 2).keys()]
         .slice(1, -1)
     )
-  }
-
-  ngOnDestroy(): void {
-    this.articleSub.unsubscribe();
-    this.markFilter.unsubscribe();
-    this.impressionFilter.unsubscribe();
   }
 }

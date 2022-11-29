@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { Article } from '../../models/article';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { Article, Ngram } from '../../models/article';
 import { ArticlesService } from '../articles.service';
 
 @Component({
@@ -10,9 +10,16 @@ import { ArticlesService } from '../articles.service';
   templateUrl: './article-detail.component.html',
   styleUrls: ['./article-detail.component.scss']
 })
-export class ArticleDetailComponent implements OnInit, OnDestroy  {
+export class ArticleDetailComponent implements OnInit  {
   article!: Article;
-  private routeSub!: Subscription;
+  deleteRunning: boolean = false;
+
+  showBody: boolean = true;
+  showNgram: boolean = false;
+
+  showPageNotFound: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  
+  private deleteSubj: BehaviorSubject<string> = new BehaviorSubject<string>("inactive");
 
   constructor(
     private articlesService: ArticlesService,
@@ -21,21 +28,39 @@ export class ArticleDetailComponent implements OnInit, OnDestroy  {
   ) { }
 
   ngOnInit(): void {
-    this.routeSub = this.route.params.subscribe(params => {
-      this.article = this.articlesService.getLoadedArticleById(params['id']);
+    this.route.params.subscribe(params => {
+      this.articlesService.getById(params['id'], this.showPageNotFound)
+        .subscribe(data => {
+          data.date = new Date(data.date);
+          this.article = data;
+        } );
     });
-    console.log(this.article)
-  }
-  
-  ngOnDestroy(): void {
-    this.routeSub.unsubscribe();
+
+    this.deleteSubj.subscribe(data => {
+      this.deleteRunning = data != "inactive" ? true : false;
+      if (data == "completed") {
+        this.location.back();
+      }
+    });
   }
 
-  onBack(): void {
-    this.location.back();
+  public onDelete(): void {
+    if (confirm("Are you sure: { Delete Article }")) {
+      this.articlesService.delete(this.article, this.deleteSubj);
+    }
   }
 
-  articleExists(): boolean {
+  public articleExists(): boolean {
     return this.article == null ? false : true;
+  }
+
+  public onArticle(): void {
+    this.showBody = true,
+    this.showNgram = false;
+  }
+
+  public onNgram(): void {
+    this.showNgram = true,
+    this.showBody = false;
   }
 }

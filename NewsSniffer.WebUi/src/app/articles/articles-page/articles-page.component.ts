@@ -33,7 +33,7 @@ export class ArticlesPageComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.pageNumber = Number(params.get("id"));
 
-      this.articlesService.getLoadedArticles().subscribe(data => {
+      this.articlesService.getAllLoaded().subscribe(data => {
         if (data.length > 0) {
           this.showFailed.show = false;
           this.showFailed.backendFailed = false;
@@ -43,10 +43,13 @@ export class ArticlesPageComponent implements OnInit {
         }
       });
 
-      this.articlesService.getFilteredLoadedArticles().subscribe(data => {
+      this.articlesService.getAllFiltered().subscribe(data => {
         if (data.length > 0) {
           this.showFailed.show = false;
           this.showFailed.filtering = false;
+          data.forEach(article => {
+            article.date = new Date(article.date);
+          });
           this.articles = this.getArticlesForCurrentPage(data);
         } else {
           this.showFailed.show = true;

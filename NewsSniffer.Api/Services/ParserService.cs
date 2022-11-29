@@ -4,6 +4,7 @@ using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using NewsSniffer.Api.Exceptions;
 using NewsSniffer.Common.Models;
+using NewsSniffer.Core.Models;
 
 namespace NewsSniffer.Api.Services;
 
@@ -81,7 +82,7 @@ public class ParserService : IParserService
 
         article.Marker = TrainingMarkers.Unmarked;
         article.Impression = Impressions.None;
-        
+
         return article;
     }
 

@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="anglesharp" Version="0.17.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Certificate" Version="6.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -15,11 +16,13 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="system.text.json" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\NewsSniffer.Core\NewsSniffer.Core.csproj" />
     <ProjectReference Include="..\NewsSniffer.Common\NewsSniffer.Common.csproj" />
+    <ProjectReference Include="..\NewsSniffer.Core.Tests\NewsSniffer.Core.Tests.csproj" />
   </ItemGroup>
 
 </Project>

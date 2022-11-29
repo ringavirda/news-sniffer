@@ -2,24 +2,35 @@
     background-color: darkgray;
     padding: 1rem;
     display: flex;
+    flex-direction: row;
     align-items: center;
+    
+    @media only screen and (max-width: 700px) {
+        flex-wrap: wrap;
+    }
 
     a {
         text-decoration: none;
         color: white;
     }
 
-    .logo {
+    .header-logo {
         font-size: xx-large;
         color: black;
     }
 
-    .items-container {
+    .nav-container {
         margin-left: auto;
         padding-right: 1rem;
         display: flex;
+        flex-direction: row;
 
-        .item {
+        @media only screen and (max-width: 480px) {
+            flex-direction: column;
+            margin-top: 1rem;
+        }
+
+        .nav-item {
             margin-inline: 1rem;
             border-radius: 1em;
             padding: 0.5em;

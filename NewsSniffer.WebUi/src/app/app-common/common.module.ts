@@ -4,8 +4,8 @@ import { PaginationComponent } from './pagination/pagination.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { LoadFailedComponent } from './load-failed/load-failed.component';
 import { SectionControlsComponent } from './section-controls/section-controls.component';
+import { GenericButtonComponent } from './generic-button/generic-button.component';
 
 
 
@@ -13,8 +13,8 @@ import { SectionControlsComponent } from './section-controls/section-controls.co
   declarations: [
     PaginationComponent,
     PageNotFoundComponent,
-    LoadFailedComponent,
-    SectionControlsComponent
+    SectionControlsComponent,
+    GenericButtonComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +25,7 @@ import { SectionControlsComponent } from './section-controls/section-controls.co
     PaginationComponent,
     PageNotFoundComponent,
     SectionControlsComponent,
-    LoadFailedComponent
+    GenericButtonComponent
   ]
 })
 export class AppCommonModule { }

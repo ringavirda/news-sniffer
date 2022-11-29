@@ -2,7 +2,8 @@
 <app-pagination 
     *ngIf="pageNumbers.length > 1" 
     [itemsPerPage]="itemsPerPage" 
-    [pageNumbers]="pageNumbers">
+    [pageNumbers]="pageNumbers"
+    [section]="section">
 </app-pagination>
 <app-articles-page 
     [itemsPerPage]="itemsPerPage"
@@ -12,5 +13,6 @@
 <app-pagination 
     *ngIf="pageNumbers.length > 1" 
     [itemsPerPage]="itemsPerPage" 
-    [pageNumbers]="pageNumbers">
+    [pageNumbers]="pageNumbers"
+    [section]="section">
 </app-pagination>

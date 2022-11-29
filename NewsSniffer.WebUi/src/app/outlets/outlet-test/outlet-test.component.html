@@ -8,9 +8,13 @@
                 This test pulls first article or displays errors.
             </div>
         </div>
-        <div (click)="onExecute()" [ngClass]="{'disabled': (testRunning | async)}" class="test-execute">
-            Execute
-        </div>
+        <app-generic-button
+            [content]="'Execute'" 
+            [style]="'large bold'"
+            (click)="onExecute()" 
+            [disableAsync]="testRunning"
+            class="test-execute">
+        </app-generic-button>
     </div>
     <div class="test-results-container">
         <div class="test-results">{{testResults}}</div>

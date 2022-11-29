@@ -1,3 +1,3 @@
 export class Routes {
-    static baseApiUrl: string = "https://localhost:7046/api/"
+    static baseApiUrl: string = "http://176.36.57.13:5002/api/"
 }

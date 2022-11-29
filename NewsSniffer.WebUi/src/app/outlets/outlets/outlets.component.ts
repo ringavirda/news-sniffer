@@ -13,11 +13,21 @@ export class OutletsComponent {
   controls: ControlItem[] = [{
     type: "button",
     text: ["New Outlet"],
-    style: "large",
+    style: "x-large bold",
     action: (stage) => {
       this.router.navigateByUrl("outlets/new");
     },
     stage: new BehaviorSubject(false)
+  },{
+    type: "button",
+    text: ["Delete All"],
+    style: "large",
+    action: (stage) => {
+      if (confirm("Are you sure: {Deleting All Outlets}?")) {
+        this.outletsService.deleteAll(stage);
+      }
+    },
+    stage: new BehaviorSubject<boolean>(false)
   }]
 
   constructor(

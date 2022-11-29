@@ -11,12 +11,12 @@ import { ArticlesService } from '../articles.service';
 export class ArticleListItemComponent implements OnInit {
   @Input() article!: Article;
   
-  markerSelector!: BehaviorSubject<string>;
-  impressionSelector!: BehaviorSubject<string>;
+  public markerSelector!: BehaviorSubject<string>;
+  public impressionSelector!: BehaviorSubject<string>;
   
-  applyRunning: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public applyRunning: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   
-  constructor(
+  public constructor(
     private articlesService: ArticlesService
   ) { }
   
@@ -25,11 +25,11 @@ export class ArticleListItemComponent implements OnInit {
     this.impressionSelector = new BehaviorSubject<string>(this.article.impression);
   }
 
-  isApply(): boolean {
+  public isApply(): boolean {
     return this.markerSelector.getValue() !== this.article.marker || this.impressionSelector.getValue() !== this.article.impression;
   }
 
-  onApply(): void {
+  public onApply(): void {
     let changedArticle : Article = {
       id: this.article.id,
       title: this.article.title,
@@ -37,12 +37,14 @@ export class ArticleListItemComponent implements OnInit {
       articleHref: this.article.articleHref,
       outletCode: this.article.outletCode,
       body: this.article.body,
+      ngram: this.article.ngram,
+      prediction: this.article.prediction,
 
       marker: this.markerSelector.getValue(),
       impression: this.impressionSelector.getValue()
     }
 
-    this.articlesService.updateArticleRequest(changedArticle, this.applyRunning)
+    this.articlesService.update(changedArticle, this.applyRunning)
       .subscribe(data => this.article = data);
   }
 }

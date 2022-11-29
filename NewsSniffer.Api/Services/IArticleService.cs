@@ -1,15 +1,23 @@
 
+using NewsSniffer.Api.Dtos;
 using NewsSniffer.Common.Models;
 
 namespace NewsSniffer.Api.Services;
 
-public interface IArticleService
+public interface IArticlesService
 {
-    public Task<List<Article>> ReadAllArticlesAsync();
-    public Task WriteAllArticlesAsync(List<Article> articles);
-    public Task<List<string>> ReadAllTitlesAsync();
-    public Task<List<Article>> UpdateArticlesAsync();
-    public Task<Article> ReadArticleByTitleAsync(string title);
-    public Task WriteArticleAsync(Article article);
-    public Task UpdateArticleAsync(Article article);
+    // CRUD Single
+    public Task<List<ArticleHeader>> GetAllHeadersAsync();
+    public Task<List<string>> GetAllTitlesAsync();
+    public Task CreateAllAsync(List<Article> articles);
+    public Task UpdateAsync(ArticleHeader article);
+    public Task DeleteAsync(int id);
+    
+    // CRUD Many
+    public Task<ArticleFull> GetByIdAsync(int id);
+    public Task CreateAsync(Article article);
+    public Task DeleteAllAsync();
+
+    // Misc
+    public Task<List<ArticleHeader>> UpdateBackendAsync();
 }

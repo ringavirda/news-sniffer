@@ -5,15 +5,13 @@
             class="control-info">
             {{control.text[0]}}
         </div>
-        <div *ngIf="control.type === 'button'" 
-            (click)="control.action.call(this, control.stage)" 
-            [ngClass]="{
-                'disabled': (control.stage | async),
-                'normal': control.style === 'normal' ? true : false,
-                'large': control.style === 'large' ? true : false
-            }" 
-            class="control-button">
-            {{control.text[0]}}
+        <div *ngIf="control.type === 'button'">
+            <app-generic-button
+                [content]="control.text[0]"
+                (click)="control.action.call(this, control.stage)"
+                [style]="control.style"
+                [disableAsync]="control.stage"
+            ></app-generic-button>
         </div>
         <div *ngIf="control.type === 'select'" class="control-select">
             <select [ngModel]="(control.stage | async)"

@@ -67,7 +67,7 @@ export class OutletAddComponent implements OnInit, OnDestroy {
   }
 
   onCreateNew(): void {
-    this.outletsService.createOutlet(this.outlet, this.createRunning);
+    this.outletsService.create(this.outlet, this.createRunning);
     this.blankOutlet();
   }
 

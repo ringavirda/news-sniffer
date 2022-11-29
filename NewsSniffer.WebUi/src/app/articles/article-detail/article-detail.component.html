@@ -3,13 +3,34 @@
     <div class="details-container">
         <div class="info-container">
             <div class="outlet">{{article.outletCode}}</div>
-            <div class="date">{{article.date}}</div>
+            <div class="date">{{article.date.toDateString()}}</div>
+        </div>
+        <div class="controls-container">
+            <app-generic-button [content]="'Article'" [style]="'large bold'" [disable]="showBody" (click)="onArticle()">
+            </app-generic-button>
+            <app-generic-button [content]="'Ngram'" [style]="'large bold'" [disable]="showNgram" (click)="onNgram()">
+            </app-generic-button>
+            <app-generic-button [content]="'Delete'" [style]="'larger'" [disable]="deleteRunning"
+                (click)="onDelete()">
+            </app-generic-button>
         </div>
     </div>
-    <div class="body">
-        {{article.body}}
+    <div class="body-container">
+        <div *ngIf="showBody" class="body">
+            {{article.body}}
+        </div>
+        <div *ngIf="showNgram" class="ngram-wrapper">
+            <div *ngFor="let frequency of article.ngram" class="ngram-container">
+                <div class="ngram-frequency">{{frequency.frequency}}</div>
+                <div class="terms-container">
+                    <div *ngFor="let term of frequency.terms" class="term">
+                        {{term}}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-<div *ngIf="!articleExists()">
+<div *ngIf="(showPageNotFound | async)">
     <app-page-not-found></app-page-not-found>
 </div>

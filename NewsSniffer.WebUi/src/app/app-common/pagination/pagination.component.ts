@@ -10,6 +10,7 @@ import { map, Subscription } from 'rxjs';
 export class PaginationComponent implements OnInit {
   @Input() itemsPerPage: number = 0;
   @Input() pageNumbers: number[] = [];
+  @Input() section!: string;
 
   currentPage!: number;
   lastPageNumber!: number;
@@ -32,11 +33,9 @@ export class PaginationComponent implements OnInit {
       left: 0,
       behavior: 'smooth'
     });
-    this.route.parent?.url.pipe(map(segments => segments.join(''))).subscribe(url =>
-      this.router.navigate([url, "page", this.currentPage < this.lastPageNumber
-        ? this.currentPage + 1
-        : this.lastPageNumber])
-    );
+    this.router.navigate([this.section, "page", this.currentPage < this.lastPageNumber
+      ? this.currentPage + 1
+      : this.lastPageNumber])
   }
 
   onPrev(): void {
@@ -45,11 +44,9 @@ export class PaginationComponent implements OnInit {
       left: 0,
       behavior: 'smooth'
     });
-    this.route.parent?.url.pipe(map(segments => segments.join(''))).subscribe(url =>
-      this.router.navigate([url, "page", this.currentPage > 1
-        ? this.currentPage - 1
-        : 1])
-    );
+    this.router.navigate([this.section, "page", this.currentPage > 1
+      ? this.currentPage - 1
+      : 1])
   }
 
   onPageChange(): void {
@@ -58,8 +55,7 @@ export class PaginationComponent implements OnInit {
       left: 0,
       behavior: 'smooth'
     });
-    this.route.url.pipe(map(segments => segments.join(''))).subscribe(url =>
-      this.router.navigate([url, "page", this.currentPage]));
+    this.router.navigate([this.section, "page", this.currentPage ]);
   }
 }
 

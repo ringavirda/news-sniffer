@@ -16,7 +16,7 @@ public class OutletsService : IOutletsService
         _parserService = parserService;
     }
 
-    public async Task CreateNewAsync(Outlet outlet)
+    public async Task CreateAsync(Outlet outlet)
     {
         await _dataContext.Outlets.AddAsync(outlet);
         await _dataContext.SaveChangesAsync();
@@ -27,13 +27,19 @@ public class OutletsService : IOutletsService
         var maybeOutlet = await _dataContext.Outlets.FirstOrDefaultAsync(outlet => outlet.Id == id);
         if (maybeOutlet == null)
         {
-            throw new OutletsException($"No article with id {id} was found");
+            throw new OutletsException($"No outlet with id {id} was found");
         }
         else
         {
-            _dataContext.Remove(maybeOutlet);
+            _dataContext.Outlets.Remove(maybeOutlet);
             await _dataContext.SaveChangesAsync();
         }
+    }
+    
+    public async Task DeleteAllAsync()
+    {
+        await _dataContext.Database.ExecuteSqlRawAsync("Delete From Outlets");
+        await _dataContext.SaveChangesAsync();
     }
 
     public async Task<List<Outlet>> GetAllAsync()

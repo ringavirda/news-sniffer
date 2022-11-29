@@ -1,0 +1,37 @@
+.generic-button {
+    margin: 0.5rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    min-width: 5rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    color: black;
+    background-color: lightblue;
+    text-align: center;
+    
+    &:hover {
+        background-color: aqua;
+        cursor: pointer;
+    }
+}
+
+.normal {
+    font-size: normal;
+}
+.larger {
+    font-size: larger;
+}
+.large {
+    font-size: large;
+}
+.x-large {
+    font-size: x-large;   
+}
+.bold {
+    font-weight: bold;
+}
+
+.disabled {
+    background-color: gray !important;
+    pointer-events: none;
+}

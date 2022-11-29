@@ -1,0 +1,149 @@
+<div class="config-container">
+    <div class="header-container">
+        <div class="header-info">
+            Selector Configuration
+        </div>
+        <div class="button-wrapper">
+            <app-generic-button
+                    [content]="'Apply'"
+                    [style]="'x-large bold'"
+                    [disable]="!valueValid(newSimilarness) || !valueValid(newCutoff)"
+                    [disableAsync]="applySelectorRunning"
+                    (click)="onSelectorApply()">
+                </app-generic-button>
+        </div>
+    </div>
+    <div class="config-info">
+        Cutoff Rank - decimal value measuring how agressive text selector is. Responsible for Exclusion List generation. It is normalised [0.0 - 1.0].
+    </div>
+    <div class="config-option-container">
+        <div class="config-option-info">
+            Cutoff Rank :
+        </div>
+        <div class="config-option-display">
+            {{config.cutoffRank}}
+        </div>
+        <input [(ngModel)]="newCutoff" type="text">
+        <div [style.visibility]="!valueValid(newCutoff) ? 'visible' : 'hidden'" class="config-option-alert">
+            Cutoff should be decimal
+        </div>
+    </div>
+    <div class="config-info">
+        Similarness Rank - decimal value measuring how similar words at least should be to consider being similar. It is normalised [0.0 - 1.0].
+    </div>
+    <div class="config-option-container">
+        <div class="config-option-info">
+            Similarness Rank :
+        </div>
+        <div class="config-option-display">
+            {{config.similarnessRank}}
+        </div>
+        <input [(ngModel)]="newSimilarness" type="text">
+        <div [style.visibility]="!valueValid(newSimilarness) ? 'visible' : 'hidden'" class="config-option-alert">
+            Cutoff should be decimal
+        </div>
+        
+    </div>
+    <div class="config-info">
+        Terms listed below are the ones from selector's exclusion list.
+    </div>
+    <div class="exclusion-container">
+        <div *ngFor="let exclusion of config.exclusionList" class="exclusion">{{exclusion}}</div>
+    </div>
+</div>
+<div class="config-container">
+    <div class="header-container">
+        <div class="header-info">
+            Model Configuration
+        </div>
+        <div class="button-wrapper">
+            <app-generic-button
+                    [content]="'Apply'"
+                    [style]="'x-large bold'"
+                    [disable]="(modelSelected | async) == config.model && !gagesCorrect() && (modeSelected | async) == config.bayasMode"
+                    [disableAsync]="applyModelRunning"
+                    (click)="onModelApply()">
+                </app-generic-button>
+        </div>
+    </div>
+    <div class="config-option-container">
+        <div class="config-option-info">
+            Desired model:
+        </div>
+        <select [ngModel]="(modelSelected | async)" (ngModelChange)="modelSelected.next($event)" class="config-option-select">
+            <option [ngValue]="'bayas'">Bayas</option>
+        </select>
+        <div class="config-option-display">{{config.model}}</div>
+    </div>
+    <div *ngIf="config.model == 'bayas'">
+        <div class="config-info">
+            Naive Bayas Model is selected.
+        </div>
+        <div class="config-info">
+            It determines the impression of text using weighted dictionary of terms. Gages measure how model reacts to different evaluation of given text. Positive gage determines higher end of the selection. Negative determines lower.
+        </div>
+    </div>
+    <div class="config-option-container">
+        <div class="config-option-info">
+            Positive Gage :
+        </div>
+        <div class="config-option-display">
+            {{config.bayasPositiveGage}}
+        </div>
+        <input [(ngModel)]="newPositiveGage" type="text">
+        <div [style.visibility]="!gagesCorrect() ? 'visible' : 'hidden'" class="config-option-alert">
+            Positive should be grater then Negative
+        </div>
+    </div>
+    <div class="config-option-container">
+        <div class="config-option-info">
+            Negative Gage :
+        </div>
+        <div class="config-option-display">
+            {{config.bayasNegativeGage}}
+        </div>
+        <input [(ngModel)]="newNegativeGage" type="text">
+        <div [style.visibility]="!gagesCorrect() ? 'visible' : 'hidden'" class="config-option-alert">
+            Negative should be lower then Positive
+        </div>
+    </div>
+    <div class="config-info">
+        Model can be trained or use default dictionary of weighted terms. Please specify which mode do you want.
+    </div>
+    <div class="config-option-container">
+        <div class="config-option-info">
+            Desired mode:
+        </div>
+        <select [ngModel]="(modeSelected | async)" (ngModelChange)="modeSelected.next($event)" class="config-option-select">
+            <option [ngValue]="'default'">Default</option>
+            <option [ngValue]="'training'">Training</option>
+        </select>
+        <div class="config-option-display">{{config.bayasMode}}</div>
+    </div>
+    <div *ngIf="config.bayasMode == 'default'">
+        <div class="config-info">
+            Default Mode is selected. Model will use built in dictionary of weights.
+        </div>
+    </div>
+    <div *ngIf="config.bayasMode == 'training'" class="config-selected-container">
+        <div class="config-info">
+            Training Mode is selected. Model will use training corpus to determine weights of terms.
+        </div>
+        <div class="config-selected-button-wrapper">
+            <app-generic-button
+                [content]="'Train'"
+                [style]="'x-large bold'"
+                [disableAsync]="bayasTrainingRunning"
+                (click)="onBayasTrain()"
+            ></app-generic-button>
+        </div>
+        <div *ngIf="bayasTrainingShowResults">
+            <div class="config-info">
+                Training Complete
+            </div>
+            <div class="config-info">
+                Fitness: {{bayasTrainingResults.fitness}}; Training Array Size: {{bayasTrainingResults.trainingArraySize}}; Testing Array Size: {{bayasTrainingResults.testingArraySize}};
+            </div>
+        </div>
+    </div>
+</div>

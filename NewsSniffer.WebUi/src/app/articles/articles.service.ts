@@ -8,24 +8,41 @@ import { Article } from '../models/article';
   providedIn: 'root'
 })
 export class ArticlesService {
+  
   private loadedArticles: BehaviorSubject<Article[]> = new BehaviorSubject<Article[]>([]);
-  private filteredLoadedArticles: BehaviorSubject<Article[]> = new BehaviorSubject<Article[]>([]);
+  private filteredArticles: BehaviorSubject<Article[]> = new BehaviorSubject<Article[]>([]);
 
   private lastFilters = {
     markerFilter: "all",
     impressionFilter: "all"
   }
 
+  private controller: string = "articles";
+
   constructor(
     private httpClient: HttpClient
   ) {
-    this.getAllRequest(new BehaviorSubject<boolean>(false));
+    this.getAll(new BehaviorSubject<boolean>(false));
   }
 
-  getAllRequest(stage: BehaviorSubject<boolean>): void {
+  // Loaded
+  public getAllLoaded(): Observable<Article[]> {
+    return this.loadedArticles;
+  }
+
+  public getAllFiltered(): Observable<Article[]> {
+    return this.filteredArticles;
+  }
+
+  public getLoadedById(id: number): Article {
+    return this.loadedArticles.getValue().find(art => art.id == id) as Article;
+  }
+
+  // Get
+  public getAll(stage: BehaviorSubject<boolean>): void {
     stage.next(true);
 
-    this.httpClient.get<Article[]>(Routes.baseApiUrl + "articles/all")
+    this.httpClient.get<Article[]>(Routes.baseApiUrl + this.controller)
       .subscribe({
         next: data => {
           this.loadedArticles.next(this.sortArticles(data));
@@ -33,32 +50,39 @@ export class ArticlesService {
           stage.next(false);
         },
         error: error => {
-          console.error(error.message);
+          alert("Get All Articles Failed\n" + error.message);
           stage.next(false);
         }
       });;
   }
 
-  updateRequest(stage: BehaviorSubject<boolean>): void {
-    stage.next(true);
+  public getById(id: number, stage: BehaviorSubject<boolean>): Observable<Article> {
+    let subject = new Subject<Article>();
 
-    this.httpClient.post<Article[]>(Routes.baseApiUrl + "articles/update", "")
-      .subscribe({
-        next: data => {
-          this.loadedArticles.next(this.sortArticles(this.loadedArticles.getValue().concat(data)));
-          stage.next(false);
-        },
-        error: error => {
-          console.error(error.message);
-          stage.next(false);
-        }
-      });
+    this.httpClient.get<Article>(Routes.baseApiUrl + this.controller + `/${id}`).subscribe({
+      next: data => {
+        stage.next(false);
+        subject.next(data);
+      },
+      error: error => {
+        alert("Get Article By Id Failed" + error.message);
+        stage.next(true);
+      }
+    });
+
+    return subject.asObservable();
   }
 
-  updateArticleRequest(article: Article, stage: BehaviorSubject<boolean>): Observable<Article> {
+  // Create
+
+
+  // Update
+  public update(article: Article, stage: BehaviorSubject<boolean>): Observable<Article> {
     stage.next(true);
     let subject = new Subject<Article>();
-    this.httpClient.put(Routes.baseApiUrl + "articles/update", article).subscribe({
+    console.log(article)
+    
+    this.httpClient.put(Routes.baseApiUrl + this.controller, article).subscribe({
       next: data => {
         let loaded = this.loadedArticles.getValue();
         loaded[loaded.findIndex(a => a.id === article.id)] = article;
@@ -68,7 +92,7 @@ export class ArticlesService {
         subject.next(article);
       },
       error: error => {
-        alert("Applying changes failed!\n" + error.message);
+        alert("Update Article Failed\n" + error.message);
         stage.next(false);
       }
     });
@@ -76,19 +100,46 @@ export class ArticlesService {
     return subject.asObservable();
   }
 
-  getLoadedArticles(): BehaviorSubject<Article[]> {
-    return this.loadedArticles;
+  // Delete
+  public delete(article: Article, stage: BehaviorSubject<string>): void {
+    stage.next("active");
+
+    this.httpClient.delete(Routes.baseApiUrl + this.controller + `/${article.id}`).subscribe({
+      next: data => {
+        stage.next("completed");
+        var loaded = this.loadedArticles.getValue();
+        const index = loaded.indexOf(article, 0);
+        if (index > -1) {
+          loaded.splice(index, 1);
+        }
+        this.loadedArticles.next(loaded);
+        this.applyFilters(this.lastFilters.markerFilter, this.lastFilters.impressionFilter);
+      },
+      error: error => {
+        alert("Delete Article Failed\n" + error.message);
+        stage.next("inactive");
+      }
+    });
   }
 
-  getFilteredLoadedArticles(): BehaviorSubject<Article[]> {
-    return this.filteredLoadedArticles;
-  } 
+  public deleteAll(stage: BehaviorSubject<boolean>): void {
+    stage.next(true);
 
-  getLoadedArticleById(id: number): Article {
-    return this.loadedArticles.getValue().find(art => art.id == id) as Article;
+    this.httpClient.delete(Routes.baseApiUrl + this.controller).subscribe({
+      next: data => {
+        stage.next(false);
+        this.loadedArticles.next([]);
+        this.applyFilters(this.lastFilters.markerFilter, this.lastFilters.impressionFilter);
+      },
+      error: error => {
+        stage.next(false);
+        alert("Delete All Failed\n" + error.message);
+      }
+    })
   }
 
-  applyFilters(markerFilter: string | null, impressionFilter: string | null): void {
+  // Misc
+  public applyFilters(markerFilter: string | null, impressionFilter: string | null): void {
     if (!markerFilter) {
       markerFilter = "all";
     }
@@ -98,14 +149,38 @@ export class ArticlesService {
     this.lastFilters.markerFilter = markerFilter;
     this.lastFilters.impressionFilter = impressionFilter;
 
-    this.filteredLoadedArticles.next(this.loadedArticles.getValue().filter(article => {
-      return (markerFilter === "all" || article.marker === markerFilter) 
-      && (impressionFilter === "all" || article.impression === impressionFilter);
+    this.filteredArticles.next(this.loadedArticles.getValue().filter(article => {
+      return (markerFilter === "all" || article.marker === markerFilter)
+        && (impressionFilter === "all" || article.impression === impressionFilter);
     }));
   }
 
+  public updateBackend(stage: BehaviorSubject<boolean>): void {
+    stage.next(true);
+
+    this.httpClient.get<Article[]>(Routes.baseApiUrl + this.controller + "/update")
+      .subscribe({
+        next: data => {
+          this.loadedArticles.next(this.sortArticles(this.loadedArticles.getValue().concat(data)));
+          this.applyFilters(this.lastFilters.markerFilter, this.lastFilters.impressionFilter);
+          stage.next(false);
+        },
+        error: error => {
+          alert("Update Backend Failed\n" + error.message);
+          stage.next(false);
+        }
+      });
+  }
+
+  public applyPredictions(data: [{ articleId: number; conclusion: string; }]) {
+    let loaded = this.loadedArticles.getValue();
+    loaded.forEach(article => 
+      article.prediction = data.find(pr => pr.articleId == article.id)?.conclusion ?? "none");
+    this.loadedArticles.next(loaded);
+  }
+
+  // Private
   private sortArticles(articles: Article[]): Article[] {
     return articles.sort((first, second) => new Date(second.date).getTime() - new Date(first.date).getTime())
   }
-
 }

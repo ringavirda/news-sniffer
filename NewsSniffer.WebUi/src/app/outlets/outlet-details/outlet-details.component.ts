@@ -10,7 +10,7 @@ import { BehaviorSubject, Subject, Subscription } from 'rxjs';
   templateUrl: './outlet-details.component.html',
   styleUrls: ['./outlet-details.component.scss']
 })
-export class OutletDetailsComponent implements OnInit, OnDestroy {
+export class OutletDetailsComponent implements OnInit {
   outlet!: Outlet;
   deleteRunning!: boolean;
   updateRunning: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -19,8 +19,6 @@ export class OutletDetailsComponent implements OnInit, OnDestroy {
   newSlcs: string = "";
   newSlts: string = "";
 
-  private routeSub!: Subscription;
-  private deleteSub!: Subscription;
   private deleteSubj: BehaviorSubject<string> = new BehaviorSubject<string>("inactive");
 
   constructor(
@@ -30,25 +28,21 @@ export class OutletDetailsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.routeSub = this.route.paramMap.subscribe(
+    this.route.paramMap.subscribe(
       params => {
         let id = Number(params.get('id'));
         if (id != NaN) {
-          this.outlet = this.outletsService.getLoadedOutletById(id);
+          this.outlet = this.outletsService.getLoadedById(id);
         }
       }
     )
-    this.deleteSub = this.deleteSubj.subscribe(data => {
+
+    this.deleteSubj.subscribe(data => {
       this.deleteRunning = data != "inactive" ? true : false;
       if (data == "completed") {
         this.onBack();
       }
     });
-  }
-
-  ngOnDestroy(): void {
-    this.routeSub.unsubscribe();
-    this.deleteSub.unsubscribe();
   }
 
   outletExists(): boolean {
@@ -64,14 +58,14 @@ export class OutletDetailsComponent implements OnInit, OnDestroy {
   }
 
   onUpdate(): void {
-    if (confirm(`A you sure: Updating outlet ${this.outlet.name}?`)) {
-      this.outletsService.updateOutlet(this.outlet, this.updateRunning);
+    if (confirm(`A you sure: { Update outlet ${this.outlet.name} }`)) {
+      this.outletsService.update(this.outlet, this.updateRunning);
     }
   }
 
   onDelete(): void {
-    if (confirm(`A you sure: Deleting outlet ${this.outlet.name}?`)) {
-      this.outletsService.deleteOutlet(this.outlet, this.deleteSubj);
+    if (confirm(`A you sure: { Delete outlet ${this.outlet.name} }`)) {
+      this.outletsService.delete(this.outlet, this.deleteSubj);
     }
   }
 

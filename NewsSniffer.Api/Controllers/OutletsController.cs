@@ -16,13 +16,30 @@ public class OutletsController : ControllerBase
         _outletsService = outletsService;
     }
 
+    // Get
     [HttpGet]
-    [Route("all")]
-    public async Task<ActionResult<List<Outlet>>> GetAllOutlets()
+    [Route("")]
+    public async Task<ActionResult<List<Outlet>>> GetAll()
     {
         try
         {
             return Ok(await _outletsService.GetAllAsync());
+        }
+        catch (Exception exception)
+        {
+            return BadRequest(exception.Message);
+        }
+    }
+
+    // Post
+    [HttpPost]
+    [Route("")]
+    public async Task<ActionResult> Create([FromBody] Outlet outlet)
+    {
+        try
+        {
+            await _outletsService.CreateAsync(outlet);
+            return Ok();
         }
         catch (Exception exception)
         {
@@ -44,24 +61,26 @@ public class OutletsController : ControllerBase
         }
     }
 
-    [HttpPost]
-    [Route("new")]
-    public async Task<ActionResult> CreateNewOutlet([FromBody] Outlet outlet)
+    // Put
+    [HttpPut]
+    [Route("")]
+    public async Task<ActionResult> Update([FromBody] Outlet outlet)
     {
-        if (ModelState.IsValid)
+        try
         {
-            await _outletsService.CreateNewAsync(outlet);
+            await _outletsService.UpdateAsync(outlet);
             return Ok();
         }
-        else
+        catch (OutletsException exception)
         {
-            return BadRequest("Model Invalid");
+            return BadRequest(exception.Message);
         }
     }
 
+    // Delete
     [HttpDelete]
-    [Route("delete/{id}")]
-    public async Task<ActionResult> DeleteOutlet([FromRoute] int id)
+    [Route("{id}")]
+    public async Task<ActionResult> Delete([FromRoute] int id)
     {
         try
         {
@@ -74,13 +93,13 @@ public class OutletsController : ControllerBase
         }
     }
 
-    [HttpPost]
-    [Route("update")]
-    public async Task<ActionResult> UpdateOutlet([FromBody] Outlet outlet)
+    [HttpDelete]
+    [Route("")]
+    public async Task<ActionResult> DeleteAll()
     {
         try
         {
-            await _outletsService.UpdateAsync(outlet);
+            await _outletsService.DeleteAllAsync();
             return Ok();
         }
         catch (OutletsException exception)

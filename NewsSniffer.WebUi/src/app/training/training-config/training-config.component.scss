@@ -1,0 +1,138 @@
+.config-container {
+    display: flex;
+    flex-direction: column;
+    margin: 0.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background-color: lightgray;
+    border-radius: 1rem;
+
+    .header-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        @media only screen and (max-width: 600px) {
+            flex-direction: column;
+            text-align: center;
+            justify-content: center;
+        }
+        .header-info {
+            font-size: xx-large;
+            font-weight: bold;
+        }
+
+        .button-wrapper {
+            background-color: gray;
+            padding: 0.5rem;
+            margin-right: 1rem;
+            border-radius: 1rem;
+            @media only screen and (max-width: 600px) {
+                margin: 0;
+                margin-top: 0.5rem;
+                margin-bottom: 0.5rem;
+            }
+        }
+    }
+
+    .config-info {
+        font-size: larger;
+        margin: 0.5rem;
+    }
+
+    .config-selected-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+
+        .config-selected-button-wrapper {
+            padding: 0.5rem;
+            background-color: gray;
+            border-radius: 0.5rem;
+        }
+    }
+
+    .config-option-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+        margin: 0.5rem;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        background-color: gray;
+        color: white;
+        @media only screen and (max-width: 600px) {
+            flex-direction: column;
+        }
+
+        .config-option-info {
+            font-size: larger;
+            font-weight: bold;
+            margin: 0.5rem;
+            margin-inline: 1rem;
+        }
+
+        .config-option-select {
+            padding: 0.5rem;
+            margin: 0.5rem;
+            font-size: large;
+            font-weight: bold;
+            border-radius: 0.5rem;
+
+            &:focus {
+                outline: none;
+            }
+        }
+
+        .config-option-display {
+            font-size: x-large;
+            font-weight: bold;
+            margin: 0.5rem;
+        }
+
+        .config-option-alert {
+            margin-left: 2rem;
+            color: red;
+            background: lightgray;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+
+            @media only screen and (max-width: 600px) {
+                margin: 0;
+            }
+        }
+
+        input {
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+
+    .exclusion-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+        padding: 1rem;
+        border-radius: 1rem;
+        background-color: white;
+        height: 20rem;
+        overflow-y: scroll;
+        
+        .exclusion {
+            margin: 0.25rem;
+            padding: 0.25rem;
+            border-radius: 0.25rem;
+            color: white;
+            background-color: gray;
+        }
+    }
+}

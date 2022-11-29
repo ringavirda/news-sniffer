@@ -13,4 +13,5 @@ public class Article
     // Analysis
     public string Marker { get; set; } = null!;
     public string Impression { get; set; } = null!;
+    public string Prediction { get; set; } = null!;
 }

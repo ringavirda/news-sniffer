@@ -1,0 +1,11 @@
+<div [ngClass]="{
+        'disabled': (disable || (disableAsync | async)),
+        'normal': (style.includes('normal')),
+        'large': (style.includes('large')),
+        'larger': (style.includes('larger')),
+        'x-large': (style.includes('x-large')),
+        'bold': (style.includes('bold'))
+    }" 
+    class="generic-button">
+    {{ content }}
+</div>

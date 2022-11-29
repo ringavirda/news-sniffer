@@ -14,12 +14,11 @@
             </div>
         </div>
         <div class="header-controls">
-            <div [ngClass]="{'disabled': (updateRunning | async)}" (click)="onUpdate()" class="header-control-item">
-                Update
-            </div>
-            <div [ngClass]="{'disabled': deleteRunning}" (click)="onDelete()" class="header-control-item">
-                Delete
-            </div>
+            <app-generic-button [content]="'Delete'" [style]="'larger'" [disableAsync]="updateRunning"
+                (click)="onUpdate()">
+            </app-generic-button>
+            <app-generic-button [content]="'Update'" [style]="'larger'" [disable]="deleteRunning" (click)="onDelete()">
+            </app-generic-button>
         </div>
     </div>
     <div class="outlet-body">
@@ -28,36 +27,39 @@
                 <div class="config-name">
                     First Level Content Selector
                 </div>
-                <div class="config-display">
-                    {{outlet.flcs}}
-                </div>
-                <input [(ngModel)]="newFlcs" type="text" class="config-change">
-                <div (click)="onFlcsApply()" class="config-apply">
-                    Apply
+                <div class="mobile-wrapper">
+                    <div class="config-display">
+                        {{outlet.flcs}}
+                    </div>
+                    <input [(ngModel)]="newFlcs" type="text" class="config-change">
+                    <app-generic-button [content]="'Apply'" [style]="'normal'" (click)="onFlcsApply()">
+                    </app-generic-button>
                 </div>
             </div>
             <div class="configs-item">
                 <div class="config-name">
                     Second Level Content Selector
                 </div>
-                <div class="config-display">
-                    {{outlet.slcs}}
-                </div>
-                <input [(ngModel)]="newSlcs" type="text" class="config-change">
-                <div (click)="onSlcsApply()" class="config-apply">
-                    Apply
+                <div class="mobile-wrapper">
+                    <div class="config-display">
+                        {{outlet.slcs}}
+                    </div>
+                    <input [(ngModel)]="newSlcs" type="text" class="config-change">
+                    <app-generic-button [content]="'Apply'" [style]="'normal'" (click)="onSlcsApply()">
+                    </app-generic-button>
                 </div>
             </div>
             <div class="configs-item">
                 <div class="config-name">
                     Second Level Time Selector
                 </div>
-                <div class="config-display">
-                    {{outlet.slts}}
-                </div>
-                <input [(ngModel)]="newSlts" type="text" class="config-change">
-                <div (click)="onSltsApply()" class="config-apply">
-                    Apply
+                <div class="mobile-wrapper">
+                    <div class="config-display">
+                        {{outlet.slts}}
+                    </div>
+                    <input [(ngModel)]="newSlts" type="text" class="config-change">
+                    <app-generic-button [content]="'Apply'" [style]="'normal'" (click)="onSltsApply()">
+                    </app-generic-button>
                 </div>
             </div>
         </div>

@@ -3,9 +3,12 @@
         <div class="add-outlet-info">
             Specify configuration neccessary for parsing of the outlet.
         </div>
-        <div [ngClass]="{'disabled': isOutletReady()}" (click)="onCreateNew()" class="add-outlet">
-            Create New
-        </div>
+        <app-generic-button 
+            [content]="'Create New'"
+            [style]="'large bold'"
+            [disable]="isOutletReady()"
+            (click)="onCreateNew()">
+        </app-generic-button>
     </div>
     <div class="add-outlet-configuration">
         <div class="configuration-item">

@@ -1,7 +1,7 @@
+using Microsoft.AspNetCore.Authentication.Certificate;
 using Microsoft.EntityFrameworkCore;
 using NewsSniffer.Api.Data;
 using NewsSniffer.Api.Services;
-
 internal class Program
 {
     private static void Main(string[] args)
@@ -31,10 +31,15 @@ internal class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
+        builder.Services.AddAuthentication(
+            CertificateAuthenticationDefaults.AuthenticationScheme)
+        .AddCertificate();
 
         builder.Services.AddSingleton<IHttpService, HttpService>();
         builder.Services.AddScoped<IOutletsService, OutletsService>();
-        builder.Services.AddScoped<IArticleService, ArticleService>();
+        builder.Services.AddScoped<IArticlesService, ArticlesService>();
+        builder.Services.AddScoped<ITrainingService, TrainingService>();
+        builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
         builder.Services.AddSingleton<IParserService, ParserService>();
 
         var app = builder.Build();
@@ -49,6 +54,8 @@ internal class Program
         app.UseCors(AllowSpecificOrigins);
 
         app.UseHttpsRedirection();
+        
+        app.UseAuthentication();
 
         app.UseAuthorization();
 

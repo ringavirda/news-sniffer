@@ -18,7 +18,7 @@ export class OutletListComponent implements OnInit, OnDestroy {
   ) { }
   
   ngOnInit(): void {
-    this.outletsSub = this.outletsService.getLoadedOutlets().subscribe(
+    this.outletsSub = this.outletsService.getAllLoaded().subscribe(
       data => {
         this.outlets = data;
       }

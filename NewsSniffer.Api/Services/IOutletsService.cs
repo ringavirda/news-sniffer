@@ -4,10 +4,16 @@ namespace NewsSniffer.Api.Services
 {
     public interface IOutletsService
     {
-        public Task CreateNewAsync(Outlet outlet);
-        public Task DeleteAsync(int id);
+        // CRUD Single
         public Task<List<Outlet>> GetAllAsync();
-        public Task<Article> PerformTestAsync(Outlet outlet);
+        public Task DeleteAllAsync();
+
+        // CRUD Many
+        public Task CreateAsync(Outlet outlet);
         public Task UpdateAsync(Outlet outlet);
+        public Task DeleteAsync(int id);
+
+        // Misc
+        public Task<Article> PerformTestAsync(Outlet outlet);
     }
 }

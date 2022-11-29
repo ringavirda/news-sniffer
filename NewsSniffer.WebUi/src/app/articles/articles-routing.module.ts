@@ -10,13 +10,9 @@ const routes: Routes = [
     redirectTo: "articles/page/1",
     pathMatch: "full",
   },
-  {
-    path: "articles",
-    children: [
-      { path: "page/:id", component: ArticlesComponent },
-      { path: ":id", component: ArticleDetailComponent },
-    ]
-  }
+  { path: "articles/page/:id", component: ArticlesComponent },
+  { path: "articles/:id", component: ArticleDetailComponent },
+
 ];
 
 @NgModule({
