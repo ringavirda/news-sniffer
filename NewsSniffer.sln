@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsSniffer.Api", "NewsSnif
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsSniffer.Common", "NewsSniffer.Common\NewsSniffer.Common.csproj", "{DB5C66E2-AED3-4223-9DAD-AB52B2DBD6D2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsSniffer.Core.Tests", "NewsSniffer.Core.Tests\NewsSniffer.Core.Tests.csproj", "{5EE9DFB7-6C9F-42F2-84B5-0D4A4E71BCE1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{DB5C66E2-AED3-4223-9DAD-AB52B2DBD6D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB5C66E2-AED3-4223-9DAD-AB52B2DBD6D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB5C66E2-AED3-4223-9DAD-AB52B2DBD6D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EE9DFB7-6C9F-42F2-84B5-0D4A4E71BCE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EE9DFB7-6C9F-42F2-84B5-0D4A4E71BCE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EE9DFB7-6C9F-42F2-84B5-0D4A4E71BCE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EE9DFB7-6C9F-42F2-84B5-0D4A4E71BCE1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
