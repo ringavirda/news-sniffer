@@ -8,24 +8,15 @@ import { map, Subscription } from 'rxjs';
   styleUrls: ['./pagination.component.scss']
 })
 export class PaginationComponent implements OnInit {
+  currentPage!: number;
   @Input() itemsPerPage: number = 0;
+  lastPageNumber!: number;
   @Input() pageNumbers: number[] = [];
   @Input() section!: string;
-
-  currentPage!: number;
-  lastPageNumber!: number;
-
   constructor(
     private route: ActivatedRoute,
     private router: Router
   ) { }
-
-  ngOnInit(): void {
-    this.lastPageNumber = this.pageNumbers.length != 1 ? this.pageNumbers[this.pageNumbers.length - 1] : 1;
-    this.route.paramMap.subscribe(params => {
-      this.currentPage = Number(params.get("id"));
-    });
-  }
 
   onNext(): void {
     window.scroll({
@@ -36,6 +27,15 @@ export class PaginationComponent implements OnInit {
     this.router.navigate([this.section, "page", this.currentPage < this.lastPageNumber
       ? this.currentPage + 1
       : this.lastPageNumber])
+  }
+
+  onPageChange(): void {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+    this.router.navigate([this.section, "page", this.currentPage ]);
   }
 
   onPrev(): void {
@@ -49,13 +49,11 @@ export class PaginationComponent implements OnInit {
       : 1])
   }
 
-  onPageChange(): void {
-    window.scroll({
-      top: 0,
-      left: 0,
-      behavior: 'smooth'
+  ngOnInit(): void {
+    this.lastPageNumber = this.pageNumbers.length != 1 ? this.pageNumbers[this.pageNumbers.length - 1] : 1;
+    this.route.paramMap.subscribe(params => {
+      this.currentPage = Number(params.get("id"));
     });
-    this.router.navigate([this.section, "page", this.currentPage ]);
   }
 }
 

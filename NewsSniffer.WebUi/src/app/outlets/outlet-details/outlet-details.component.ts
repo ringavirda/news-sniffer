@@ -11,56 +11,21 @@ import { BehaviorSubject, Subject, Subscription } from 'rxjs';
   styleUrls: ['./outlet-details.component.scss']
 })
 export class OutletDetailsComponent implements OnInit {
-  outlet!: Outlet;
   deleteRunning!: boolean;
-  updateRunning: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-
+  deleteSubj: BehaviorSubject<string> = new BehaviorSubject<string>("inactive");
   newFlcs: string = "";
   newSlcs: string = "";
   newSlts: string = "";
-
-  private deleteSubj: BehaviorSubject<string> = new BehaviorSubject<string>("inactive");
-
+  outlet!: Outlet;
+  updateRunning: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   constructor(
     private location: Location,
     private route: ActivatedRoute,
     private outletsService: OutletsService
   ) { }
 
-  ngOnInit(): void {
-    this.route.paramMap.subscribe(
-      params => {
-        let id = Number(params.get('id'));
-        if (id != NaN) {
-          this.outlet = this.outletsService.getLoadedById(id);
-        }
-      }
-    )
-
-    this.deleteSubj.subscribe(data => {
-      this.deleteRunning = data != "inactive" ? true : false;
-      if (data == "completed") {
-        this.onBack();
-      }
-    });
-  }
-
-  outletExists(): boolean {
-    return this.outlet == null ? false : true;
-  }
-
-  onHeaderLink(): void {
-    window.open(this.outlet.link);
-  }
-
   onBack(): void {
     this.location.back();
-  }
-
-  onUpdate(): void {
-    if (confirm(`A you sure: { Update outlet ${this.outlet.name} }`)) {
-      this.outletsService.update(this.outlet, this.updateRunning);
-    }
   }
 
   onDelete(): void {
@@ -73,12 +38,46 @@ export class OutletDetailsComponent implements OnInit {
     this.outlet.flcs = this.newFlcs;
     this.newFlcs = "";
   }
+
+  onHeaderLink(): void {
+    window.open(this.outlet.link);
+  }
+
   onSlcsApply(): void {
     this.outlet.slcs = this.newSlcs;
     this.newSlcs = "";
   }
+
   onSltsApply(): void {
     this.outlet.slts = this.newSlts;
     this.newSlts = "";
+  }
+
+  onUpdate(): void {
+    if (confirm(`A you sure: { Update outlet ${this.outlet.name} }`)) {
+      this.outletsService.update(this.outlet, this.updateRunning);
+    }
+  }
+
+  outletExists(): boolean {
+    return this.outlet == null ? false : true;
+  }
+
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(
+      params => {
+        let id = Number(params.get('id'));
+        if (!isNaN(id)) {
+          this.outlet = this.outletsService.getLoadedById(id);
+        }
+      }
+    )
+
+    this.deleteSubj.subscribe(data => {
+      this.deleteRunning = data != "inactive" ? true : false;
+      if (data == "completed") {
+        this.onBack();
+      }
+    });
   }
 }

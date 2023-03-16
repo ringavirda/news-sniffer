@@ -1,5 +1,5 @@
 export class TrainingMarkers {
-    static unmarked: string = "unmarked";
+    static testing: string = "testing";
     static training: string = "training";
-    static testing: string = "testing"; 
+    static unmarked: string = "unmarked";
 }

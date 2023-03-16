@@ -13,19 +13,20 @@ import { ArticlesService } from '../articles.service';
 export class ArticleDetailComponent implements OnInit  {
   article!: Article;
   deleteRunning: boolean = false;
-
+  deleteSubj: BehaviorSubject<string> = new BehaviorSubject<string>("inactive");
   showBody: boolean = true;
   showNgram: boolean = false;
 
   showPageNotFound: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  
-  private deleteSubj: BehaviorSubject<string> = new BehaviorSubject<string>("inactive");
-
   constructor(
     private articlesService: ArticlesService,
     private route: ActivatedRoute,
     private location: Location
   ) { }
+
+  public articleExists(): boolean {
+    return this.article == null ? false : true;
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -44,19 +45,15 @@ export class ArticleDetailComponent implements OnInit  {
     });
   }
 
+  public onArticle(): void {
+    this.showBody = true,
+    this.showNgram = false;
+  }
+
   public onDelete(): void {
     if (confirm("Are you sure: { Delete Article }")) {
       this.articlesService.delete(this.article, this.deleteSubj);
     }
-  }
-
-  public articleExists(): boolean {
-    return this.article == null ? false : true;
-  }
-
-  public onArticle(): void {
-    this.showBody = true,
-    this.showNgram = false;
   }
 
   public onNgram(): void {

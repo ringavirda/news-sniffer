@@ -10,6 +10,7 @@ import { AnalyticsService } from '../analytics.service';
   styleUrls: ['./analytics.component.scss']
 })
 export class AnalyticsComponent implements OnInit {
+  analytics!: Analytics;
   public controls: ControlItem[] = [{
     type: "button",
     text: ["Update Analytics"],
@@ -19,9 +20,6 @@ export class AnalyticsComponent implements OnInit {
     },
     stage: new BehaviorSubject<boolean>(false)
   }];
-
-  analytics!: Analytics;
-
   constructor(
     private analyticsService: AnalyticsService
   ) { }
@@ -29,6 +27,4 @@ export class AnalyticsComponent implements OnInit {
   ngOnInit(): void {
     this.analyticsService.getLoaded().subscribe(data => this.analytics = data);
   }
-
-
 }

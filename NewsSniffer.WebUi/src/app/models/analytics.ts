@@ -1,4 +1,9 @@
 export class Analytics {
+    overall!: {
+        positive: number;
+        negative: number;
+        neuteral: number;
+    };
     perTime!: [{
             outlet: string;
             daily: [{
@@ -12,9 +17,4 @@ export class Analytics {
             ];
         }
     ];
-    overall!: {
-        positive: number;
-        negative: number;
-        neuteral: number;
-    };
 }

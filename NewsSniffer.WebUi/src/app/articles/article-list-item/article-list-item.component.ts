@@ -10,23 +10,20 @@ import { ArticlesService } from '../articles.service';
 })
 export class ArticleListItemComponent implements OnInit {
   @Input() article!: Article;
-  
-  public markerSelector!: BehaviorSubject<string>;
-  public impressionSelector!: BehaviorSubject<string>;
-  
   public applyRunning: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  
+  public impressionSelector!: BehaviorSubject<string>;
+  public markerSelector!: BehaviorSubject<string>;
   public constructor(
     private articlesService: ArticlesService
   ) { }
-  
-  ngOnInit(): void {
-    this.markerSelector = new BehaviorSubject<string>(this.article.marker);
-    this.impressionSelector = new BehaviorSubject<string>(this.article.impression);
-  }
 
   public isApply(): boolean {
     return this.markerSelector.getValue() !== this.article.marker || this.impressionSelector.getValue() !== this.article.impression;
+  }
+
+  ngOnInit(): void {
+    this.markerSelector = new BehaviorSubject<string>(this.article.marker);
+    this.impressionSelector = new BehaviorSubject<string>(this.article.impression);
   }
 
   public onApply(): void {

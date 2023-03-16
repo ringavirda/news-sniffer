@@ -80,14 +80,11 @@ export class ArticlesComponent implements OnInit {
     },
     stage: new BehaviorSubject<string>("all")
   }];
-
+  impressionFilter: BehaviorSubject<string> = new BehaviorSubject<string>("all");
   itemsPerPage: number = 30;
+  markFilter: BehaviorSubject<string> = new BehaviorSubject<string>("all");
   pageNumbers: number[] = [];
   section: string = "articles";
-
-  markFilter: BehaviorSubject<string> = new BehaviorSubject<string>("all");
-  impressionFilter: BehaviorSubject<string> = new BehaviorSubject<string>("all");
-
   constructor(
     private articlesService: ArticlesService
   ) { }

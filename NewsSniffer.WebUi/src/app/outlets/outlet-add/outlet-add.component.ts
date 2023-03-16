@@ -9,6 +9,19 @@ import { OutletsService } from '../outlets.service';
   styleUrls: ['./outlet-add.component.scss']
 })
 export class OutletAddComponent implements OnInit, OnDestroy {
+  createRunning: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  newCode: BehaviorSubject<string> = new BehaviorSubject<string>("");
+  newCodeSub!: Subscription;
+  newFLCS: BehaviorSubject<string> = new BehaviorSubject<string>("");
+  newFLCSSub!: Subscription;
+  newLink: BehaviorSubject<string> = new BehaviorSubject<string>("");
+  newLinkSub!: Subscription;
+  newName: BehaviorSubject<string> = new BehaviorSubject<string>("");
+  newNameSub!: Subscription;
+  newSLCS: BehaviorSubject<string> = new BehaviorSubject<string>("");
+  newSLCSSub!: Subscription;
+  newSLTS: BehaviorSubject<string> = new BehaviorSubject<string>("");
+  newSLTSSub!: Subscription;
   outlet: Outlet = {
     id: 0,
     name: "",
@@ -18,43 +31,17 @@ export class OutletAddComponent implements OnInit, OnDestroy {
     slcs: "",
     slts: ""
   };
-
-  newName: BehaviorSubject<string> = new BehaviorSubject<string>("");
-  newCode: BehaviorSubject<string> = new BehaviorSubject<string>("");
-  newLink: BehaviorSubject<string> = new BehaviorSubject<string>("");
-  newFLCS: BehaviorSubject<string> = new BehaviorSubject<string>("");
-  newSLCS: BehaviorSubject<string> = new BehaviorSubject<string>("");
-  newSLTS: BehaviorSubject<string> = new BehaviorSubject<string>("");
-
-  createRunning: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-
-  private newNameSub!: Subscription;
-  private newCodeSub!: Subscription;
-  private newLinkSub!: Subscription;
-  private newFLCSSub!: Subscription;
-  private newSLCSSub!: Subscription;
-  private newSLTSSub!: Subscription;
-
   constructor(
     private outletsService: OutletsService
   ) { }
 
-  ngOnInit(): void {
-    this.newNameSub = this.newName.subscribe(data => this.outlet.name = data);
-    this.newCodeSub = this.newCode.subscribe(data => this.outlet.code = data);
-    this.newLinkSub = this.newLink.subscribe(data => this.outlet.link = data);
-    this.newFLCSSub = this.newFLCS.subscribe(data => this.outlet.flcs = data);
-    this.newSLCSSub = this.newSLCS.subscribe(data => this.outlet.slcs = data);
-    this.newSLTSSub = this.newSLTS.subscribe(data => this.outlet.slts = data);
-  }
-
-  ngOnDestroy(): void {
-    this.newNameSub.unsubscribe();
-    this.newCodeSub.unsubscribe();
-    this.newLinkSub.unsubscribe();
-    this.newFLCSSub.unsubscribe();
-    this.newSLCSSub.unsubscribe();
-    this.newSLTSSub.unsubscribe();
+  blankOutlet(): void {
+    this.newName.next("");
+    this.newLink.next("");
+    this.newCode.next("");
+    this.newFLCS.next("");
+    this.newSLCS.next("");
+    this.newSLTS.next("");
   }
 
   isOutletReady(): boolean {
@@ -71,12 +58,21 @@ export class OutletAddComponent implements OnInit, OnDestroy {
     this.blankOutlet();
   }
 
-  private blankOutlet(): void {
-    this.newName.next("");
-    this.newLink.next("");
-    this.newCode.next("");
-    this.newFLCS.next("");
-    this.newSLCS.next("");
-    this.newSLTS.next("");
+  ngOnDestroy(): void {
+    this.newNameSub.unsubscribe();
+    this.newCodeSub.unsubscribe();
+    this.newLinkSub.unsubscribe();
+    this.newFLCSSub.unsubscribe();
+    this.newSLCSSub.unsubscribe();
+    this.newSLTSSub.unsubscribe();
+  }
+
+  ngOnInit(): void {
+    this.newNameSub = this.newName.subscribe(data => this.outlet.name = data);
+    this.newCodeSub = this.newCode.subscribe(data => this.outlet.code = data);
+    this.newLinkSub = this.newLink.subscribe(data => this.outlet.link = data);
+    this.newFLCSSub = this.newFLCS.subscribe(data => this.outlet.flcs = data);
+    this.newSLCSSub = this.newSLCS.subscribe(data => this.outlet.slcs = data);
+    this.newSLTSSub = this.newSLTS.subscribe(data => this.outlet.slts = data);
   }
 }

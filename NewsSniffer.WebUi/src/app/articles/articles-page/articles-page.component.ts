@@ -10,24 +10,30 @@ import { ArticlesService } from '../articles.service';
   styleUrls: ['./articles-page.component.scss']
 })
 export class ArticlesPageComponent implements OnInit {
+  articles: Article[] = [];
+  @Input() impressionFilter!: BehaviorSubject<string>;
   @Input() itemsPerPage!: number;
   @Input() markFilter!: BehaviorSubject<string>;
-  @Input() impressionFilter!: BehaviorSubject<string>;
-
-  articles: Article[] = [];
-
+  pageNumber: number = 1;
   showFailed = {
     show: true,
     filtering: false,
     backendFailed: true
   };
-
-  private pageNumber: number = 1;
-
   constructor(
     private articlesService: ArticlesService,
     private route: ActivatedRoute
   ) { }
+
+  articlesExist(): boolean {
+    return this.articles.length == 0 ? false : true;
+  }
+
+  getArticlesForCurrentPage(articles: Article[]): Article[] {
+    return articles.slice(
+      (this.pageNumber - 1) * this.itemsPerPage,
+      this.pageNumber * this.itemsPerPage);
+  }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -67,15 +73,4 @@ export class ArticlesPageComponent implements OnInit {
       this.articlesService.applyFilters(null, this.impressionFilter.getValue());
     });
   }
-
-  articlesExist(): boolean {
-    return this.articles.length == 0 ? false : true;
-  }
-
-  private getArticlesForCurrentPage(articles: Article[]): Article[] {
-    return articles.slice(
-      (this.pageNumber - 1) * this.itemsPerPage,
-      this.pageNumber * this.itemsPerPage);
-  }
-
 }

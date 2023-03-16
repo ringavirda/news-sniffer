@@ -20,14 +20,7 @@ export class AnalyticsChartsComponent implements OnInit {
     private analyticsService: AnalyticsService
   ) { }
 
-  ngOnInit(): void {
-    this.analyticsService.getLoaded().subscribe(data => {
-      this.analytics = data;
-      this.updateCharts()
-    });
-  }
-
-  private updateCharts(): void {
+  updateCharts(): void {
     if (this.analytics?.perTime == undefined) return;
 
     let perDaySerries: Highcharts.SeriesOptionsType[] = [];
@@ -188,6 +181,13 @@ export class AnalyticsChartsComponent implements OnInit {
         title: undefined,
         visible: true
       }
+    });
+  }
+
+  ngOnInit(): void {
+    this.analyticsService.getLoaded().subscribe(data => {
+      this.analytics = data;
+      this.updateCharts()
     });
   }
 }

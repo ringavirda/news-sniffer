@@ -8,18 +8,12 @@ import { Analytics } from '../models/analytics';
   providedIn: 'root'
 })
 export class AnalyticsService {
-  private loadedAnalytics: BehaviorSubject<Analytics> = new BehaviorSubject<Analytics>({} as Analytics);
-
   private controller: string = "analytics";
-
+  private loadedAnalytics: BehaviorSubject<Analytics> = new BehaviorSubject<Analytics>({} as Analytics);
   constructor(
     private httpClient: HttpClient
   ) { 
     this.get(new BehaviorSubject<boolean>(false));
-  }
-
-  public getLoaded(): BehaviorSubject<Analytics> {
-    return this.loadedAnalytics;
   }
 
   public get(stage: BehaviorSubject<boolean>): void {
@@ -35,6 +29,10 @@ export class AnalyticsService {
         stage.next(false);
       }
     });
+  }
+
+  public getLoaded(): BehaviorSubject<Analytics> {
+    return this.loadedAnalytics;
   }
 
   public update(stage: BehaviorSubject<boolean>) {

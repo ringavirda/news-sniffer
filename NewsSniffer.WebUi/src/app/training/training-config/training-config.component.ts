@@ -10,23 +10,18 @@ import { TrainingService } from '../training.service';
   styleUrls: ['./training-config.component.scss']
 })
 export class TrainingConfigComponent {
+  public applyModelRunning: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public applySelectorRunning: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public bayasTrainingResults!: TrainingResponse;
+  public bayasTrainingRunning: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public bayasTrainingShowResults: boolean = false;
   public config!: TrainingConfig;
-
-  public newCutoff: string = "";
-  public newSimilarness: string = "";
-
   public modelSelected: BehaviorSubject<string> = new BehaviorSubject<string>("");
   public modeSelected: BehaviorSubject<string> = new BehaviorSubject<string>("");
-  public newPositiveGage!: string;
+  public newCutoff: string = "";
   public newNegativeGage!: string;
-
-  public bayasTrainingRunning: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  public bayasTrainingResults!: TrainingResponse;
-  public bayasTrainingShowResults: boolean = false;
-
-  public applySelectorRunning: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  public applyModelRunning: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-
+  public newPositiveGage!: string;
+  public newSimilarness: string = "";
   public constructor(
     private trainingService: TrainingService
   ) { }
@@ -39,15 +34,6 @@ export class TrainingConfigComponent {
     });
   }
 
-  public valueValid(value: string): boolean {
-    if (!Number(value)) {
-      return false;
-    } else {
-      let num = Number(value);
-      return num >= 0 && num <= 1;
-    }
-  }
-
   public gagesCorrect() {
     if (!Number(this.newNegativeGage) || !Number(this.newPositiveGage)) {
       return false;
@@ -55,22 +41,11 @@ export class TrainingConfigComponent {
     return Number(this.newNegativeGage) < Number(this.newPositiveGage);
   }
 
-  public onSelectorApply(): void {
-    let newConfig = {
-      cutoffRank: Number(this.newCutoff),
-      similarnessRank: Number(this.newSimilarness),
-      exclusionList: [],
-      model: this.config.model,
-      bayasPositiveGage: this.config.bayasPositiveGage,
-      bayasNegativeGage: this.config.bayasNegativeGage,
-      bayasMode: this.config.bayasMode
-    } as TrainingConfig
-
-    this.newCutoff = "";
-    this.newSimilarness = "";
-
-    this.config.exclusionList = [];
-    this.trainingService.updateConfig(newConfig, this.applySelectorRunning);
+  public onBayasTrain(): void {
+    this.trainingService.trainBayas(this.bayasTrainingRunning).subscribe(data => {
+      this.bayasTrainingResults = data;
+      this.bayasTrainingShowResults = true;
+    });
   }
 
   public onModelApply() {
@@ -92,10 +67,30 @@ export class TrainingConfigComponent {
     this.trainingService.updateConfig(newConfig, this.applyModelRunning);
   }
 
-  public onBayasTrain(): void {
-    this.trainingService.trainBayas(this.bayasTrainingRunning).subscribe(data => {
-      this.bayasTrainingResults = data;
-      this.bayasTrainingShowResults = true;
-    });
+  public onSelectorApply(): void {
+    let newConfig = {
+      cutoffRank: Number(this.newCutoff),
+      similarnessRank: Number(this.newSimilarness),
+      exclusionList: [],
+      model: this.config.model,
+      bayasPositiveGage: this.config.bayasPositiveGage,
+      bayasNegativeGage: this.config.bayasNegativeGage,
+      bayasMode: this.config.bayasMode
+    } as TrainingConfig
+
+    this.newCutoff = "";
+    this.newSimilarness = "";
+
+    this.config.exclusionList = [];
+    this.trainingService.updateConfig(newConfig, this.applySelectorRunning);
+  }
+
+  public valueValid(value: string): boolean {
+    if (!Number(value)) {
+      return false;
+    } else {
+      let num = Number(value);
+      return num >= 0 && num <= 1;
+    }
   }
 }

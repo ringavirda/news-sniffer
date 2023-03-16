@@ -1,0 +1,1413 @@
+<svg version="1.1" baseProfile="full" width="10043.0" height="807.0" viewbox="0 0 10043 807" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events">
+<desc >#.interface: fill=lightblue
+#.enumeration: fill=lightgreen
+#.type: fill=lightgray
+[AppRoutingModule||]
+[AppComponent|+title: string|]
+[AppModule||]
+[AnalyticsRoutingModule||]
+[AnalyticsModule||]
+[AnalyticsService|-loadedAnalytics: BehaviorSubject&lt;Analytics&gt;;-controller: string;-httpClient: HttpClient|+getLoaded(): BehaviorSubject&lt;Analytics&gt;;+get(): void;+update(): void]
+[AppCommonModule||]
+[Impressions|+static none: string;+static neuteral: string;+static positive: string;+static negative: string|]
+[Routes|+static baseApiUrl: string|]
+[TrainingMarkers|+static unmarked: string;+static training: string;+static testing: string|]
+[AppHeaderComponent||]
+[ArticlesRoutingModule||]
+[ArticlesModule||]
+[ArticlesService|-loadedArticles: BehaviorSubject&lt;Article\[\]&gt;;-filteredArticles: BehaviorSubject&lt;Article\[\]&gt;;-lastFilters: { markerFilter: string; impressionFilter: string; };-controller: string;-httpClient: HttpClient|+getAllLoaded(): Observable&lt;Article\[\]&gt;;+getAllFiltered(): Observable&lt;Article\[\]&gt;;+getLoadedById(): Article;+getAll(): void;+getById(): Observable&lt;Article&gt;;+update(): Observable&lt;Article&gt;;+delete(): void;+deleteAll(): void;+applyFilters(): void;+updateBackend(): void;+applyPredictions(): void;-sortArticles(): Article\[\]]
+[Analytics|+perTime: \[{ outlet: string; daily: \[{ date: Date; value: { positive: number; negative: number; neuteral: number; }; }\]; }\];+overall: { positive: number; negative: number; neuteral: number; }|]
+[&lt;interface&gt;Article|+id: number;+outletCode: string;+date: Date;+title: string;+articleHref: string;+body: string;+ngram: Ngram;+marker: string;+impression: string;+prediction: string|]
+[&lt;interface&gt;Outlet|+id: number;+name: string;+code: string;+link: string;+flcs: string;+slts: string;+slcs: string|]
+[&lt;interface&gt;TrainingConfig|+cutoffRank: number;+similarnessRank: number;+exclusionList: string\[\];+model: string;+bayasPositiveGage: number;+bayasNegativeGage: number;+bayasMode: string|]
+[OutletsRoutingModule||]
+[OutletsModule||]
+[OutletsService|-loadedOutlets: BehaviorSubject&lt;Outlet\[\]&gt;;-controller: string;-httpClient: HttpClient|+getAllLoaded(): Observable&lt;Outlet\[\]&gt;;+getLoadedById(): Outlet;+getAll(): void;+create(): void;+update(): void;+delete(): void;+deleteAll(): void;+performTestRequest(): Observable&lt;Article&gt;]
+[&lt;interface&gt;TrainingResponse|+fitness: number;+trainingArraySize: number;+testingArraySize: number|]
+[TrainingRoutingModule||]
+[TrainingModule||]
+[TrainingService|-loadedConfig: BehaviorSubject&lt;TrainingConfig&gt;;-controller: string;-httpClient: HttpClient;-articlesService: ArticlesService|+getLoadedConfig(): Observable&lt;TrainingConfig&gt;;+getConfig(): void;+updateConfig(): void;+updateSelector(): void;+predictAll(): void;+updateModel(): void;+trainBayas(): Observable&lt;TrainingResponse&gt;]
+[AnalyticsComponent|+controls: ControlItem\[\];+analytics: Analytics;-analyticsService: AnalyticsService|+ngOnInit(): void]
+[OnInit]&lt;:--[AnalyticsComponent]
+[AnalyticsChartsComponent|+Highcharts: typeof Highcharts;+analytics: Analytics;-analyticsService: AnalyticsService|+ngOnInit(): void;-updateCharts(): void]
+[OnInit]&lt;:--[AnalyticsChartsComponent]
+[GenericButtonComponent|+content: string;+style: string;+disable: boolean;+disableAsync: BehaviorSubject&lt;boolean&gt;|]
+[PageNotFoundComponent||]
+[PaginationComponent|+itemsPerPage: number;+pageNumbers: number\[\];+section: string;+currentPage: number;+lastPageNumber: number;-route: ActivatedRoute;-router: Router|+ngOnInit(): void;+onNext(): void;+onPrev(): void;+onPageChange(): void]
+[OnInit]&lt;:--[PaginationComponent]
+[&lt;interface&gt;ControlItem|+type: string;+text: string\[\];+style: string;+action: (stage: any) =&gt; void;+stage: BehaviorSubject&lt;any&gt;|]
+[SectionControlsComponent|+controls: ControlItem\[\]|]
+[ArticleDetailComponent|+article: Article;+deleteRunning: boolean;+showBody: boolean;+showNgram: boolean;+showPageNotFound: BehaviorSubject&lt;boolean&gt;;-deleteSubj: BehaviorSubject&lt;string&gt;;-articlesService: ArticlesService;-route: ActivatedRoute;-location: Location|+ngOnInit(): void;+onDelete(): void;+articleExists(): boolean;+onArticle(): void;+onNgram(): void]
+[OnInit]&lt;:--[ArticleDetailComponent]
+[ArticleListComponent|+articles: Article\[\];-articlesService: ArticlesService|+ngOnInit(): void]
+[OnInit]&lt;:--[ArticleListComponent]
+[ArticleListItemComponent|+article: Article;+markerSelector: BehaviorSubject&lt;string&gt;;+impressionSelector: BehaviorSubject&lt;string&gt;;+applyRunning: BehaviorSubject&lt;boolean&gt;;-articlesService: ArticlesService|+ngOnInit(): void;+isApply(): boolean;+onApply(): void]
+[OnInit]&lt;:--[ArticleListItemComponent]
+[ArticlesComponent|+controls: ControlItem\[\];+itemsPerPage: number;+pageNumbers: number\[\];+section: string;+markFilter: BehaviorSubject&lt;string&gt;;+impressionFilter: BehaviorSubject&lt;string&gt;;-articlesService: ArticlesService|+ngOnInit(): void]
+[OnInit]&lt;:--[ArticlesComponent]
+[ArticlesPageComponent|+itemsPerPage: number;+markFilter: BehaviorSubject&lt;string&gt;;+impressionFilter: BehaviorSubject&lt;string&gt;;+articles: Article\[\];+showFailed: { show: boolean; filtering: boolean; backendFailed: boolean; };-pageNumber: number;-articlesService: ArticlesService;-route: ActivatedRoute|+ngOnInit(): void;+articlesExist(): boolean;-getArticlesForCurrentPage(): Article\[\]]
+[OnInit]&lt;:--[ArticlesPageComponent]
+[OutletAddComponent|+outlet: Outlet;+newName: BehaviorSubject&lt;string&gt;;+newCode: BehaviorSubject&lt;string&gt;;+newLink: BehaviorSubject&lt;string&gt;;+newFLCS: BehaviorSubject&lt;string&gt;;+newSLCS: BehaviorSubject&lt;string&gt;;+newSLTS: BehaviorSubject&lt;string&gt;;+createRunning: BehaviorSubject&lt;boolean&gt;;-newNameSub: Subscription;-newCodeSub: Subscription;-newLinkSub: Subscription;-newFLCSSub: Subscription;-newSLCSSub: Subscription;-newSLTSSub: Subscription;-outletsService: OutletsService|+ngOnInit(): void;+ngOnDestroy(): void;+isOutletReady(): boolean;+onCreateNew(): void;-blankOutlet(): void]
+[OnInit]&lt;:--[OutletAddComponent]
+[OnDestroy]&lt;:--[OutletAddComponent]
+[OutletDetailsComponent|+outlet: Outlet;+deleteRunning: boolean;+updateRunning: BehaviorSubject&lt;boolean&gt;;+newFlcs: string;+newSlcs: string;+newSlts: string;-deleteSubj: BehaviorSubject&lt;string&gt;;-location: Location;-route: ActivatedRoute;-outletsService: OutletsService|+ngOnInit(): void;+outletExists(): boolean;+onHeaderLink(): void;+onBack(): void;+onUpdate(): void;+onDelete(): void;+onFlcsApply(): void;+onSlcsApply(): void;+onSltsApply(): void]
+[OnInit]&lt;:--[OutletDetailsComponent]
+[OutletListComponent|+outlets: Outlet\[\];-outletsSub: Subscription;-outletsService: OutletsService|+ngOnInit(): void;+ngOnDestroy(): void;+onLink(): void;+outletsExist(): boolean]
+[OnInit]&lt;:--[OutletListComponent]
+[OnDestroy]&lt;:--[OutletListComponent]
+[OutletTestComponent|+testResults: Article;+testRunning: BehaviorSubject&lt;boolean&gt;;+outlet: Outlet;-outletsService: OutletsService|+onExecute(): void]
+[OutletsComponent|+controls: ControlItem\[\];-router: Router;-outletsService: OutletsService|]
+[TrainingComponent|+controls: ControlItem\[\];+trainingConfig: TrainingConfig;-trainingService: TrainingService|+ngOnInit(): void]
+[OnInit]&lt;:--[TrainingComponent]
+[TrainingConfigComponent|+config: TrainingConfig;+newCutoff: string;+newSimilarness: string;+modelSelected: BehaviorSubject&lt;string&gt;;+modeSelected: BehaviorSubject&lt;string&gt;;+newPositiveGage: string;+newNegativeGage: string;+bayasTrainingRunning: BehaviorSubject&lt;boolean&gt;;+bayasTrainingResults: TrainingResponse;+bayasTrainingShowResults: boolean;+applySelectorRunning: BehaviorSubject&lt;boolean&gt;;+applyModelRunning: BehaviorSubject&lt;boolean&gt;;-trainingService: TrainingService|+ngOnInit(): void;+valueValid(): boolean;+gagesCorrect(): boolean;+onSelectorApply(): void;+onModelApply(): void;+onBayasTrain(): void]</desc>
+<g stroke-width="1.0" text-align="left" font="12pt Helvetica, Arial, sans-serif" font-size="12pt" font-family="Helvetica" font-weight="bold" font-style="normal">
+<g transform="translate(0.5, 0.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" stroke-width="3.0" stroke-linejoin="round" stroke-linecap="round" stroke="#33322E">
+<g stroke="transparent" fill="transparent">
+<rect x="0.0" y="0.0" height="807.0" width="10043.0" stroke="none"></rect>
+</g>
+<g transform="translate(8, 8)" fill="#33322E">
+<g transform="translate(20, 20)" fill="#eee8d5" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal">
+<g stroke-dasharray="6 6">
+<path d="M8610.7 177.1 L5855.5 368 L5855.5 508 L5855.5 508.0 " fill="none"></path>
+</g>
+<path d="M8611.1 182.4 L8610.7 177.1 L8610.3 171.8 L8624.0 176.2 Z"></path>
+<g stroke-dasharray="6 6">
+<path d="M8610.7 177.5 L6186.5 368 L6186.5 500.5 L6186.5 500.5 " fill="none"></path>
+</g>
+<path d="M8611.1 182.8 L8610.7 177.5 L8610.3 172.2 L8624.0 176.5 Z"></path>
+<g stroke-dasharray="6 6">
+<path d="M8610.7 178.0 L6485.5 368 L6485.5 455.5 L6485.5 455.5 " fill="none"></path>
+</g>
+<path d="M8611.2 183.3 L8610.7 178.0 L8610.2 172.7 L8624.0 176.8 Z"></path>
+<g stroke-dasharray="6 6">
+<path d="M8610.7 178.8 L6843 368 L6843 433 L6843.0 433.0 " fill="none"></path>
+</g>
+<path d="M8611.3 184.1 L8610.7 178.8 L8610.2 173.5 L8624.0 177.4 Z"></path>
+<g stroke-dasharray="6 6">
+<path d="M8610.8 180.0 L7219.5 368 L7219.5 515.5 L7219.5 515.5 " fill="none"></path>
+</g>
+<path d="M8611.5 185.3 L8610.8 180.0 L8610.1 174.8 L8624.0 178.3 Z"></path>
+<g stroke-dasharray="6 6">
+<path d="M8610.9 182.1 L7582 368 L7582 478 L7582.0 478.0 " fill="none"></path>
+</g>
+<path d="M8611.8 187.3 L8610.9 182.1 L8609.9 176.8 L8624.0 179.7 Z"></path>
+<g stroke-dasharray="6 6">
+<path d="M8611.2 186.9 L7989 368 L7989 478 L7989.0 478.0 " fill="none"></path>
+</g>
+<path d="M8612.7 192.0 L8611.2 186.9 L8609.7 181.8 L8624.0 183.2 Z"></path>
+<g stroke-dasharray="6 6">
+<path d="M8622.9 197.2 L8383 368 L8383 433 L8383.0 433.0 " fill="none"></path>
+</g>
+<path d="M8626.0 201.6 L8622.9 197.2 L8619.8 192.9 L8633.7 189.5 Z"></path>
+<g stroke-dasharray="6 6">
+<path d="M8647.8 202.4 L8602.75 368 L8620.591191066998 388 L8620.6 388.0 " fill="none"></path>
+</g>
+<path d="M8652.9 203.8 L8647.8 202.4 L8642.6 201.0 L8651.3 189.5 Z"></path>
+<g stroke-dasharray="6 6">
+<path d="M9445.1 194.1 L8966.25 368 L8948.011786600497 388 L8948.0 388.0 " fill="none"></path>
+</g>
+<path d="M9446.9 199.1 L9445.1 194.1 L9443.2 189.0 L9457.6 189.5 Z"></path>
+<g stroke-dasharray="6 6">
+<path d="M8699.5 190.0 L9190 368 L9190 395.5 L9190.0 395.5 " fill="none"></path>
+</g>
+<path d="M8701.4 185.0 L8699.5 190.0 L8697.7 195.0 L8687.0 185.4 Z"></path>
+<g stroke-dasharray="6 6">
+<path d="M8699.9 185.8 L9387.25 368 L9478.94665012407 485.5 L9478.9 485.5 " fill="none"></path>
+</g>
+<path d="M8701.3 180.6 L8699.9 185.8 L8698.5 190.9 L8687.0 182.4 Z"></path>
+<g stroke-dasharray="6 6">
+<path d="M9523.4 199.3 L9677.5 368 L9599.944168734492 485.5 L9599.9 485.5 " fill="none"></path>
+</g>
+<path d="M9527.3 195.7 L9523.4 199.3 L9519.5 202.9 L9514.4 189.5 Z"></path>
+<g stroke-dasharray="6 6">
+<path d="M8700.2 181.3 L9850.5 368 L9850.5 508 L9850.5 508.0 " fill="none"></path>
+</g>
+<path d="M8701.0 176.0 L8700.2 181.3 L8699.3 186.5 L8687.0 179.1 Z"></path>
+<g data-name="AppRoutingModule">
+<g fill="#eee8d5" stroke="#33322E" data-name="AppRoutingModule">
+<rect x="0.0" y="151.0" height="47.0" width="166.0" data-name="AppRoutingModule"></rect>
+<path d="M0.0 182.0 L166.0 182.0" fill="none" data-name="AppRoutingModule"></path>
+<path d="M0.0 190.0 L166.0 190.0" fill="none" data-name="AppRoutingModule"></path>
+</g>
+<g transform="translate(0, 151)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="AppRoutingModule">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="AppRoutingModule">
+<a id="src\app\app-routing.module.ts.AppRoutingModule" xlink:href="src\app\app-routing.module.ts"><text x="75.0" y="13.5" stroke="none" text-anchor="middle" data-name="AppRoutingModule">AppRoutingModule</text></a>
+
+</g>
+</g>
+<g transform="translate(0, 182)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AppRoutingModule">
+<g transform="translate(8, 8)" fill="#33322E" data-name="AppRoutingModule">
+
+</g>
+</g>
+<g transform="translate(0, 190)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AppRoutingModule">
+<g transform="translate(8, 8)" fill="#33322E" data-name="AppRoutingModule">
+
+</g>
+</g>
+</g>
+<g data-name="AppComponent">
+<g fill="#eee8d5" stroke="#33322E" data-name="AppComponent">
+<rect x="206.0" y="139.0" height="70.0" width="138.0" data-name="AppComponent"></rect>
+<path d="M206.0 170.0 L344.0 170.0" fill="none" data-name="AppComponent"></path>
+<path d="M206.0 201.0 L344.0 201.0" fill="none" data-name="AppComponent"></path>
+</g>
+<g transform="translate(206, 139)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="AppComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="AppComponent">
+<a id="src\app\app.component.ts.AppComponent" xlink:href="src\app\app.component.ts"><text x="61.0" y="13.5" stroke="none" text-anchor="middle" data-name="AppComponent">AppComponent</text></a>
+
+</g>
+</g>
+<g transform="translate(206, 170)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AppComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="AppComponent">
+<text x="0.0" y="13.5" stroke="none" data-name="AppComponent">+title: string</text>
+
+</g>
+</g>
+<g transform="translate(206, 201)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AppComponent">
+<g transform="translate(8, 8)" fill="#33322E" data-name="AppComponent">
+
+</g>
+</g>
+</g>
+<g data-name="AppModule">
+<g fill="#eee8d5" stroke="#33322E" data-name="AppModule">
+<rect x="384.0" y="151.0" height="47.0" width="105.0" data-name="AppModule"></rect>
+<path d="M384.0 182.0 L489.0 182.0" fill="none" data-name="AppModule"></path>
+<path d="M384.0 190.0 L489.0 190.0" fill="none" data-name="AppModule"></path>
+</g>
+<g transform="translate(384, 151)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="AppModule">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="AppModule">
+<a id="src\app\app.module.ts.AppModule" xlink:href="src\app\app.module.ts"><text x="44.5" y="13.5" stroke="none" text-anchor="middle" data-name="AppModule">AppModule</text></a>
+
+</g>
+</g>
+<g transform="translate(384, 182)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AppModule">
+<g transform="translate(8, 8)" fill="#33322E" data-name="AppModule">
+
+</g>
+</g>
+<g transform="translate(384, 190)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AppModule">
+<g transform="translate(8, 8)" fill="#33322E" data-name="AppModule">
+
+</g>
+</g>
+</g>
+<g data-name="AnalyticsRoutingModule">
+<g fill="#eee8d5" stroke="#33322E" data-name="AnalyticsRoutingModule">
+<rect x="529.0" y="151.0" height="47.0" width="206.0" data-name="AnalyticsRoutingModule"></rect>
+<path d="M529.0 182.0 L735.0 182.0" fill="none" data-name="AnalyticsRoutingModule"></path>
+<path d="M529.0 190.0 L735.0 190.0" fill="none" data-name="AnalyticsRoutingModule"></path>
+</g>
+<g transform="translate(529, 151)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="AnalyticsRoutingModule">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="AnalyticsRoutingModule">
+<a id="src\app\analytics\analytics-routing.module.ts.AnalyticsRoutingModule" xlink:href="src\app\analytics\analytics-routing.module.ts"><text x="95.0" y="13.5" stroke="none" text-anchor="middle" data-name="AnalyticsRoutingModule">AnalyticsRoutingModule</text></a>
+
+</g>
+</g>
+<g transform="translate(529, 182)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AnalyticsRoutingModule">
+<g transform="translate(8, 8)" fill="#33322E" data-name="AnalyticsRoutingModule">
+
+</g>
+</g>
+<g transform="translate(529, 190)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AnalyticsRoutingModule">
+<g transform="translate(8, 8)" fill="#33322E" data-name="AnalyticsRoutingModule">
+
+</g>
+</g>
+</g>
+<g data-name="AnalyticsModule">
+<g fill="#eee8d5" stroke="#33322E" data-name="AnalyticsModule">
+<rect x="775.0" y="151.0" height="47.0" width="145.0" data-name="AnalyticsModule"></rect>
+<path d="M775.0 182.0 L920.0 182.0" fill="none" data-name="AnalyticsModule"></path>
+<path d="M775.0 190.0 L920.0 190.0" fill="none" data-name="AnalyticsModule"></path>
+</g>
+<g transform="translate(775, 151)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="AnalyticsModule">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="AnalyticsModule">
+<a id="src\app\analytics\analytics.module.ts.AnalyticsModule" xlink:href="src\app\analytics\analytics.module.ts"><text x="64.5" y="13.5" stroke="none" text-anchor="middle" data-name="AnalyticsModule">AnalyticsModule</text></a>
+
+</g>
+</g>
+<g transform="translate(775, 182)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AnalyticsModule">
+<g transform="translate(8, 8)" fill="#33322E" data-name="AnalyticsModule">
+
+</g>
+</g>
+<g transform="translate(775, 190)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AnalyticsModule">
+<g transform="translate(8, 8)" fill="#33322E" data-name="AnalyticsModule">
+
+</g>
+</g>
+</g>
+<g data-name="AnalyticsService">
+<g fill="#eee8d5" stroke="#33322E" data-name="AnalyticsService">
+<rect x="960.0" y="98.0" height="153.0" width="377.0" data-name="AnalyticsService"></rect>
+<path d="M960.0 129.0 L1337.0 129.0" fill="none" data-name="AnalyticsService"></path>
+<path d="M960.0 190.0 L1337.0 190.0" fill="none" data-name="AnalyticsService"></path>
+</g>
+<g transform="translate(960, 98)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="AnalyticsService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="AnalyticsService">
+<a id="src\app\analytics\analytics.service.ts.AnalyticsService" xlink:href="src\app\analytics\analytics.service.ts"><text x="180.5" y="13.5" stroke="none" text-anchor="middle" data-name="AnalyticsService">AnalyticsService</text></a>
+
+</g>
+</g>
+<g transform="translate(960, 129)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AnalyticsService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="AnalyticsService">
+<text x="0.0" y="13.5" stroke="none" data-name="AnalyticsService">-loadedAnalytics: BehaviorSubject&lt;Analytics&gt;</text>
+<text x="0.0" y="28.5" stroke="none" data-name="AnalyticsService">-controller: string</text>
+<text x="0.0" y="43.5" stroke="none" data-name="AnalyticsService">-httpClient: HttpClient</text>
+
+</g>
+</g>
+<g transform="translate(960, 190)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AnalyticsService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="AnalyticsService">
+<text x="0.0" y="13.5" stroke="none" data-name="AnalyticsService">+getLoaded(): BehaviorSubject&lt;Analytics&gt;</text>
+<text x="0.0" y="28.5" stroke="none" data-name="AnalyticsService">+get(): void</text>
+<text x="0.0" y="43.5" stroke="none" data-name="AnalyticsService">+update(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="AppCommonModule">
+<g fill="#eee8d5" stroke="#33322E" data-name="AppCommonModule">
+<rect x="1377.0" y="151.0" height="47.0" width="175.0" data-name="AppCommonModule"></rect>
+<path d="M1377.0 182.0 L1552.0 182.0" fill="none" data-name="AppCommonModule"></path>
+<path d="M1377.0 190.0 L1552.0 190.0" fill="none" data-name="AppCommonModule"></path>
+</g>
+<g transform="translate(1377, 151)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="AppCommonModule">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="AppCommonModule">
+<a id="src\app\app-common\common.module.ts.AppCommonModule" xlink:href="src\app\app-common\common.module.ts"><text x="79.5" y="13.5" stroke="none" text-anchor="middle" data-name="AppCommonModule">AppCommonModule</text></a>
+
+</g>
+</g>
+<g transform="translate(1377, 182)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AppCommonModule">
+<g transform="translate(8, 8)" fill="#33322E" data-name="AppCommonModule">
+
+</g>
+</g>
+<g transform="translate(1377, 190)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AppCommonModule">
+<g transform="translate(8, 8)" fill="#33322E" data-name="AppCommonModule">
+
+</g>
+</g>
+</g>
+<g data-name="Impressions">
+<g fill="#eee8d5" stroke="#33322E" data-name="Impressions">
+<rect x="1592.0" y="117.0" height="115.0" width="195.0" data-name="Impressions"></rect>
+<path d="M1592.0 148.0 L1787.0 148.0" fill="none" data-name="Impressions"></path>
+<path d="M1592.0 224.0 L1787.0 224.0" fill="none" data-name="Impressions"></path>
+</g>
+<g transform="translate(1592, 117)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Impressions">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Impressions">
+<a id="src\app\app-common\impressions.ts.Impressions" xlink:href="src\app\app-common\impressions.ts"><text x="89.5" y="13.5" stroke="none" text-anchor="middle" data-name="Impressions">Impressions</text></a>
+
+</g>
+</g>
+<g transform="translate(1592, 148)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Impressions">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Impressions">
+<text x="0.0" y="13.5" stroke="none" data-name="Impressions">+static none: string</text>
+<text x="0.0" y="28.5" stroke="none" data-name="Impressions">+static neuteral: string</text>
+<text x="0.0" y="43.5" stroke="none" data-name="Impressions">+static positive: string</text>
+<text x="0.0" y="58.5" stroke="none" data-name="Impressions">+static negative: string</text>
+
+</g>
+</g>
+<g transform="translate(1592, 224)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Impressions">
+<g transform="translate(8, 8)" fill="#33322E" data-name="Impressions">
+
+</g>
+</g>
+</g>
+<g data-name="Routes">
+<g fill="#eee8d5" stroke="#33322E" data-name="Routes">
+<rect x="1827.0" y="139.0" height="70.0" width="213.0" data-name="Routes"></rect>
+<path d="M1827.0 170.0 L2040.0 170.0" fill="none" data-name="Routes"></path>
+<path d="M1827.0 201.0 L2040.0 201.0" fill="none" data-name="Routes"></path>
+</g>
+<g transform="translate(1827, 139)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Routes">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Routes">
+<a id="src\app\app-common\routes.ts.Routes" xlink:href="src\app\app-common\routes.ts"><text x="98.5" y="13.5" stroke="none" text-anchor="middle" data-name="Routes">Routes</text></a>
+
+</g>
+</g>
+<g transform="translate(1827, 170)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Routes">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Routes">
+<text x="0.0" y="13.5" stroke="none" data-name="Routes">+static baseApiUrl: string</text>
+
+</g>
+</g>
+<g transform="translate(1827, 201)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Routes">
+<g transform="translate(8, 8)" fill="#33322E" data-name="Routes">
+
+</g>
+</g>
+</g>
+<g data-name="TrainingMarkers">
+<g fill="#eee8d5" stroke="#33322E" data-name="TrainingMarkers">
+<rect x="2080.0" y="124.0" height="100.0" width="206.0" data-name="TrainingMarkers"></rect>
+<path d="M2080.0 155.0 L2286.0 155.0" fill="none" data-name="TrainingMarkers"></path>
+<path d="M2080.0 216.0 L2286.0 216.0" fill="none" data-name="TrainingMarkers"></path>
+</g>
+<g transform="translate(2080, 124)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="TrainingMarkers">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="TrainingMarkers">
+<a id="src\app\app-common\training-markers.ts.TrainingMarkers" xlink:href="src\app\app-common\training-markers.ts"><text x="95.0" y="13.5" stroke="none" text-anchor="middle" data-name="TrainingMarkers">TrainingMarkers</text></a>
+
+</g>
+</g>
+<g transform="translate(2080, 155)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TrainingMarkers">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="TrainingMarkers">
+<text x="0.0" y="13.5" stroke="none" data-name="TrainingMarkers">+static unmarked: string</text>
+<text x="0.0" y="28.5" stroke="none" data-name="TrainingMarkers">+static training: string</text>
+<text x="0.0" y="43.5" stroke="none" data-name="TrainingMarkers">+static testing: string</text>
+
+</g>
+</g>
+<g transform="translate(2080, 216)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TrainingMarkers">
+<g transform="translate(8, 8)" fill="#33322E" data-name="TrainingMarkers">
+
+</g>
+</g>
+</g>
+<g data-name="AppHeaderComponent">
+<g fill="#eee8d5" stroke="#33322E" data-name="AppHeaderComponent">
+<rect x="2326.0" y="151.0" height="47.0" width="196.0" data-name="AppHeaderComponent"></rect>
+<path d="M2326.0 182.0 L2522.0 182.0" fill="none" data-name="AppHeaderComponent"></path>
+<path d="M2326.0 190.0 L2522.0 190.0" fill="none" data-name="AppHeaderComponent"></path>
+</g>
+<g transform="translate(2326, 151)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="AppHeaderComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="AppHeaderComponent">
+<a id="src\app\app-header\app-header.component.ts.AppHeaderComponent" xlink:href="src\app\app-header\app-header.component.ts"><text x="90.0" y="13.5" stroke="none" text-anchor="middle" data-name="AppHeaderComponent">AppHeaderComponent</text></a>
+
+</g>
+</g>
+<g transform="translate(2326, 182)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AppHeaderComponent">
+<g transform="translate(8, 8)" fill="#33322E" data-name="AppHeaderComponent">
+
+</g>
+</g>
+<g transform="translate(2326, 190)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AppHeaderComponent">
+<g transform="translate(8, 8)" fill="#33322E" data-name="AppHeaderComponent">
+
+</g>
+</g>
+</g>
+<g data-name="ArticlesRoutingModule">
+<g fill="#eee8d5" stroke="#33322E" data-name="ArticlesRoutingModule">
+<rect x="2562.0" y="151.0" height="47.0" width="193.0" data-name="ArticlesRoutingModule"></rect>
+<path d="M2562.0 182.0 L2755.0 182.0" fill="none" data-name="ArticlesRoutingModule"></path>
+<path d="M2562.0 190.0 L2755.0 190.0" fill="none" data-name="ArticlesRoutingModule"></path>
+</g>
+<g transform="translate(2562, 151)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="ArticlesRoutingModule">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="ArticlesRoutingModule">
+<a id="src\app\articles\articles-routing.module.ts.ArticlesRoutingModule" xlink:href="src\app\articles\articles-routing.module.ts"><text x="88.5" y="13.5" stroke="none" text-anchor="middle" data-name="ArticlesRoutingModule">ArticlesRoutingModule</text></a>
+
+</g>
+</g>
+<g transform="translate(2562, 182)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ArticlesRoutingModule">
+<g transform="translate(8, 8)" fill="#33322E" data-name="ArticlesRoutingModule">
+
+</g>
+</g>
+<g transform="translate(2562, 190)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ArticlesRoutingModule">
+<g transform="translate(8, 8)" fill="#33322E" data-name="ArticlesRoutingModule">
+
+</g>
+</g>
+</g>
+<g data-name="ArticlesModule">
+<g fill="#eee8d5" stroke="#33322E" data-name="ArticlesModule">
+<rect x="2795.0" y="151.0" height="47.0" width="132.0" data-name="ArticlesModule"></rect>
+<path d="M2795.0 182.0 L2927.0 182.0" fill="none" data-name="ArticlesModule"></path>
+<path d="M2795.0 190.0 L2927.0 190.0" fill="none" data-name="ArticlesModule"></path>
+</g>
+<g transform="translate(2795, 151)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="ArticlesModule">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="ArticlesModule">
+<a id="src\app\articles\articles.module.ts.ArticlesModule" xlink:href="src\app\articles\articles.module.ts"><text x="58.0" y="13.5" stroke="none" text-anchor="middle" data-name="ArticlesModule">ArticlesModule</text></a>
+
+</g>
+</g>
+<g transform="translate(2795, 182)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ArticlesModule">
+<g transform="translate(8, 8)" fill="#33322E" data-name="ArticlesModule">
+
+</g>
+</g>
+<g transform="translate(2795, 190)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ArticlesModule">
+<g transform="translate(8, 8)" fill="#33322E" data-name="ArticlesModule">
+
+</g>
+</g>
+</g>
+<g data-name="ArticlesService">
+<g fill="#eee8d5" stroke="#33322E" data-name="ArticlesService">
+<rect x="2967.0" y="0.0" height="348.0" width="352.0" data-name="ArticlesService"></rect>
+<path d="M2967.0 31.0 L3319.0 31.0" fill="none" data-name="ArticlesService"></path>
+<path d="M2967.0 152.0 L3319.0 152.0" fill="none" data-name="ArticlesService"></path>
+</g>
+<g transform="translate(2967, 0)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="ArticlesService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="ArticlesService">
+<a id="src\app\articles\articles.service.ts.ArticlesService" xlink:href="src\app\articles\articles.service.ts"><text x="168.0" y="13.5" stroke="none" text-anchor="middle" data-name="ArticlesService">ArticlesService</text></a>
+
+</g>
+</g>
+<g transform="translate(2967, 31)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ArticlesService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ArticlesService">
+<text x="0.0" y="13.5" stroke="none" data-name="ArticlesService">-loadedArticles: BehaviorSubject&lt;Article[]&gt;</text>
+<text x="0.0" y="28.5" stroke="none" data-name="ArticlesService">-filteredArticles: BehaviorSubject&lt;Article[]&gt;</text>
+<text x="0.0" y="43.5" stroke="none" data-name="ArticlesService">-lastFilters: { markerFilter: string</text>
+<text x="0.0" y="58.5" stroke="none" data-name="ArticlesService">impressionFilter: string</text>
+<text x="0.0" y="73.5" stroke="none" data-name="ArticlesService">}</text>
+<text x="0.0" y="88.5" stroke="none" data-name="ArticlesService">-controller: string</text>
+<text x="0.0" y="103.5" stroke="none" data-name="ArticlesService">-httpClient: HttpClient</text>
+
+</g>
+</g>
+<g transform="translate(2967, 152)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ArticlesService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ArticlesService">
+<text x="0.0" y="13.5" stroke="none" data-name="ArticlesService">+getAllLoaded(): Observable&lt;Article[]&gt;</text>
+<text x="0.0" y="28.5" stroke="none" data-name="ArticlesService">+getAllFiltered(): Observable&lt;Article[]&gt;</text>
+<text x="0.0" y="43.5" stroke="none" data-name="ArticlesService">+getLoadedById(): Article</text>
+<text x="0.0" y="58.5" stroke="none" data-name="ArticlesService">+getAll(): void</text>
+<text x="0.0" y="73.5" stroke="none" data-name="ArticlesService">+getById(): Observable&lt;Article&gt;</text>
+<text x="0.0" y="88.5" stroke="none" data-name="ArticlesService">+update(): Observable&lt;Article&gt;</text>
+<text x="0.0" y="103.5" stroke="none" data-name="ArticlesService">+delete(): void</text>
+<text x="0.0" y="118.5" stroke="none" data-name="ArticlesService">+deleteAll(): void</text>
+<text x="0.0" y="133.5" stroke="none" data-name="ArticlesService">+applyFilters(): void</text>
+<text x="0.0" y="148.5" stroke="none" data-name="ArticlesService">+updateBackend(): void</text>
+<text x="0.0" y="163.5" stroke="none" data-name="ArticlesService">+applyPredictions(): void</text>
+<text x="0.0" y="178.5" stroke="none" data-name="ArticlesService">-sortArticles(): Article[]</text>
+
+</g>
+</g>
+</g>
+<g data-name="Analytics">
+<g fill="#eee8d5" stroke="#33322E" data-name="Analytics">
+<rect x="3359.0" y="57.0" height="235.0" width="231.0" data-name="Analytics"></rect>
+<path d="M3359.0 88.0 L3590.0 88.0" fill="none" data-name="Analytics"></path>
+<path d="M3359.0 284.0 L3590.0 284.0" fill="none" data-name="Analytics"></path>
+</g>
+<g transform="translate(3359, 57)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Analytics">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Analytics">
+<a id="src\app\models\analytics.ts.Analytics" xlink:href="src\app\models\analytics.ts"><text x="107.5" y="13.5" stroke="none" text-anchor="middle" data-name="Analytics">Analytics</text></a>
+
+</g>
+</g>
+<g transform="translate(3359, 88)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Analytics">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Analytics">
+<text x="0.0" y="13.5" stroke="none" data-name="Analytics">+perTime: [{ outlet: string</text>
+<text x="0.0" y="28.5" stroke="none" data-name="Analytics">daily: [{ date: Date</text>
+<text x="0.0" y="43.5" stroke="none" data-name="Analytics">value: { positive: number</text>
+<text x="0.0" y="58.5" stroke="none" data-name="Analytics">negative: number</text>
+<text x="0.0" y="73.5" stroke="none" data-name="Analytics">neuteral: number</text>
+<text x="0.0" y="88.5" stroke="none" data-name="Analytics">}</text>
+<text x="0.0" y="103.5" stroke="none" data-name="Analytics">}]</text>
+<text x="0.0" y="118.5" stroke="none" data-name="Analytics">}]</text>
+<text x="0.0" y="133.5" stroke="none" data-name="Analytics">+overall: { positive: number</text>
+<text x="0.0" y="148.5" stroke="none" data-name="Analytics">negative: number</text>
+<text x="0.0" y="163.5" stroke="none" data-name="Analytics">neuteral: number</text>
+<text x="0.0" y="178.5" stroke="none" data-name="Analytics">}</text>
+
+</g>
+</g>
+<g transform="translate(3359, 284)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Analytics">
+<g transform="translate(8, 8)" fill="#33322E" data-name="Analytics">
+
+</g>
+</g>
+</g>
+<g data-name="Article">
+<g fill="lightblue" stroke="#33322E" data-name="Article">
+<rect x="3630.0" y="72.0" height="205.0" width="166.0" data-name="Article"></rect>
+<path d="M3630.0 103.0 L3796.0 103.0" fill="none" data-name="Article"></path>
+<path d="M3630.0 269.0 L3796.0 269.0" fill="none" data-name="Article"></path>
+</g>
+<g transform="translate(3630, 72)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Article">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Article">
+<a id="src\app\models\article.ts.Article" xlink:href="src\app\models\article.ts"><text x="75.0" y="13.5" stroke="none" text-anchor="middle" data-name="Article">Article</text></a>
+
+</g>
+</g>
+<g transform="translate(3630, 103)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Article">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Article">
+<text x="0.0" y="13.5" stroke="none" data-name="Article">+id: number</text>
+<text x="0.0" y="28.5" stroke="none" data-name="Article">+outletCode: string</text>
+<text x="0.0" y="43.5" stroke="none" data-name="Article">+date: Date</text>
+<text x="0.0" y="58.5" stroke="none" data-name="Article">+title: string</text>
+<text x="0.0" y="73.5" stroke="none" data-name="Article">+articleHref: string</text>
+<text x="0.0" y="88.5" stroke="none" data-name="Article">+body: string</text>
+<text x="0.0" y="103.5" stroke="none" data-name="Article">+ngram: Ngram</text>
+<text x="0.0" y="118.5" stroke="none" data-name="Article">+marker: string</text>
+<text x="0.0" y="133.5" stroke="none" data-name="Article">+impression: string</text>
+<text x="0.0" y="148.5" stroke="none" data-name="Article">+prediction: string</text>
+
+</g>
+</g>
+<g transform="translate(3630, 269)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Article">
+<g transform="translate(8, 8)" fill="#33322E" data-name="Article">
+
+</g>
+</g>
+</g>
+<g data-name="Outlet">
+<g fill="lightblue" stroke="#33322E" data-name="Outlet">
+<rect x="3836.0" y="94.0" height="160.0" width="124.0" data-name="Outlet"></rect>
+<path d="M3836.0 125.0 L3960.0 125.0" fill="none" data-name="Outlet"></path>
+<path d="M3836.0 246.0 L3960.0 246.0" fill="none" data-name="Outlet"></path>
+</g>
+<g transform="translate(3836, 94)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Outlet">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Outlet">
+<a id="src\app\models\outlet.ts.Outlet" xlink:href="src\app\models\outlet.ts"><text x="54.0" y="13.5" stroke="none" text-anchor="middle" data-name="Outlet">Outlet</text></a>
+
+</g>
+</g>
+<g transform="translate(3836, 125)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Outlet">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Outlet">
+<text x="0.0" y="13.5" stroke="none" data-name="Outlet">+id: number</text>
+<text x="0.0" y="28.5" stroke="none" data-name="Outlet">+name: string</text>
+<text x="0.0" y="43.5" stroke="none" data-name="Outlet">+code: string</text>
+<text x="0.0" y="58.5" stroke="none" data-name="Outlet">+link: string</text>
+<text x="0.0" y="73.5" stroke="none" data-name="Outlet">+flcs: string</text>
+<text x="0.0" y="88.5" stroke="none" data-name="Outlet">+slts: string</text>
+<text x="0.0" y="103.5" stroke="none" data-name="Outlet">+slcs: string</text>
+
+</g>
+</g>
+<g transform="translate(3836, 246)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Outlet">
+<g transform="translate(8, 8)" fill="#33322E" data-name="Outlet">
+
+</g>
+</g>
+</g>
+<g data-name="TrainingConfig">
+<g fill="lightblue" stroke="#33322E" data-name="TrainingConfig">
+<rect x="4000.0" y="94.0" height="160.0" width="257.0" data-name="TrainingConfig"></rect>
+<path d="M4000.0 125.0 L4257.0 125.0" fill="none" data-name="TrainingConfig"></path>
+<path d="M4000.0 246.0 L4257.0 246.0" fill="none" data-name="TrainingConfig"></path>
+</g>
+<g transform="translate(4000, 94)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TrainingConfig">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="TrainingConfig">
+<a id="src\app\models\training-config.ts.TrainingConfig" xlink:href="src\app\models\training-config.ts"><text x="120.5" y="13.5" stroke="none" text-anchor="middle" data-name="TrainingConfig">TrainingConfig</text></a>
+
+</g>
+</g>
+<g transform="translate(4000, 125)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TrainingConfig">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="TrainingConfig">
+<text x="0.0" y="13.5" stroke="none" data-name="TrainingConfig">+cutoffRank: number</text>
+<text x="0.0" y="28.5" stroke="none" data-name="TrainingConfig">+similarnessRank: number</text>
+<text x="0.0" y="43.5" stroke="none" data-name="TrainingConfig">+exclusionList: string[]</text>
+<text x="0.0" y="58.5" stroke="none" data-name="TrainingConfig">+model: string</text>
+<text x="0.0" y="73.5" stroke="none" data-name="TrainingConfig">+bayasPositiveGage: number</text>
+<text x="0.0" y="88.5" stroke="none" data-name="TrainingConfig">+bayasNegativeGage: number</text>
+<text x="0.0" y="103.5" stroke="none" data-name="TrainingConfig">+bayasMode: string</text>
+
+</g>
+</g>
+<g transform="translate(4000, 246)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TrainingConfig">
+<g transform="translate(8, 8)" fill="#33322E" data-name="TrainingConfig">
+
+</g>
+</g>
+</g>
+<g data-name="OutletsRoutingModule">
+<g fill="#eee8d5" stroke="#33322E" data-name="OutletsRoutingModule">
+<rect x="4297.0" y="151.0" height="47.0" width="191.0" data-name="OutletsRoutingModule"></rect>
+<path d="M4297.0 182.0 L4488.0 182.0" fill="none" data-name="OutletsRoutingModule"></path>
+<path d="M4297.0 190.0 L4488.0 190.0" fill="none" data-name="OutletsRoutingModule"></path>
+</g>
+<g transform="translate(4297, 151)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="OutletsRoutingModule">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="OutletsRoutingModule">
+<a id="src\app\outlets\outlets-routing.module.ts.OutletsRoutingModule" xlink:href="src\app\outlets\outlets-routing.module.ts"><text x="87.5" y="13.5" stroke="none" text-anchor="middle" data-name="OutletsRoutingModule">OutletsRoutingModule</text></a>
+
+</g>
+</g>
+<g transform="translate(4297, 182)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="OutletsRoutingModule">
+<g transform="translate(8, 8)" fill="#33322E" data-name="OutletsRoutingModule">
+
+</g>
+</g>
+<g transform="translate(4297, 190)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="OutletsRoutingModule">
+<g transform="translate(8, 8)" fill="#33322E" data-name="OutletsRoutingModule">
+
+</g>
+</g>
+</g>
+<g data-name="OutletsModule">
+<g fill="#eee8d5" stroke="#33322E" data-name="OutletsModule">
+<rect x="4528.0" y="151.0" height="47.0" width="130.0" data-name="OutletsModule"></rect>
+<path d="M4528.0 182.0 L4658.0 182.0" fill="none" data-name="OutletsModule"></path>
+<path d="M4528.0 190.0 L4658.0 190.0" fill="none" data-name="OutletsModule"></path>
+</g>
+<g transform="translate(4528, 151)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="OutletsModule">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="OutletsModule">
+<a id="src\app\outlets\outlets.module.ts.OutletsModule" xlink:href="src\app\outlets\outlets.module.ts"><text x="57.0" y="13.5" stroke="none" text-anchor="middle" data-name="OutletsModule">OutletsModule</text></a>
+
+</g>
+</g>
+<g transform="translate(4528, 182)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="OutletsModule">
+<g transform="translate(8, 8)" fill="#33322E" data-name="OutletsModule">
+
+</g>
+</g>
+<g transform="translate(4528, 190)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="OutletsModule">
+<g transform="translate(8, 8)" fill="#33322E" data-name="OutletsModule">
+
+</g>
+</g>
+</g>
+<g data-name="OutletsService">
+<g fill="#eee8d5" stroke="#33322E" data-name="OutletsService">
+<rect x="4698.0" y="60.0" height="228.0" width="369.0" data-name="OutletsService"></rect>
+<path d="M4698.0 91.0 L5067.0 91.0" fill="none" data-name="OutletsService"></path>
+<path d="M4698.0 152.0 L5067.0 152.0" fill="none" data-name="OutletsService"></path>
+</g>
+<g transform="translate(4698, 60)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="OutletsService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="OutletsService">
+<a id="src\app\outlets\outlets.service.ts.OutletsService" xlink:href="src\app\outlets\outlets.service.ts"><text x="176.5" y="13.5" stroke="none" text-anchor="middle" data-name="OutletsService">OutletsService</text></a>
+
+</g>
+</g>
+<g transform="translate(4698, 91)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="OutletsService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="OutletsService">
+<text x="0.0" y="13.5" stroke="none" data-name="OutletsService">-loadedOutlets: BehaviorSubject&lt;Outlet[]&gt;</text>
+<text x="0.0" y="28.5" stroke="none" data-name="OutletsService">-controller: string</text>
+<text x="0.0" y="43.5" stroke="none" data-name="OutletsService">-httpClient: HttpClient</text>
+
+</g>
+</g>
+<g transform="translate(4698, 152)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="OutletsService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="OutletsService">
+<text x="0.0" y="13.5" stroke="none" data-name="OutletsService">+getAllLoaded(): Observable&lt;Outlet[]&gt;</text>
+<text x="0.0" y="28.5" stroke="none" data-name="OutletsService">+getLoadedById(): Outlet</text>
+<text x="0.0" y="43.5" stroke="none" data-name="OutletsService">+getAll(): void</text>
+<text x="0.0" y="58.5" stroke="none" data-name="OutletsService">+create(): void</text>
+<text x="0.0" y="73.5" stroke="none" data-name="OutletsService">+update(): void</text>
+<text x="0.0" y="88.5" stroke="none" data-name="OutletsService">+delete(): void</text>
+<text x="0.0" y="103.5" stroke="none" data-name="OutletsService">+deleteAll(): void</text>
+<text x="0.0" y="118.5" stroke="none" data-name="OutletsService">+performTestRequest(): Observable&lt;Article&gt;</text>
+
+</g>
+</g>
+</g>
+<g data-name="TrainingResponse">
+<g fill="lightblue" stroke="#33322E" data-name="TrainingResponse">
+<rect x="5107.0" y="124.0" height="100.0" width="231.0" data-name="TrainingResponse"></rect>
+<path d="M5107.0 155.0 L5338.0 155.0" fill="none" data-name="TrainingResponse"></path>
+<path d="M5107.0 216.0 L5338.0 216.0" fill="none" data-name="TrainingResponse"></path>
+</g>
+<g transform="translate(5107, 124)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TrainingResponse">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="TrainingResponse">
+<a id="src\app\training\training-response.ts.TrainingResponse" xlink:href="src\app\training\training-response.ts"><text x="107.5" y="13.5" stroke="none" text-anchor="middle" data-name="TrainingResponse">TrainingResponse</text></a>
+
+</g>
+</g>
+<g transform="translate(5107, 155)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TrainingResponse">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="TrainingResponse">
+<text x="0.0" y="13.5" stroke="none" data-name="TrainingResponse">+fitness: number</text>
+<text x="0.0" y="28.5" stroke="none" data-name="TrainingResponse">+trainingArraySize: number</text>
+<text x="0.0" y="43.5" stroke="none" data-name="TrainingResponse">+testingArraySize: number</text>
+
+</g>
+</g>
+<g transform="translate(5107, 216)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TrainingResponse">
+<g transform="translate(8, 8)" fill="#33322E" data-name="TrainingResponse">
+
+</g>
+</g>
+</g>
+<g data-name="TrainingRoutingModule">
+<g fill="#eee8d5" stroke="#33322E" data-name="TrainingRoutingModule">
+<rect x="5378.0" y="151.0" height="47.0" width="199.0" data-name="TrainingRoutingModule"></rect>
+<path d="M5378.0 182.0 L5577.0 182.0" fill="none" data-name="TrainingRoutingModule"></path>
+<path d="M5378.0 190.0 L5577.0 190.0" fill="none" data-name="TrainingRoutingModule"></path>
+</g>
+<g transform="translate(5378, 151)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="TrainingRoutingModule">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="TrainingRoutingModule">
+<a id="src\app\training\training-routing.module.ts.TrainingRoutingModule" xlink:href="src\app\training\training-routing.module.ts"><text x="91.5" y="13.5" stroke="none" text-anchor="middle" data-name="TrainingRoutingModule">TrainingRoutingModule</text></a>
+
+</g>
+</g>
+<g transform="translate(5378, 182)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TrainingRoutingModule">
+<g transform="translate(8, 8)" fill="#33322E" data-name="TrainingRoutingModule">
+
+</g>
+</g>
+<g transform="translate(5378, 190)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TrainingRoutingModule">
+<g transform="translate(8, 8)" fill="#33322E" data-name="TrainingRoutingModule">
+
+</g>
+</g>
+</g>
+<g data-name="TrainingModule">
+<g fill="#eee8d5" stroke="#33322E" data-name="TrainingModule">
+<rect x="5617.0" y="151.0" height="47.0" width="138.0" data-name="TrainingModule"></rect>
+<path d="M5617.0 182.0 L5755.0 182.0" fill="none" data-name="TrainingModule"></path>
+<path d="M5617.0 190.0 L5755.0 190.0" fill="none" data-name="TrainingModule"></path>
+</g>
+<g transform="translate(5617, 151)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="TrainingModule">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="TrainingModule">
+<a id="src\app\training\training.module.ts.TrainingModule" xlink:href="src\app\training\training.module.ts"><text x="61.0" y="13.5" stroke="none" text-anchor="middle" data-name="TrainingModule">TrainingModule</text></a>
+
+</g>
+</g>
+<g transform="translate(5617, 182)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TrainingModule">
+<g transform="translate(8, 8)" fill="#33322E" data-name="TrainingModule">
+
+</g>
+</g>
+<g transform="translate(5617, 190)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TrainingModule">
+<g transform="translate(8, 8)" fill="#33322E" data-name="TrainingModule">
+
+</g>
+</g>
+</g>
+<g data-name="TrainingService">
+<g fill="#eee8d5" stroke="#33322E" data-name="TrainingService">
+<rect x="5795.0" y="60.0" height="228.0" width="410.0" data-name="TrainingService"></rect>
+<path d="M5795.0 91.0 L6205.0 91.0" fill="none" data-name="TrainingService"></path>
+<path d="M5795.0 167.0 L6205.0 167.0" fill="none" data-name="TrainingService"></path>
+</g>
+<g transform="translate(5795, 60)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="TrainingService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="TrainingService">
+<a id="src\app\training\training.service.ts.TrainingService" xlink:href="src\app\training\training.service.ts"><text x="197.0" y="13.5" stroke="none" text-anchor="middle" data-name="TrainingService">TrainingService</text></a>
+
+</g>
+</g>
+<g transform="translate(5795, 91)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TrainingService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="TrainingService">
+<text x="0.0" y="13.5" stroke="none" data-name="TrainingService">-loadedConfig: BehaviorSubject&lt;TrainingConfig&gt;</text>
+<text x="0.0" y="28.5" stroke="none" data-name="TrainingService">-controller: string</text>
+<text x="0.0" y="43.5" stroke="none" data-name="TrainingService">-httpClient: HttpClient</text>
+<text x="0.0" y="58.5" stroke="none" data-name="TrainingService">-articlesService: ArticlesService</text>
+
+</g>
+</g>
+<g transform="translate(5795, 167)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TrainingService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="TrainingService">
+<text x="0.0" y="13.5" stroke="none" data-name="TrainingService">+getLoadedConfig(): Observable&lt;TrainingConfig&gt;</text>
+<text x="0.0" y="28.5" stroke="none" data-name="TrainingService">+getConfig(): void</text>
+<text x="0.0" y="43.5" stroke="none" data-name="TrainingService">+updateConfig(): void</text>
+<text x="0.0" y="58.5" stroke="none" data-name="TrainingService">+updateSelector(): void</text>
+<text x="0.0" y="73.5" stroke="none" data-name="TrainingService">+predictAll(): void</text>
+<text x="0.0" y="88.5" stroke="none" data-name="TrainingService">+updateModel(): void</text>
+<text x="0.0" y="103.5" stroke="none" data-name="TrainingService">+trainBayas(): Observable&lt;TrainingResponse&gt;</text>
+
+</g>
+</g>
+</g>
+<g data-name="AnalyticsComponent">
+<g fill="#eee8d5" stroke="#33322E" data-name="AnalyticsComponent">
+<rect x="5710.0" y="508.0" height="123.0" width="291.0" data-name="AnalyticsComponent"></rect>
+<path d="M5710.0 539.0 L6001.0 539.0" fill="none" data-name="AnalyticsComponent"></path>
+<path d="M5710.0 600.0 L6001.0 600.0" fill="none" data-name="AnalyticsComponent"></path>
+</g>
+<g transform="translate(5710, 508)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="AnalyticsComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="AnalyticsComponent">
+<a id="src\app\analytics\analytics\analytics.component.ts.AnalyticsComponent" xlink:href="src\app\analytics\analytics\analytics.component.ts"><text x="137.5" y="13.5" stroke="none" text-anchor="middle" data-name="AnalyticsComponent">AnalyticsComponent</text></a>
+
+</g>
+</g>
+<g transform="translate(5710, 539)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AnalyticsComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="AnalyticsComponent">
+<text x="0.0" y="13.5" stroke="none" data-name="AnalyticsComponent">+controls: ControlItem[]</text>
+<text x="0.0" y="28.5" stroke="none" data-name="AnalyticsComponent">+analytics: Analytics</text>
+<text x="0.0" y="43.5" stroke="none" data-name="AnalyticsComponent">-analyticsService: AnalyticsService</text>
+
+</g>
+</g>
+<g transform="translate(5710, 600)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AnalyticsComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="AnalyticsComponent">
+<text x="0.0" y="13.5" stroke="none" data-name="AnalyticsComponent">+ngOnInit(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="AnalyticsChartsComponent">
+<g fill="#eee8d5" stroke="#33322E" data-name="AnalyticsChartsComponent">
+<rect x="6041.0" y="501.0" height="138.0" width="291.0" data-name="AnalyticsChartsComponent"></rect>
+<path d="M6041.0 532.0 L6332.0 532.0" fill="none" data-name="AnalyticsChartsComponent"></path>
+<path d="M6041.0 593.0 L6332.0 593.0" fill="none" data-name="AnalyticsChartsComponent"></path>
+</g>
+<g transform="translate(6041, 501)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="AnalyticsChartsComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="AnalyticsChartsComponent">
+<a id="src\app\analytics\analytics-charts\analytics-charts.component.ts.AnalyticsChartsComponent" xlink:href="src\app\analytics\analytics-charts\analytics-charts.component.ts"><text x="137.5" y="13.5" stroke="none" text-anchor="middle" data-name="AnalyticsChartsComponent">AnalyticsChartsComponent</text></a>
+
+</g>
+</g>
+<g transform="translate(6041, 532)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AnalyticsChartsComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="AnalyticsChartsComponent">
+<text x="0.0" y="13.5" stroke="none" data-name="AnalyticsChartsComponent">+Highcharts: typeof Highcharts</text>
+<text x="0.0" y="28.5" stroke="none" data-name="AnalyticsChartsComponent">+analytics: Analytics</text>
+<text x="0.0" y="43.5" stroke="none" data-name="AnalyticsChartsComponent">-analyticsService: AnalyticsService</text>
+
+</g>
+</g>
+<g transform="translate(6041, 593)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AnalyticsChartsComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="AnalyticsChartsComponent">
+<text x="0.0" y="13.5" stroke="none" data-name="AnalyticsChartsComponent">+ngOnInit(): void</text>
+<text x="0.0" y="28.5" stroke="none" data-name="AnalyticsChartsComponent">-updateCharts(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="GenericButtonComponent">
+<g fill="#eee8d5" stroke="#33322E" data-name="GenericButtonComponent">
+<rect x="6245.0" y="117.0" height="115.0" width="354.0" data-name="GenericButtonComponent"></rect>
+<path d="M6245.0 148.0 L6599.0 148.0" fill="none" data-name="GenericButtonComponent"></path>
+<path d="M6245.0 224.0 L6599.0 224.0" fill="none" data-name="GenericButtonComponent"></path>
+</g>
+<g transform="translate(6245, 117)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="GenericButtonComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="GenericButtonComponent">
+<a id="src\app\app-common\generic-button\generic-button.component.ts.GenericButtonComponent" xlink:href="src\app\app-common\generic-button\generic-button.component.ts"><text x="169.0" y="13.5" stroke="none" text-anchor="middle" data-name="GenericButtonComponent">GenericButtonComponent</text></a>
+
+</g>
+</g>
+<g transform="translate(6245, 148)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GenericButtonComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="GenericButtonComponent">
+<text x="0.0" y="13.5" stroke="none" data-name="GenericButtonComponent">+content: string</text>
+<text x="0.0" y="28.5" stroke="none" data-name="GenericButtonComponent">+style: string</text>
+<text x="0.0" y="43.5" stroke="none" data-name="GenericButtonComponent">+disable: boolean</text>
+<text x="0.0" y="58.5" stroke="none" data-name="GenericButtonComponent">+disableAsync: BehaviorSubject&lt;boolean&gt;</text>
+
+</g>
+</g>
+<g transform="translate(6245, 224)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GenericButtonComponent">
+<g transform="translate(8, 8)" fill="#33322E" data-name="GenericButtonComponent">
+
+</g>
+</g>
+</g>
+<g data-name="PageNotFoundComponent">
+<g fill="#eee8d5" stroke="#33322E" data-name="PageNotFoundComponent">
+<rect x="6639.0" y="151.0" height="47.0" width="225.0" data-name="PageNotFoundComponent"></rect>
+<path d="M6639.0 182.0 L6864.0 182.0" fill="none" data-name="PageNotFoundComponent"></path>
+<path d="M6639.0 190.0 L6864.0 190.0" fill="none" data-name="PageNotFoundComponent"></path>
+</g>
+<g transform="translate(6639, 151)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="PageNotFoundComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="PageNotFoundComponent">
+<a id="src\app\app-common\page-not-found\page-not-found.component.ts.PageNotFoundComponent" xlink:href="src\app\app-common\page-not-found\page-not-found.component.ts"><text x="104.5" y="13.5" stroke="none" text-anchor="middle" data-name="PageNotFoundComponent">PageNotFoundComponent</text></a>
+
+</g>
+</g>
+<g transform="translate(6639, 182)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="PageNotFoundComponent">
+<g transform="translate(8, 8)" fill="#33322E" data-name="PageNotFoundComponent">
+
+</g>
+</g>
+<g transform="translate(6639, 190)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="PageNotFoundComponent">
+<g transform="translate(8, 8)" fill="#33322E" data-name="PageNotFoundComponent">
+
+</g>
+</g>
+</g>
+<g data-name="PaginationComponent">
+<g fill="#eee8d5" stroke="#33322E" data-name="PaginationComponent">
+<rect x="6372.0" y="456.0" height="228.0" width="227.0" data-name="PaginationComponent"></rect>
+<path d="M6372.0 487.0 L6599.0 487.0" fill="none" data-name="PaginationComponent"></path>
+<path d="M6372.0 608.0 L6599.0 608.0" fill="none" data-name="PaginationComponent"></path>
+</g>
+<g transform="translate(6372, 456)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="PaginationComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="PaginationComponent">
+<a id="src\app\app-common\pagination\pagination.component.ts.PaginationComponent" xlink:href="src\app\app-common\pagination\pagination.component.ts"><text x="105.5" y="13.5" stroke="none" text-anchor="middle" data-name="PaginationComponent">PaginationComponent</text></a>
+
+</g>
+</g>
+<g transform="translate(6372, 487)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="PaginationComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="PaginationComponent">
+<text x="0.0" y="13.5" stroke="none" data-name="PaginationComponent">+itemsPerPage: number</text>
+<text x="0.0" y="28.5" stroke="none" data-name="PaginationComponent">+pageNumbers: number[]</text>
+<text x="0.0" y="43.5" stroke="none" data-name="PaginationComponent">+section: string</text>
+<text x="0.0" y="58.5" stroke="none" data-name="PaginationComponent">+currentPage: number</text>
+<text x="0.0" y="73.5" stroke="none" data-name="PaginationComponent">+lastPageNumber: number</text>
+<text x="0.0" y="88.5" stroke="none" data-name="PaginationComponent">-route: ActivatedRoute</text>
+<text x="0.0" y="103.5" stroke="none" data-name="PaginationComponent">-router: Router</text>
+
+</g>
+</g>
+<g transform="translate(6372, 608)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="PaginationComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="PaginationComponent">
+<text x="0.0" y="13.5" stroke="none" data-name="PaginationComponent">+ngOnInit(): void</text>
+<text x="0.0" y="28.5" stroke="none" data-name="PaginationComponent">+onNext(): void</text>
+<text x="0.0" y="43.5" stroke="none" data-name="PaginationComponent">+onPrev(): void</text>
+<text x="0.0" y="58.5" stroke="none" data-name="PaginationComponent">+onPageChange(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="ControlItem">
+<g fill="lightblue" stroke="#33322E" data-name="ControlItem">
+<rect x="6904.0" y="109.0" height="130.0" width="258.0" data-name="ControlItem"></rect>
+<path d="M6904.0 140.0 L7162.0 140.0" fill="none" data-name="ControlItem"></path>
+<path d="M6904.0 231.0 L7162.0 231.0" fill="none" data-name="ControlItem"></path>
+</g>
+<g transform="translate(6904, 109)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ControlItem">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="ControlItem">
+<a id="src\app\app-common\section-controls\control-item.ts.ControlItem" xlink:href="src\app\app-common\section-controls\control-item.ts"><text x="121.0" y="13.5" stroke="none" text-anchor="middle" data-name="ControlItem">ControlItem</text></a>
+
+</g>
+</g>
+<g transform="translate(6904, 140)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ControlItem">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ControlItem">
+<text x="0.0" y="13.5" stroke="none" data-name="ControlItem">+type: string</text>
+<text x="0.0" y="28.5" stroke="none" data-name="ControlItem">+text: string[]</text>
+<text x="0.0" y="43.5" stroke="none" data-name="ControlItem">+style: string</text>
+<text x="0.0" y="58.5" stroke="none" data-name="ControlItem">+action: (stage: any) =&gt; void</text>
+<text x="0.0" y="73.5" stroke="none" data-name="ControlItem">+stage: BehaviorSubject&lt;any&gt;</text>
+
+</g>
+</g>
+<g transform="translate(6904, 231)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ControlItem">
+<g transform="translate(8, 8)" fill="#33322E" data-name="ControlItem">
+
+</g>
+</g>
+</g>
+<g data-name="SectionControlsComponent">
+<g fill="#eee8d5" stroke="#33322E" data-name="SectionControlsComponent">
+<rect x="7202.0" y="139.0" height="70.0" width="232.0" data-name="SectionControlsComponent"></rect>
+<path d="M7202.0 170.0 L7434.0 170.0" fill="none" data-name="SectionControlsComponent"></path>
+<path d="M7202.0 201.0 L7434.0 201.0" fill="none" data-name="SectionControlsComponent"></path>
+</g>
+<g transform="translate(7202, 139)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="SectionControlsComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="SectionControlsComponent">
+<a id="src\app\app-common\section-controls\section-controls.component.ts.SectionControlsComponent" xlink:href="src\app\app-common\section-controls\section-controls.component.ts"><text x="108.0" y="13.5" stroke="none" text-anchor="middle" data-name="SectionControlsComponent">SectionControlsComponent</text></a>
+
+</g>
+</g>
+<g transform="translate(7202, 170)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SectionControlsComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="SectionControlsComponent">
+<text x="0.0" y="13.5" stroke="none" data-name="SectionControlsComponent">+controls: ControlItem[]</text>
+
+</g>
+</g>
+<g transform="translate(7202, 201)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SectionControlsComponent">
+<g transform="translate(8, 8)" fill="#33322E" data-name="SectionControlsComponent">
+
+</g>
+</g>
+</g>
+<g data-name="ArticleDetailComponent">
+<g fill="#eee8d5" stroke="#33322E" data-name="ArticleDetailComponent">
+<rect x="6639.0" y="433.0" height="273.0" width="408.0" data-name="ArticleDetailComponent"></rect>
+<path d="M6639.0 464.0 L7047.0 464.0" fill="none" data-name="ArticleDetailComponent"></path>
+<path d="M6639.0 615.0 L7047.0 615.0" fill="none" data-name="ArticleDetailComponent"></path>
+</g>
+<g transform="translate(6639, 433)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="ArticleDetailComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="ArticleDetailComponent">
+<a id="src\app\articles\article-detail\article-detail.component.ts.ArticleDetailComponent" xlink:href="src\app\articles\article-detail\article-detail.component.ts"><text x="196.0" y="13.5" stroke="none" text-anchor="middle" data-name="ArticleDetailComponent">ArticleDetailComponent</text></a>
+
+</g>
+</g>
+<g transform="translate(6639, 464)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ArticleDetailComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ArticleDetailComponent">
+<text x="0.0" y="13.5" stroke="none" data-name="ArticleDetailComponent">+article: Article</text>
+<text x="0.0" y="28.5" stroke="none" data-name="ArticleDetailComponent">+deleteRunning: boolean</text>
+<text x="0.0" y="43.5" stroke="none" data-name="ArticleDetailComponent">+showBody: boolean</text>
+<text x="0.0" y="58.5" stroke="none" data-name="ArticleDetailComponent">+showNgram: boolean</text>
+<text x="0.0" y="73.5" stroke="none" data-name="ArticleDetailComponent">+showPageNotFound: BehaviorSubject&lt;boolean&gt;</text>
+<text x="0.0" y="88.5" stroke="none" data-name="ArticleDetailComponent">-deleteSubj: BehaviorSubject&lt;string&gt;</text>
+<text x="0.0" y="103.5" stroke="none" data-name="ArticleDetailComponent">-articlesService: ArticlesService</text>
+<text x="0.0" y="118.5" stroke="none" data-name="ArticleDetailComponent">-route: ActivatedRoute</text>
+<text x="0.0" y="133.5" stroke="none" data-name="ArticleDetailComponent">-location: Location</text>
+
+</g>
+</g>
+<g transform="translate(6639, 615)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ArticleDetailComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ArticleDetailComponent">
+<text x="0.0" y="13.5" stroke="none" data-name="ArticleDetailComponent">+ngOnInit(): void</text>
+<text x="0.0" y="28.5" stroke="none" data-name="ArticleDetailComponent">+onDelete(): void</text>
+<text x="0.0" y="43.5" stroke="none" data-name="ArticleDetailComponent">+articleExists(): boolean</text>
+<text x="0.0" y="58.5" stroke="none" data-name="ArticleDetailComponent">+onArticle(): void</text>
+<text x="0.0" y="73.5" stroke="none" data-name="ArticleDetailComponent">+onNgram(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="ArticleListComponent">
+<g fill="#eee8d5" stroke="#33322E" data-name="ArticleListComponent">
+<rect x="7087.0" y="516.0" height="108.0" width="265.0" data-name="ArticleListComponent"></rect>
+<path d="M7087.0 547.0 L7352.0 547.0" fill="none" data-name="ArticleListComponent"></path>
+<path d="M7087.0 593.0 L7352.0 593.0" fill="none" data-name="ArticleListComponent"></path>
+</g>
+<g transform="translate(7087, 516)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="ArticleListComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="ArticleListComponent">
+<a id="src\app\articles\article-list\article-list.component.ts.ArticleListComponent" xlink:href="src\app\articles\article-list\article-list.component.ts"><text x="124.5" y="13.5" stroke="none" text-anchor="middle" data-name="ArticleListComponent">ArticleListComponent</text></a>
+
+</g>
+</g>
+<g transform="translate(7087, 547)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ArticleListComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ArticleListComponent">
+<text x="0.0" y="13.5" stroke="none" data-name="ArticleListComponent">+articles: Article[]</text>
+<text x="0.0" y="28.5" stroke="none" data-name="ArticleListComponent">-articlesService: ArticlesService</text>
+
+</g>
+</g>
+<g transform="translate(7087, 593)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ArticleListComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ArticleListComponent">
+<text x="0.0" y="13.5" stroke="none" data-name="ArticleListComponent">+ngOnInit(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="ArticleListItemComponent">
+<g fill="#eee8d5" stroke="#33322E" data-name="ArticleListItemComponent">
+<rect x="7392.0" y="478.0" height="183.0" width="380.0" data-name="ArticleListItemComponent"></rect>
+<path d="M7392.0 509.0 L7772.0 509.0" fill="none" data-name="ArticleListItemComponent"></path>
+<path d="M7392.0 600.0 L7772.0 600.0" fill="none" data-name="ArticleListItemComponent"></path>
+</g>
+<g transform="translate(7392, 478)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="ArticleListItemComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="ArticleListItemComponent">
+<a id="src\app\articles\article-list-item\article-list-item.component.ts.ArticleListItemComponent" xlink:href="src\app\articles\article-list-item\article-list-item.component.ts"><text x="182.0" y="13.5" stroke="none" text-anchor="middle" data-name="ArticleListItemComponent">ArticleListItemComponent</text></a>
+
+</g>
+</g>
+<g transform="translate(7392, 509)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ArticleListItemComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ArticleListItemComponent">
+<text x="0.0" y="13.5" stroke="none" data-name="ArticleListItemComponent">+article: Article</text>
+<text x="0.0" y="28.5" stroke="none" data-name="ArticleListItemComponent">+markerSelector: BehaviorSubject&lt;string&gt;</text>
+<text x="0.0" y="43.5" stroke="none" data-name="ArticleListItemComponent">+impressionSelector: BehaviorSubject&lt;string&gt;</text>
+<text x="0.0" y="58.5" stroke="none" data-name="ArticleListItemComponent">+applyRunning: BehaviorSubject&lt;boolean&gt;</text>
+<text x="0.0" y="73.5" stroke="none" data-name="ArticleListItemComponent">-articlesService: ArticlesService</text>
+
+</g>
+</g>
+<g transform="translate(7392, 600)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ArticleListItemComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ArticleListItemComponent">
+<text x="0.0" y="13.5" stroke="none" data-name="ArticleListItemComponent">+ngOnInit(): void</text>
+<text x="0.0" y="28.5" stroke="none" data-name="ArticleListItemComponent">+isApply(): boolean</text>
+<text x="0.0" y="43.5" stroke="none" data-name="ArticleListItemComponent">+onApply(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="ArticlesComponent">
+<g fill="#eee8d5" stroke="#33322E" data-name="ArticlesComponent">
+<rect x="7812.0" y="478.0" height="183.0" width="354.0" data-name="ArticlesComponent"></rect>
+<path d="M7812.0 509.0 L8166.0 509.0" fill="none" data-name="ArticlesComponent"></path>
+<path d="M7812.0 630.0 L8166.0 630.0" fill="none" data-name="ArticlesComponent"></path>
+</g>
+<g transform="translate(7812, 478)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="ArticlesComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="ArticlesComponent">
+<a id="src\app\articles\articles\articles.component.ts.ArticlesComponent" xlink:href="src\app\articles\articles\articles.component.ts"><text x="169.0" y="13.5" stroke="none" text-anchor="middle" data-name="ArticlesComponent">ArticlesComponent</text></a>
+
+</g>
+</g>
+<g transform="translate(7812, 509)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ArticlesComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ArticlesComponent">
+<text x="0.0" y="13.5" stroke="none" data-name="ArticlesComponent">+controls: ControlItem[]</text>
+<text x="0.0" y="28.5" stroke="none" data-name="ArticlesComponent">+itemsPerPage: number</text>
+<text x="0.0" y="43.5" stroke="none" data-name="ArticlesComponent">+pageNumbers: number[]</text>
+<text x="0.0" y="58.5" stroke="none" data-name="ArticlesComponent">+section: string</text>
+<text x="0.0" y="73.5" stroke="none" data-name="ArticlesComponent">+markFilter: BehaviorSubject&lt;string&gt;</text>
+<text x="0.0" y="88.5" stroke="none" data-name="ArticlesComponent">+impressionFilter: BehaviorSubject&lt;string&gt;</text>
+<text x="0.0" y="103.5" stroke="none" data-name="ArticlesComponent">-articlesService: ArticlesService</text>
+
+</g>
+</g>
+<g transform="translate(7812, 630)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ArticlesComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ArticlesComponent">
+<text x="0.0" y="13.5" stroke="none" data-name="ArticlesComponent">+ngOnInit(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="ArticlesPageComponent">
+<g fill="#eee8d5" stroke="#33322E" data-name="ArticlesPageComponent">
+<rect x="8206.0" y="433.0" height="273.0" width="354.0" data-name="ArticlesPageComponent"></rect>
+<path d="M8206.0 464.0 L8560.0 464.0" fill="none" data-name="ArticlesPageComponent"></path>
+<path d="M8206.0 645.0 L8560.0 645.0" fill="none" data-name="ArticlesPageComponent"></path>
+</g>
+<g transform="translate(8206, 433)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="ArticlesPageComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="ArticlesPageComponent">
+<a id="src\app\articles\articles-page\articles-page.component.ts.ArticlesPageComponent" xlink:href="src\app\articles\articles-page\articles-page.component.ts"><text x="169.0" y="13.5" stroke="none" text-anchor="middle" data-name="ArticlesPageComponent">ArticlesPageComponent</text></a>
+
+</g>
+</g>
+<g transform="translate(8206, 464)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ArticlesPageComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ArticlesPageComponent">
+<text x="0.0" y="13.5" stroke="none" data-name="ArticlesPageComponent">+itemsPerPage: number</text>
+<text x="0.0" y="28.5" stroke="none" data-name="ArticlesPageComponent">+markFilter: BehaviorSubject&lt;string&gt;</text>
+<text x="0.0" y="43.5" stroke="none" data-name="ArticlesPageComponent">+impressionFilter: BehaviorSubject&lt;string&gt;</text>
+<text x="0.0" y="58.5" stroke="none" data-name="ArticlesPageComponent">+articles: Article[]</text>
+<text x="0.0" y="73.5" stroke="none" data-name="ArticlesPageComponent">+showFailed: { show: boolean</text>
+<text x="0.0" y="88.5" stroke="none" data-name="ArticlesPageComponent">filtering: boolean</text>
+<text x="0.0" y="103.5" stroke="none" data-name="ArticlesPageComponent">backendFailed: boolean</text>
+<text x="0.0" y="118.5" stroke="none" data-name="ArticlesPageComponent">}</text>
+<text x="0.0" y="133.5" stroke="none" data-name="ArticlesPageComponent">-pageNumber: number</text>
+<text x="0.0" y="148.5" stroke="none" data-name="ArticlesPageComponent">-articlesService: ArticlesService</text>
+<text x="0.0" y="163.5" stroke="none" data-name="ArticlesPageComponent">-route: ActivatedRoute</text>
+
+</g>
+</g>
+<g transform="translate(8206, 645)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ArticlesPageComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ArticlesPageComponent">
+<text x="0.0" y="13.5" stroke="none" data-name="ArticlesPageComponent">+ngOnInit(): void</text>
+<text x="0.0" y="28.5" stroke="none" data-name="ArticlesPageComponent">+articlesExist(): boolean</text>
+<text x="0.0" y="43.5" stroke="none" data-name="ArticlesPageComponent">-getArticlesForCurrentPage(): Article[]</text>
+
+</g>
+</g>
+</g>
+<g data-name="OutletAddComponent">
+<g fill="#eee8d5" stroke="#33322E" data-name="OutletAddComponent">
+<rect x="8600.0" y="388.0" height="363.0" width="365.0" data-name="OutletAddComponent"></rect>
+<path d="M8600.0 419.0 L8965.0 419.0" fill="none" data-name="OutletAddComponent"></path>
+<path d="M8600.0 660.0 L8965.0 660.0" fill="none" data-name="OutletAddComponent"></path>
+</g>
+<g transform="translate(8600, 388)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="OutletAddComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="OutletAddComponent">
+<a id="src\app\outlets\outlet-add\outlet-add.component.ts.OutletAddComponent" xlink:href="src\app\outlets\outlet-add\outlet-add.component.ts"><text x="174.5" y="13.5" stroke="none" text-anchor="middle" data-name="OutletAddComponent">OutletAddComponent</text></a>
+
+</g>
+</g>
+<g transform="translate(8600, 419)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="OutletAddComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="OutletAddComponent">
+<text x="0.0" y="13.5" stroke="none" data-name="OutletAddComponent">+outlet: Outlet</text>
+<text x="0.0" y="28.5" stroke="none" data-name="OutletAddComponent">+newName: BehaviorSubject&lt;string&gt;</text>
+<text x="0.0" y="43.5" stroke="none" data-name="OutletAddComponent">+newCode: BehaviorSubject&lt;string&gt;</text>
+<text x="0.0" y="58.5" stroke="none" data-name="OutletAddComponent">+newLink: BehaviorSubject&lt;string&gt;</text>
+<text x="0.0" y="73.5" stroke="none" data-name="OutletAddComponent">+newFLCS: BehaviorSubject&lt;string&gt;</text>
+<text x="0.0" y="88.5" stroke="none" data-name="OutletAddComponent">+newSLCS: BehaviorSubject&lt;string&gt;</text>
+<text x="0.0" y="103.5" stroke="none" data-name="OutletAddComponent">+newSLTS: BehaviorSubject&lt;string&gt;</text>
+<text x="0.0" y="118.5" stroke="none" data-name="OutletAddComponent">+createRunning: BehaviorSubject&lt;boolean&gt;</text>
+<text x="0.0" y="133.5" stroke="none" data-name="OutletAddComponent">-newNameSub: Subscription</text>
+<text x="0.0" y="148.5" stroke="none" data-name="OutletAddComponent">-newCodeSub: Subscription</text>
+<text x="0.0" y="163.5" stroke="none" data-name="OutletAddComponent">-newLinkSub: Subscription</text>
+<text x="0.0" y="178.5" stroke="none" data-name="OutletAddComponent">-newFLCSSub: Subscription</text>
+<text x="0.0" y="193.5" stroke="none" data-name="OutletAddComponent">-newSLCSSub: Subscription</text>
+<text x="0.0" y="208.5" stroke="none" data-name="OutletAddComponent">-newSLTSSub: Subscription</text>
+<text x="0.0" y="223.5" stroke="none" data-name="OutletAddComponent">-outletsService: OutletsService</text>
+
+</g>
+</g>
+<g transform="translate(8600, 660)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="OutletAddComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="OutletAddComponent">
+<text x="0.0" y="13.5" stroke="none" data-name="OutletAddComponent">+ngOnInit(): void</text>
+<text x="0.0" y="28.5" stroke="none" data-name="OutletAddComponent">+ngOnDestroy(): void</text>
+<text x="0.0" y="43.5" stroke="none" data-name="OutletAddComponent">+isOutletReady(): boolean</text>
+<text x="0.0" y="58.5" stroke="none" data-name="OutletAddComponent">+onCreateNew(): void</text>
+<text x="0.0" y="73.5" stroke="none" data-name="OutletAddComponent">-blankOutlet(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="OutletDetailsComponent">
+<g fill="#eee8d5" stroke="#33322E" data-name="OutletDetailsComponent">
+<rect x="9005.0" y="396.0" height="348.0" width="370.0" data-name="OutletDetailsComponent"></rect>
+<path d="M9005.0 427.0 L9375.0 427.0" fill="none" data-name="OutletDetailsComponent"></path>
+<path d="M9005.0 593.0 L9375.0 593.0" fill="none" data-name="OutletDetailsComponent"></path>
+</g>
+<g transform="translate(9005, 396)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="OutletDetailsComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="OutletDetailsComponent">
+<a id="src\app\outlets\outlet-details\outlet-details.component.ts.OutletDetailsComponent" xlink:href="src\app\outlets\outlet-details\outlet-details.component.ts"><text x="177.0" y="13.5" stroke="none" text-anchor="middle" data-name="OutletDetailsComponent">OutletDetailsComponent</text></a>
+
+</g>
+</g>
+<g transform="translate(9005, 427)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="OutletDetailsComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="OutletDetailsComponent">
+<text x="0.0" y="13.5" stroke="none" data-name="OutletDetailsComponent">+outlet: Outlet</text>
+<text x="0.0" y="28.5" stroke="none" data-name="OutletDetailsComponent">+deleteRunning: boolean</text>
+<text x="0.0" y="43.5" stroke="none" data-name="OutletDetailsComponent">+updateRunning: BehaviorSubject&lt;boolean&gt;</text>
+<text x="0.0" y="58.5" stroke="none" data-name="OutletDetailsComponent">+newFlcs: string</text>
+<text x="0.0" y="73.5" stroke="none" data-name="OutletDetailsComponent">+newSlcs: string</text>
+<text x="0.0" y="88.5" stroke="none" data-name="OutletDetailsComponent">+newSlts: string</text>
+<text x="0.0" y="103.5" stroke="none" data-name="OutletDetailsComponent">-deleteSubj: BehaviorSubject&lt;string&gt;</text>
+<text x="0.0" y="118.5" stroke="none" data-name="OutletDetailsComponent">-location: Location</text>
+<text x="0.0" y="133.5" stroke="none" data-name="OutletDetailsComponent">-route: ActivatedRoute</text>
+<text x="0.0" y="148.5" stroke="none" data-name="OutletDetailsComponent">-outletsService: OutletsService</text>
+
+</g>
+</g>
+<g transform="translate(9005, 593)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="OutletDetailsComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="OutletDetailsComponent">
+<text x="0.0" y="13.5" stroke="none" data-name="OutletDetailsComponent">+ngOnInit(): void</text>
+<text x="0.0" y="28.5" stroke="none" data-name="OutletDetailsComponent">+outletExists(): boolean</text>
+<text x="0.0" y="43.5" stroke="none" data-name="OutletDetailsComponent">+onHeaderLink(): void</text>
+<text x="0.0" y="58.5" stroke="none" data-name="OutletDetailsComponent">+onBack(): void</text>
+<text x="0.0" y="73.5" stroke="none" data-name="OutletDetailsComponent">+onUpdate(): void</text>
+<text x="0.0" y="88.5" stroke="none" data-name="OutletDetailsComponent">+onDelete(): void</text>
+<text x="0.0" y="103.5" stroke="none" data-name="OutletDetailsComponent">+onFlcsApply(): void</text>
+<text x="0.0" y="118.5" stroke="none" data-name="OutletDetailsComponent">+onSlcsApply(): void</text>
+<text x="0.0" y="133.5" stroke="none" data-name="OutletDetailsComponent">+onSltsApply(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="OutletListComponent">
+<g fill="#eee8d5" stroke="#33322E" data-name="OutletListComponent">
+<rect x="9415.0" y="486.0" height="168.0" width="259.0" data-name="OutletListComponent"></rect>
+<path d="M9415.0 517.0 L9674.0 517.0" fill="none" data-name="OutletListComponent"></path>
+<path d="M9415.0 578.0 L9674.0 578.0" fill="none" data-name="OutletListComponent"></path>
+</g>
+<g transform="translate(9415, 486)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="OutletListComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="OutletListComponent">
+<a id="src\app\outlets\outlet-list\outlet-list.component.ts.OutletListComponent" xlink:href="src\app\outlets\outlet-list\outlet-list.component.ts"><text x="121.5" y="13.5" stroke="none" text-anchor="middle" data-name="OutletListComponent">OutletListComponent</text></a>
+
+</g>
+</g>
+<g transform="translate(9415, 517)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="OutletListComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="OutletListComponent">
+<text x="0.0" y="13.5" stroke="none" data-name="OutletListComponent">+outlets: Outlet[]</text>
+<text x="0.0" y="28.5" stroke="none" data-name="OutletListComponent">-outletsSub: Subscription</text>
+<text x="0.0" y="43.5" stroke="none" data-name="OutletListComponent">-outletsService: OutletsService</text>
+
+</g>
+</g>
+<g transform="translate(9415, 578)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="OutletListComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="OutletListComponent">
+<text x="0.0" y="13.5" stroke="none" data-name="OutletListComponent">+ngOnInit(): void</text>
+<text x="0.0" y="28.5" stroke="none" data-name="OutletListComponent">+ngOnDestroy(): void</text>
+<text x="0.0" y="43.5" stroke="none" data-name="OutletListComponent">+onLink(): void</text>
+<text x="0.0" y="58.5" stroke="none" data-name="OutletListComponent">+outletsExist(): boolean</text>
+
+</g>
+</g>
+</g>
+<g data-name="OutletTestComponent">
+<g fill="#eee8d5" stroke="#33322E" data-name="OutletTestComponent">
+<rect x="7474.0" y="105.0" height="138.0" width="344.0" data-name="OutletTestComponent"></rect>
+<path d="M7474.0 136.0 L7818.0 136.0" fill="none" data-name="OutletTestComponent"></path>
+<path d="M7474.0 212.0 L7818.0 212.0" fill="none" data-name="OutletTestComponent"></path>
+</g>
+<g transform="translate(7474, 105)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="OutletTestComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="OutletTestComponent">
+<a id="src\app\outlets\outlet-test\outlet-test.component.ts.OutletTestComponent" xlink:href="src\app\outlets\outlet-test\outlet-test.component.ts"><text x="164.0" y="13.5" stroke="none" text-anchor="middle" data-name="OutletTestComponent">OutletTestComponent</text></a>
+
+</g>
+</g>
+<g transform="translate(7474, 136)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="OutletTestComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="OutletTestComponent">
+<text x="0.0" y="13.5" stroke="none" data-name="OutletTestComponent">+testResults: Article</text>
+<text x="0.0" y="28.5" stroke="none" data-name="OutletTestComponent">+testRunning: BehaviorSubject&lt;boolean&gt;</text>
+<text x="0.0" y="43.5" stroke="none" data-name="OutletTestComponent">+outlet: Outlet</text>
+<text x="0.0" y="58.5" stroke="none" data-name="OutletTestComponent">-outletsService: OutletsService</text>
+
+</g>
+</g>
+<g transform="translate(7474, 212)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="OutletTestComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="OutletTestComponent">
+<text x="0.0" y="13.5" stroke="none" data-name="OutletTestComponent">+onExecute(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="OutletsComponent">
+<g fill="#eee8d5" stroke="#33322E" data-name="OutletsComponent">
+<rect x="7858.0" y="124.0" height="100.0" width="259.0" data-name="OutletsComponent"></rect>
+<path d="M7858.0 155.0 L8117.0 155.0" fill="none" data-name="OutletsComponent"></path>
+<path d="M7858.0 216.0 L8117.0 216.0" fill="none" data-name="OutletsComponent"></path>
+</g>
+<g transform="translate(7858, 124)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="OutletsComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="OutletsComponent">
+<a id="src\app\outlets\outlets\outlets.component.ts.OutletsComponent" xlink:href="src\app\outlets\outlets\outlets.component.ts"><text x="121.5" y="13.5" stroke="none" text-anchor="middle" data-name="OutletsComponent">OutletsComponent</text></a>
+
+</g>
+</g>
+<g transform="translate(7858, 155)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="OutletsComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="OutletsComponent">
+<text x="0.0" y="13.5" stroke="none" data-name="OutletsComponent">+controls: ControlItem[]</text>
+<text x="0.0" y="28.5" stroke="none" data-name="OutletsComponent">-router: Router</text>
+<text x="0.0" y="43.5" stroke="none" data-name="OutletsComponent">-outletsService: OutletsService</text>
+
+</g>
+</g>
+<g transform="translate(7858, 216)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="OutletsComponent">
+<g transform="translate(8, 8)" fill="#33322E" data-name="OutletsComponent">
+
+</g>
+</g>
+</g>
+<g data-name="TrainingComponent">
+<g fill="#eee8d5" stroke="#33322E" data-name="TrainingComponent">
+<rect x="9714.0" y="508.0" height="123.0" width="273.0" data-name="TrainingComponent"></rect>
+<path d="M9714.0 539.0 L9987.0 539.0" fill="none" data-name="TrainingComponent"></path>
+<path d="M9714.0 600.0 L9987.0 600.0" fill="none" data-name="TrainingComponent"></path>
+</g>
+<g transform="translate(9714, 508)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="TrainingComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="TrainingComponent">
+<a id="src\app\training\training\training.component.ts.TrainingComponent" xlink:href="src\app\training\training\training.component.ts"><text x="128.5" y="13.5" stroke="none" text-anchor="middle" data-name="TrainingComponent">TrainingComponent</text></a>
+
+</g>
+</g>
+<g transform="translate(9714, 539)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TrainingComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="TrainingComponent">
+<text x="0.0" y="13.5" stroke="none" data-name="TrainingComponent">+controls: ControlItem[]</text>
+<text x="0.0" y="28.5" stroke="none" data-name="TrainingComponent">+trainingConfig: TrainingConfig</text>
+<text x="0.0" y="43.5" stroke="none" data-name="TrainingComponent">-trainingService: TrainingService</text>
+
+</g>
+</g>
+<g transform="translate(9714, 600)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TrainingComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="TrainingComponent">
+<text x="0.0" y="13.5" stroke="none" data-name="TrainingComponent">+ngOnInit(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="TrainingConfigComponent">
+<g fill="#eee8d5" stroke="#33322E" data-name="TrainingConfigComponent">
+<rect x="8157.0" y="0.0" height="348.0" width="427.0" data-name="TrainingConfigComponent"></rect>
+<path d="M8157.0 31.0 L8584.0 31.0" fill="none" data-name="TrainingConfigComponent"></path>
+<path d="M8157.0 242.0 L8584.0 242.0" fill="none" data-name="TrainingConfigComponent"></path>
+</g>
+<g transform="translate(8157, 0)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="TrainingConfigComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="TrainingConfigComponent">
+<a id="src\app\training\training-config\training-config.component.ts.TrainingConfigComponent" xlink:href="src\app\training\training-config\training-config.component.ts"><text x="205.5" y="13.5" stroke="none" text-anchor="middle" data-name="TrainingConfigComponent">TrainingConfigComponent</text></a>
+
+</g>
+</g>
+<g transform="translate(8157, 31)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TrainingConfigComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="TrainingConfigComponent">
+<text x="0.0" y="13.5" stroke="none" data-name="TrainingConfigComponent">+config: TrainingConfig</text>
+<text x="0.0" y="28.5" stroke="none" data-name="TrainingConfigComponent">+newCutoff: string</text>
+<text x="0.0" y="43.5" stroke="none" data-name="TrainingConfigComponent">+newSimilarness: string</text>
+<text x="0.0" y="58.5" stroke="none" data-name="TrainingConfigComponent">+modelSelected: BehaviorSubject&lt;string&gt;</text>
+<text x="0.0" y="73.5" stroke="none" data-name="TrainingConfigComponent">+modeSelected: BehaviorSubject&lt;string&gt;</text>
+<text x="0.0" y="88.5" stroke="none" data-name="TrainingConfigComponent">+newPositiveGage: string</text>
+<text x="0.0" y="103.5" stroke="none" data-name="TrainingConfigComponent">+newNegativeGage: string</text>
+<text x="0.0" y="118.5" stroke="none" data-name="TrainingConfigComponent">+bayasTrainingRunning: BehaviorSubject&lt;boolean&gt;</text>
+<text x="0.0" y="133.5" stroke="none" data-name="TrainingConfigComponent">+bayasTrainingResults: TrainingResponse</text>
+<text x="0.0" y="148.5" stroke="none" data-name="TrainingConfigComponent">+bayasTrainingShowResults: boolean</text>
+<text x="0.0" y="163.5" stroke="none" data-name="TrainingConfigComponent">+applySelectorRunning: BehaviorSubject&lt;boolean&gt;</text>
+<text x="0.0" y="178.5" stroke="none" data-name="TrainingConfigComponent">+applyModelRunning: BehaviorSubject&lt;boolean&gt;</text>
+<text x="0.0" y="193.5" stroke="none" data-name="TrainingConfigComponent">-trainingService: TrainingService</text>
+
+</g>
+</g>
+<g transform="translate(8157, 242)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TrainingConfigComponent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="TrainingConfigComponent">
+<text x="0.0" y="13.5" stroke="none" data-name="TrainingConfigComponent">+ngOnInit(): void</text>
+<text x="0.0" y="28.5" stroke="none" data-name="TrainingConfigComponent">+valueValid(): boolean</text>
+<text x="0.0" y="43.5" stroke="none" data-name="TrainingConfigComponent">+gagesCorrect(): boolean</text>
+<text x="0.0" y="58.5" stroke="none" data-name="TrainingConfigComponent">+onSelectorApply(): void</text>
+<text x="0.0" y="73.5" stroke="none" data-name="TrainingConfigComponent">+onModelApply(): void</text>
+<text x="0.0" y="88.5" stroke="none" data-name="TrainingConfigComponent">+onBayasTrain(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="OnInit">
+<g fill="#eee8d5" stroke="#33322E" data-name="OnInit">
+<rect x="8624.0" y="159.0" height="31.0" width="63.0" data-name="OnInit"></rect>
+</g>
+<g transform="translate(8624, 159)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="OnInit">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="OnInit">
+<text x="23.5" y="13.5" stroke="none" text-anchor="middle" data-name="OnInit">OnInit</text>
+
+</g>
+</g>
+</g>
+<g data-name="OnDestroy">
+<g fill="#eee8d5" stroke="#33322E" data-name="OnDestroy">
+<rect x="9450.0" y="159.0" height="31.0" width="100.0" data-name="OnDestroy"></rect>
+</g>
+<g transform="translate(9450, 159)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="OnDestroy">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="OnDestroy">
+<text x="42.0" y="13.5" stroke="none" text-anchor="middle" data-name="OnDestroy">OnDestroy</text>
+
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</svg>

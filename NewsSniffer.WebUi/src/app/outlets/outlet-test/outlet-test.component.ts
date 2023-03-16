@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { Article } from 'src/app/models/article';
 import { Outlet } from '../../models/outlet';
 import { OutletsService } from '../outlets.service';
 
@@ -9,11 +10,9 @@ import { OutletsService } from '../outlets.service';
   styleUrls: ['./outlet-test.component.scss']
 })
 export class OutletTestComponent {
-  testResults: string = "";
-  testRunning: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-
   @Input() outlet!: Outlet;
-
+  testResults!: Article;
+  testRunning: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   constructor(
     private outletsService: OutletsService
   ) {
@@ -26,7 +25,7 @@ export class OutletTestComponent {
 
       this.outletsService.performTestRequest(this.outlet).subscribe({
         next: data => {
-          this.testResults = JSON.stringify(data);
+          this.testResults =  data;
           this.testRunning.next(false);
         },
         error: error => {

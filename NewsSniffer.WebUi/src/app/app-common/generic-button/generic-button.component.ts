@@ -7,8 +7,8 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['./generic-button.component.scss']
 })
 export class GenericButtonComponent {
-  @Input() content!: string; 
-  @Input() style!: string;
+  @Input() content!: string;
   @Input() disable: boolean = false;
   @Input() disableAsync!: BehaviorSubject<boolean>;
+  @Input() style!: string;
 }

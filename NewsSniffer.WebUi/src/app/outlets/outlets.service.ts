@@ -9,10 +9,8 @@ import { Outlet } from '../models/outlet';
   providedIn: 'root'
 })
 export class OutletsService {
-  private loadedOutlets: BehaviorSubject<Outlet[]> = new BehaviorSubject<Outlet[]>([]);
-
   private controller: string = "outlets";
-
+  private loadedOutlets: BehaviorSubject<Outlet[]> = new BehaviorSubject<Outlet[]>([]);
   constructor(
     private httpClient: HttpClient
   ) {

@@ -8,17 +8,13 @@ import { Article } from '../models/article';
   providedIn: 'root'
 })
 export class ArticlesService {
-  
-  private loadedArticles: BehaviorSubject<Article[]> = new BehaviorSubject<Article[]>([]);
+  private controller: string = "articles";
   private filteredArticles: BehaviorSubject<Article[]> = new BehaviorSubject<Article[]>([]);
-
   private lastFilters = {
     markerFilter: "all",
     impressionFilter: "all"
   }
-
-  private controller: string = "articles";
-
+  private loadedArticles: BehaviorSubject<Article[]> = new BehaviorSubject<Article[]>([]);
   constructor(
     private httpClient: HttpClient
   ) {

@@ -11,23 +11,11 @@ import { OutletsService } from '../outlets.service';
 export class OutletListComponent implements OnInit, OnDestroy {
   outlets: Outlet[] = [];
 
-  private outletsSub!: Subscription;
+  outletsSub!: Subscription;
 
   constructor(
     private outletsService: OutletsService
   ) { }
-  
-  ngOnInit(): void {
-    this.outletsSub = this.outletsService.getAllLoaded().subscribe(
-      data => {
-        this.outlets = data;
-      }
-    );
-  }
-  
-  ngOnDestroy(): void {
-    this.outletsSub.unsubscribe();
-  }
 
   onLink(url: string) {
     window.open(url);
@@ -35,5 +23,17 @@ export class OutletListComponent implements OnInit, OnDestroy {
 
   outletsExist(): boolean {
     return this.outlets.length > 0 ? true : false;
+  }
+
+  ngOnDestroy(): void {
+    this.outletsSub.unsubscribe();
+  }
+
+  ngOnInit(): void {
+    this.outletsSub = this.outletsService.getAllLoaded().subscribe(
+      data => {
+        this.outlets = data;
+      }
+    );
   }
 }
