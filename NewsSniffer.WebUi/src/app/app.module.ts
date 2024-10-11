@@ -6,27 +6,20 @@ import { AppComponent } from './app.component';
 import { AppHeaderComponent } from './app-header/app-header.component';
 import { ArticlesModule } from './articles/articles.module';
 import { AppCommonModule } from './app-common/common.module';
-import { HttpClientModule} from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { OutletsModule } from './outlets/outlets.module';
 import { TrainingModule } from './training/training.module';
 import { AnalyticsModule } from './analytics/analytics.module';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    AppHeaderComponent,
-  ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    ArticlesModule,
-    OutletsModule,
-    TrainingModule,
-    AnalyticsModule,
-    AppCommonModule,
-    AppRoutingModule,
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        AppHeaderComponent,
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        ArticlesModule,
+        OutletsModule,
+        TrainingModule,
+        AnalyticsModule,
+        AppCommonModule,
+        AppRoutingModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }
