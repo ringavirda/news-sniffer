@@ -2,16 +2,10 @@ using NewsSniffer.Core.Models;
 
 namespace NewsSniffer.Core.Features;
 
-public class FeatureSelector : IFeatureSelector
+public class FeatureSelector(List<string> terms, double similarness) : IFeatureSelector
 {
-    private List<string> _termsToExclude;
-    private double _similarnessRank;
-
-    internal FeatureSelector(List<string> terms, double similarness)
-    {
-        _termsToExclude = terms;
-        _similarnessRank = similarness;
-    }
+    private readonly List<string> _termsToExclude = terms;
+    private readonly double _similarnessRank = similarness;
 
     public List<string> GetExclusionList()
         => _termsToExclude;
@@ -31,7 +25,7 @@ public class FeatureSelector : IFeatureSelector
         // Apply exclusion list
         foreach (var frequency in ngram.Value)
         {
-            frequency.Value.RemoveAll(s => _termsToExclude.Contains(s));
+            frequency.Value.RemoveAll(_termsToExclude.Contains);
         }
 
         // Minimize
@@ -39,7 +33,7 @@ public class FeatureSelector : IFeatureSelector
         {
             foreach (var termToCompare in ngram.GetAllTerms())
             {
-                if (term != termToCompare 
+                if (term != termToCompare
                     && Utils.CalculateSimilarity(term, termToCompare) > _similarnessRank)
                     ngram.RemoveTerm(termToCompare);
             }

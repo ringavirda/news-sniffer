@@ -1,21 +1,18 @@
 using System.Text.RegularExpressions;
+
 using AngleSharp;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
+
 using NewsSniffer.Api.Exceptions;
 using NewsSniffer.Common.Models;
 using NewsSniffer.Core.Models;
 
 namespace NewsSniffer.Api.Services;
 
-public class ParserService : IParserService
+public partial class ParserService(IHttpService httpService) : IParserService
 {
-    private IHttpService _httpService;
-
-    public ParserService(IHttpService httpService)
-    {
-        _httpService = httpService;
-    }
+    private readonly IHttpService _httpService = httpService;
 
     public async Task<Article> ParseArticleFromOutletAsync(Outlet outlet)
     {
@@ -32,8 +29,8 @@ public class ParserService : IParserService
         var article = new Article();
         try
         {
-            var flElement = (await ParseElementsAsync(rawHtml, outlet.FLCS)).FirstOrDefault();
-            if (flElement == null) throw new Exception();
+            var flElement = (await ParseElementsAsync(rawHtml, outlet.FLCS))
+                .FirstOrDefault() ?? throw new Exception();
             var aElement = (IHtmlAnchorElement)flElement;
 
             article.OutletCode = outlet.Code;
@@ -58,9 +55,10 @@ public class ParserService : IParserService
         {
             var slElement = await ParseElementsAsync(rawHtml, outlet.SLCS);
 
-            article.Body = slElement.Any() ? slElement.First().QuerySelectorAll("p")
-                .Select(el => el.TextContent)
-                .Aggregate((str1, str2) => $"{str1}\n{str2}")
+            article.Body = slElement.Count != 0
+                ? slElement.First().QuerySelectorAll("p")
+                    .Select(el => el.TextContent)
+                    .Aggregate((str1, str2) => $"{str1}\n{str2}")
                 : throw new Exception();
 
             article.Body = FilterOut(article.Body);
@@ -126,15 +124,17 @@ public class ParserService : IParserService
         return articles.DistinctBy(article => article.Title).ToList();
     }
 
-    private string FilterOut(string unfiltered)
-        => Regex.Replace(unfiltered, @"[\s\\""]+", " ");
+    private static string FilterOut(string unfiltered)
+        => MyRegex().Replace(unfiltered, " ");
 
     private async Task<List<IElement>> ParseElementsAsync(string rawHtml, string selector)
     {
         IBrowsingContext context = BrowsingContext.New(Configuration.Default);
         IDocument document = await context.OpenAsync(req => req.Content(rawHtml));
 
-        return document.QuerySelectorAll($"{selector}")
-            .ToList();
+        return [.. document.QuerySelectorAll($"{selector}")];
     }
+
+    [GeneratedRegex(@"[\s\\""]+")]
+    private static partial Regex MyRegex();
 }

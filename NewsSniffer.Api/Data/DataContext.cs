@@ -1,7 +1,6 @@
-using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
+
 using NewsSniffer.Common.Models;
-using NewsSniffer.Core.Models;
 
 namespace NewsSniffer.Api.Data;
 

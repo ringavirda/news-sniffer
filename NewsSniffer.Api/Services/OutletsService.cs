@@ -5,16 +5,12 @@ using NewsSniffer.Common.Models;
 
 namespace NewsSniffer.Api.Services;
 
-public class OutletsService : IOutletsService
+public class OutletsService(
+    DataContext dataContext, 
+    IParserService parserService) : IOutletsService
 {
-    private DataContext _dataContext;
-    private IParserService _parserService;
-
-    public OutletsService(DataContext dataContext, IParserService parserService)
-    {
-        _dataContext = dataContext;
-        _parserService = parserService;
-    }
+    private readonly DataContext _dataContext = dataContext;
+    private readonly IParserService _parserService = parserService;
 
     public async Task CreateAsync(Outlet outlet)
     {
@@ -24,7 +20,8 @@ public class OutletsService : IOutletsService
 
     public async Task DeleteAsync(int id)
     {
-        var maybeOutlet = await _dataContext.Outlets.FirstOrDefaultAsync(outlet => outlet.Id == id);
+        var maybeOutlet = 
+            await _dataContext.Outlets.FirstOrDefaultAsync(outlet => outlet.Id == id);
         if (maybeOutlet == null)
         {
             throw new OutletsException($"No outlet with id {id} was found");

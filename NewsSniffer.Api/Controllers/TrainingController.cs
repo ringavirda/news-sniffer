@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+
 using NewsSniffer.Api.Dtos;
 using NewsSniffer.Api.Services;
 using NewsSniffer.Core.Models;
@@ -7,14 +8,9 @@ namespace NewsSniffer.Api.Controllers;
 
 [ApiController]
 [Route("api/training")]
-public class TrainingController : ControllerBase
+public class TrainingController(ITrainingService trainingService) : ControllerBase
 {
-    private ITrainingService _trainingService;
-
-    public TrainingController(ITrainingService trainingService)
-    {
-        _trainingService = trainingService;
-    }
+    private readonly ITrainingService _trainingService = trainingService;
 
     [HttpGet]
     [Route("config")]

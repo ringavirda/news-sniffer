@@ -10,7 +10,8 @@ public class ArticleFull : Article
     public List<NgramViewModel> Ngram { get; set; } = null!;
 
     public static ArticleFull FromArticle(Article article, IFeatureSelector selector)
-        => new ArticleFull {
+        => new()
+        {
             Id = article.Id,
             Title = article.Title,
             ArticleHref = article.ArticleHref,

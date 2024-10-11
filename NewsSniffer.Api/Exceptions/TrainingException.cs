@@ -1,7 +1,5 @@
 namespace NewsSniffer.Api.Exceptions;
 
-public class TrainingException : Exception
+public class TrainingException(string message) : Exception(message)
 {
-    public TrainingException(string message)
-        : base(message) { }
 }

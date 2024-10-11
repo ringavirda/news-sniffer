@@ -3,9 +3,8 @@ namespace NewsSniffer.Core.Models;
 [Serializable]
 public class Analytics
 {
-    public List<OutletAnalytics> PerTime { get; set; } 
-        = new List<OutletAnalytics>();
-        
+    public List<OutletAnalytics> PerTime { get; set; } = [];
+
     public AnalyticsValue Overall { get; set; } = new AnalyticsValue();
 }
 
@@ -13,7 +12,7 @@ public class Analytics
 public class OutletAnalytics
 {
     public string Outlet { get; set; } = null!;
-    public List<DailyAnalytics> Daily { get; set; } = new List<DailyAnalytics>();
+    public List<DailyAnalytics> Daily { get; set; } = [];
 }
 
 [Serializable]
@@ -28,12 +27,12 @@ public class AnalyticsValue
 {
     public int Positive { get; set; }
     public int Negative { get; set; }
-    public int Neuteral { get; set; }
+    public int Neutral { get; set; }
 
     public void Add(AnalyticsValue analyticsValue)
     {
         Positive += analyticsValue.Positive;
         Negative += analyticsValue.Negative;
-        Neuteral += analyticsValue.Neuteral;
+        Neutral += analyticsValue.Neutral;
     }
 }

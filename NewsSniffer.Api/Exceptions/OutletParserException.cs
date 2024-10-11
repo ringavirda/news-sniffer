@@ -5,8 +5,6 @@ public class OutletParserException : Exception
 {
     public OutletParserException() { }
     public OutletParserException(string message) : base(message) { }
-    public OutletParserException(string message, System.Exception inner) : base(message, inner) { }
-    protected OutletParserException(
-        System.Runtime.Serialization.SerializationInfo info,
-        System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+    public OutletParserException(string message, Exception inner) : base(message, inner) { }
+
 }

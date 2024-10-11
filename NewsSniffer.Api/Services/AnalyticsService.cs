@@ -1,5 +1,7 @@
 using System.Text.Json;
+
 using Microsoft.EntityFrameworkCore;
+
 using NewsSniffer.Api.Data;
 using NewsSniffer.Api.Exceptions;
 using NewsSniffer.Common.Models;
@@ -7,16 +9,11 @@ using NewsSniffer.Core.Models;
 
 namespace NewsSniffer.Api.Services;
 
-public class AnalyticsService : IAnalyticsService
+public class AnalyticsService(DataContext dataContext) : IAnalyticsService
 {
-    private string _analyticsFilePath = Path.Combine("Data", "analytics.json");
+    private readonly string _analyticsFilePath = Path.Combine("Data", "analytics.json");
 
-    private DataContext _dataContext;
-
-    public AnalyticsService(DataContext dataContext)
-    {
-        _dataContext = dataContext;
-    }
+    private readonly DataContext _dataContext = dataContext;
 
     public async Task<Analytics> GetAnalyticsAsync()
     {
@@ -42,7 +39,7 @@ public class AnalyticsService : IAnalyticsService
             {
                 Positive = item.Item3 == Impressions.Positive ? 1 : 0,
                 Negative = item.Item3 == Impressions.Negative ? 1 : 0,
-                Neuteral = item.Item3 == Impressions.Neuteral ? 1 : 0,
+                Neutral = item.Item3 == Impressions.Neutral ? 1 : 0,
             };
 
             var outlet = analytics.PerTime.FirstOrDefault(outlet => outlet.Outlet == item.Item1);
@@ -71,14 +68,14 @@ public class AnalyticsService : IAnalyticsService
                 analytics.PerTime.Add(new OutletAnalytics
                 {
                     Outlet = item.Item1,
-                    Daily = new List<DailyAnalytics>
-                    {
+                    Daily =
+                    [
                         new DailyAnalytics
                         {
                             Date = item.Item2.Date,
                             Value = daily
                         }
-                    }
+                    ]
                 });
             }
 

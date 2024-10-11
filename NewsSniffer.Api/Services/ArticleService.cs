@@ -6,24 +6,16 @@ using NewsSniffer.Common.Models;
 
 namespace NewsSniffer.Api.Services;
 
-public class ArticlesService : IArticlesService
+public class ArticlesService(
+    DataContext dataContext,
+    IOutletsService outletsService,
+    ITrainingService trainingService,
+    IParserService parserService) : IArticlesService
 {
-    private DataContext _dataContext;
-    private IParserService _parserService;
-    private IOutletsService _outletsService;
-    private ITrainingService _trainingService;
-
-    public ArticlesService(
-        DataContext dataContext,
-        IOutletsService outletsService,
-        ITrainingService trainingService,
-        IParserService parserService)
-    {
-        _dataContext = dataContext;
-        _outletsService = outletsService;
-        _parserService = parserService;
-        _trainingService = trainingService;
-    }
+    private readonly DataContext _dataContext = dataContext;
+    private readonly IParserService _parserService = parserService;
+    private readonly IOutletsService _outletsService = outletsService;
+    private readonly ITrainingService _trainingService = trainingService;
 
     // CRUD Single
     public async Task<ArticleFull> GetByIdAsync(int id)
@@ -43,14 +35,16 @@ public class ArticlesService : IArticlesService
 
     public async Task UpdateAsync(ArticleHeader article)
     {
-        var maybeArticle = await _dataContext.Articles.SingleOrDefaultAsync(o => o.Id == article.Id);
+        var maybeArticle = 
+            await _dataContext.Articles.SingleOrDefaultAsync(o => o.Id == article.Id);
         if (maybeArticle == null)
         {
             throw new ArticlesException("There is no such article in the database to update");
         }
         else
         {
-            _dataContext.Articles.Entry(maybeArticle).CurrentValues.SetValues(new Article {
+            _dataContext.Articles.Entry(maybeArticle).CurrentValues.SetValues(new Article
+            {
                 Id = article.Id,
                 ArticleHref = maybeArticle.ArticleHref,
                 Body = maybeArticle.Body,
@@ -108,12 +102,13 @@ public class ArticlesService : IArticlesService
         var titles = await GetAllTitlesAsync();
 
         foreach (var config in configs)
-            newArticles.AddRange(FilterNew(await _parserService.ParseArticlesFromOutletAsync(config), titles));
+            newArticles.AddRange(FilterNew(
+                await _parserService.ParseArticlesFromOutletAsync(config), titles));
 
         newArticles = await _trainingService.PredictAllAsync(newArticles);
         await CreateAllAsync(newArticles);
 
-        return newArticles.Select(article => ArticleHeader.FromArticle(article)).ToList();
+        return newArticles.Select(ArticleHeader.FromArticle).ToList();
     }
 
     // Private

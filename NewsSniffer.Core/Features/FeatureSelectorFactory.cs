@@ -1,4 +1,5 @@
 using System.Collections.Concurrent;
+
 using NewsSniffer.Core.Models;
 
 namespace NewsSniffer.Core.Features;
@@ -8,7 +9,10 @@ public static class FeatureSelectorFactory
     public static IFeatureSelector GenerateFeatureSecector(TrainingConfig config)
         => new FeatureSelector(config.ExclusionList, config.SimilarnessRank);
 
-    public async static Task<IFeatureSelector> GenerateFeatureSecectorAsync(Corpus corpus, double cutoff, double similarness)
+    public async static Task<IFeatureSelector> GenerateFeatureSelectorAsync(
+        Corpus corpus,
+        double cutoff,
+        double similarness)
     {
         var uniqueTerms = corpus.GetUniqueTerms();
         var corpusNgrams = corpus.GetAllNgrams();
@@ -18,23 +22,25 @@ public static class FeatureSelectorFactory
 
         await Task.Run(() =>
         {
-            Parallel.For(0, uniqueTerms.Count, 
-                (i, state) => {
+            Parallel.For(0, uniqueTerms.Count,
+                (i, state) =>
+                {
                     idfVector[i] = GetTermIdf(uniqueTerms[i], corpus);
 
                     for (int j = 0; j < corpus.GetNgramCount(); j++)
                         tfMatrix[i, j] = GetTermTf(uniqueTerms[i], corpusNgrams[j]);
-            });
-            
+                });
 
-            Parallel.For(0, uniqueTerms.Count, 
-                (i, state) => {
+
+            Parallel.For(0, uniqueTerms.Count,
+                (i, state) =>
+                {
                     for (int j = 0; j < corpus.GetNgramCount(); j++)
                         ratioDict.AddOrUpdate(
-                            uniqueTerms[i], 
-                            key => 0, 
+                            uniqueTerms[i],
+                            key => 0,
                             (key, old) => old + tfMatrix[i, j] * idfVector[i]);
-            });
+                });
         });
 
         var max = ratioDict.Values.Max();
@@ -57,7 +63,8 @@ public static class FeatureSelectorFactory
 
     private static double GetTermIdf(string term, Corpus corpus)
     {
-        var d = corpus.GetAllNgrams().Select(ngram => ngram.ContainsTerm(term) ? 1 : 0).Sum();
+        var d = corpus.GetAllNgrams()
+            .Select(ngram => ngram.ContainsTerm(term) ? 1 : 0).Sum();
 
         return Math.Log(corpus.GetNgramCount() / (double)d);
     }

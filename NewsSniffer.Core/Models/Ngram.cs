@@ -2,8 +2,7 @@ namespace NewsSniffer.Core.Models;
 
 public class Ngram
 {
-    public Dictionary<int, List<string>> Value { get; private set; }
-        = new Dictionary<int, List<string>>();
+    public Dictionary<int, List<string>> Value { get; private set; } = [];
 
     public string? Impression { get; set; }
 

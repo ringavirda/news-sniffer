@@ -4,7 +4,7 @@ namespace NewsSniffer.Api.Services;
 
 public class HttpService : IHttpService
 {
-    private HttpClient _httpClient = new HttpClient();
+    private readonly HttpClient _httpClient = new();
 
     public async Task<string> GetRawHtmlAsync(Uri uri)
     {

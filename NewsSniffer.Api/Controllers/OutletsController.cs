@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+
 using NewsSniffer.Api.Exceptions;
 using NewsSniffer.Api.Services;
 using NewsSniffer.Common.Models;
@@ -7,14 +8,9 @@ namespace NewsSniffer.Api.Controllers;
 
 [ApiController]
 [Route("api/outlets")]
-public class OutletsController : ControllerBase
+public class OutletsController(IOutletsService outletsService) : ControllerBase
 {
-    private IOutletsService _outletsService;
-
-    public OutletsController(IOutletsService outletsService)
-    {
-        _outletsService = outletsService;
-    }
+    private readonly IOutletsService _outletsService = outletsService;
 
     // Get
     [HttpGet]

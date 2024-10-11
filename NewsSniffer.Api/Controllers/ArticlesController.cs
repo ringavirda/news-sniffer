@@ -1,20 +1,15 @@
 using Microsoft.AspNetCore.Mvc;
+
 using NewsSniffer.Api.Dtos;
 using NewsSniffer.Api.Services;
-using NewsSniffer.Common.Models;
 
 namespace NewsSniffer.Api.Controllers;
 
 [ApiController]
 [Route("api/articles")]
-public class ArticlesController : ControllerBase
+public class ArticlesController(IArticlesService articlesService) : ControllerBase
 {
-    private IArticlesService _articlesService;
-
-    public ArticlesController(IArticlesService articlesService)
-    {
-        _articlesService = articlesService;
-    }
+    private readonly IArticlesService _articlesService = articlesService;
 
     // Get
     [HttpGet]
@@ -69,7 +64,7 @@ public class ArticlesController : ControllerBase
     {
         try
         {
-            await this._articlesService.UpdateAsync(article);
+            await _articlesService.UpdateAsync(article);
             return Ok();
         }
         catch (Exception exception)
@@ -77,7 +72,7 @@ public class ArticlesController : ControllerBase
             return BadRequest(exception.Message);
         }
     }
-    
+
     // Delete
     [HttpDelete]
     [Route("{id}")]
@@ -85,7 +80,7 @@ public class ArticlesController : ControllerBase
     {
         try
         {
-            await this._articlesService.DeleteAsync(id);
+            await _articlesService.DeleteAsync(id);
             return Ok();
         }
         catch (Exception exception)
@@ -100,7 +95,7 @@ public class ArticlesController : ControllerBase
     {
         try
         {
-            await this._articlesService.DeleteAllAsync();
+            await _articlesService.DeleteAllAsync();
             return Ok();
         }
         catch (Exception exception)

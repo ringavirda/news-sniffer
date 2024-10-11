@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+
 using NewsSniffer.Api.Services;
 using NewsSniffer.Core.Models;
 
@@ -6,14 +7,9 @@ namespace NewsSniffer.Api.Controllers;
 
 [ApiController]
 [Route("api/analytics")]
-public class AnalyticsController : ControllerBase
+public class AnalyticsController(IAnalyticsService analyticsService) : ControllerBase
 {
-    private IAnalyticsService _analyticsService;
-
-    public AnalyticsController(IAnalyticsService analyticsService)
-    {
-        _analyticsService = analyticsService;
-    }
+    private readonly IAnalyticsService _analyticsService = analyticsService;
 
     // Get
     [HttpGet]

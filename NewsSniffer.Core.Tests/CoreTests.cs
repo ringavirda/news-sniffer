@@ -29,11 +29,11 @@ public class CoreTests
     [Fact]
     public async void FeatureSelectTest()
     {
-        var selector = await FeatureSelectorFactory.GenerateFeatureSecectorAsync(
+        var selector = await FeatureSelectorFactory.GenerateFeatureSelectorAsync(
             await Corpus.GenerateCorpusAsync(
-                new List<Tuple<string, string, string>> {
-                    new Tuple<string, string, string>("test", "neuteral", _rawArticle) 
-                    }),
+                [
+                    new Tuple<string, string, string>("test", "neuteral", _rawArticle)
+                ]),
             0.2,
             0.7
             );

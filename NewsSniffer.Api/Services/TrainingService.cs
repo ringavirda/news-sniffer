@@ -1,5 +1,7 @@
 using System.Text.Json;
+
 using Microsoft.EntityFrameworkCore;
+
 using NewsSniffer.Api.Data;
 using NewsSniffer.Api.Dtos;
 using NewsSniffer.Api.Exceptions;
@@ -12,14 +14,16 @@ namespace NewsSniffer.Api.Services;
 
 public class TrainingService : ITrainingService
 {
-    private readonly string _configFilePath = Path.Combine("Data", "training-conf.json");
-    private readonly string _defalutConfigFilePath = Path.Combine("Data", "training-conf-default.json");
+    private readonly string _configFilePath
+        = Path.Combine("Data", "training-conf.json");
+    private readonly string _defaultConfigFilePath
+        = Path.Combine("Data", "training-conf-default.json");
 
     private readonly DataContext _dataContext;
 
     private TrainingConfig _currentConfig;
     private IFeatureSelector _selector;
-    private IPredictionModel _predictionModel;
+    private readonly IPredictionModel _predictionModel;
 
     public TrainingService(DataContext dataContext)
     {
@@ -44,10 +48,10 @@ public class TrainingService : ITrainingService
 
     private TrainingConfig GetDefaultConfig()
     {
-        if (!File.Exists(_defalutConfigFilePath))
+        if (!File.Exists(_defaultConfigFilePath))
             throw new TrainingException("Default config file does not exist");
 
-        var defaultConfig = File.ReadAllText(_defalutConfigFilePath);
+        var defaultConfig = File.ReadAllText(_defaultConfigFilePath);
         return JsonSerializer.Deserialize<TrainingConfig>(defaultConfig)
             ?? throw new TrainingException("Can't deserialize default config");
     }
@@ -60,11 +64,12 @@ public class TrainingService : ITrainingService
 
     public async Task UpdateConfigAsync(TrainingConfig newConfig)
     {
-        newConfig.BayasDefaultDictionary = _currentConfig.BayasDefaultDictionary;
-        newConfig.BayasTrainedDictionary = _currentConfig.BayasTrainedDictionary;
+        newConfig.BayesDefaultDictionary = _currentConfig.BayesDefaultDictionary;
+        newConfig.BayesTrainedDictionary = _currentConfig.BayesTrainedDictionary;
         newConfig.ExclusionList = _currentConfig.ExclusionList;
 
-        await File.WriteAllTextAsync(_configFilePath, JsonSerializer.Serialize<TrainingConfig>(newConfig));
+        await File.WriteAllTextAsync(_configFilePath,
+                                     JsonSerializer.Serialize<TrainingConfig>(newConfig));
         _currentConfig = newConfig;
     }
 
@@ -77,7 +82,7 @@ public class TrainingService : ITrainingService
                 article.Body))
             .ToListAsync();
 
-        _selector = await FeatureSelectorFactory.GenerateFeatureSecectorAsync(
+        _selector = await FeatureSelectorFactory.GenerateFeatureSelectorAsync(
             await Corpus.GenerateCorpusAsync(articles),
             _currentConfig.CutoffRank,
             _currentConfig.SimilarnessRank);
@@ -93,14 +98,15 @@ public class TrainingService : ITrainingService
             .Select(article => new Tuple<int, string>(article.Id, article.Body))
             .ToListAsync();
 
-        _predictionModel.UseGages(_currentConfig.BayasPositiveGage, _currentConfig.BayasNegativeGage);
+        _predictionModel.UseGages(
+            _currentConfig.BayesPositiveGage, _currentConfig.BayesNegativeGage);
 
-        if (_currentConfig.BayasMode == "training")
-            _predictionModel.UseWeighted(_currentConfig.BayasTrainedDictionary);
+        if (_currentConfig.BayesMode == "training")
+            _predictionModel.UseWeighted(_currentConfig.BayesTrainedDictionary);
         else
-            _predictionModel.UseWeighted(_currentConfig.BayasDefaultDictionary);
+            _predictionModel.UseWeighted(_currentConfig.BayesDefaultDictionary);
 
-        List<Prediction> predictions =  new List<Prediction>();
+        List<Prediction> predictions = new List<Prediction>();
         await Parallel.ForEachAsync(
             articles,
             async (article, token) =>
@@ -108,13 +114,15 @@ public class TrainingService : ITrainingService
                 predictions.Add(new Prediction
                 {
                     ArticleId = article.Item1,
-                    Conclusion = await _predictionModel.PredictAsync(_selector.GenerateNgram(article.Item2))
+                    Conclusion = await _predictionModel
+                        .PredictAsync(_selector.GenerateNgram(article.Item2))
                 });
             }
         );
 
         await _dataContext.Articles.ForEachAsync(article =>
-            article.Prediction = predictions.Single(pr => pr.ArticleId == article.Id).Conclusion);
+            article.Prediction = predictions.Single(
+                pr => pr.ArticleId == article.Id).Conclusion);
         await _dataContext.SaveChangesAsync();
 
         return predictions;
@@ -124,22 +132,18 @@ public class TrainingService : ITrainingService
     {
         if (_currentConfig.Model == "bayas")
         {
-            _predictionModel.UseGages(_currentConfig.BayasPositiveGage, _currentConfig.BayasNegativeGage);
+            _predictionModel.UseGages(_currentConfig.BayesPositiveGage, _currentConfig.BayesNegativeGage);
 
-            if (_currentConfig.BayasMode == "training")
-                _predictionModel.UseWeighted(_currentConfig.BayasTrainedDictionary);
+            if (_currentConfig.BayesMode == "training")
+                _predictionModel.UseWeighted(_currentConfig.BayesTrainedDictionary);
             else
-                _predictionModel.UseWeighted(_currentConfig.BayasDefaultDictionary);
+                _predictionModel.UseWeighted(_currentConfig.BayesDefaultDictionary);
 
 
             await Parallel.ForEachAsync(
                 articles,
-                async (article, token) =>
-                {
-                    article.Prediction =
-                        await _predictionModel.PredictAsync(_selector.GenerateNgram(article.Body));
-                }
-            );
+                async (article, token) => article.Prediction =
+                    await _predictionModel.PredictAsync(_selector.GenerateNgram(article.Body)));
 
             return articles;
         }
@@ -170,7 +174,7 @@ public class TrainingService : ITrainingService
             await Corpus.GenerateCorpusAsync(testingArticles)
             );
 
-        _currentConfig.BayasTrainedDictionary = trainingResult.Item2;
+        _currentConfig.BayesTrainedDictionary = trainingResult.Item2;
         await UpdateConfigAsync(_currentConfig);
 
         return new TrainingResponse

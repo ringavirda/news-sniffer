@@ -1,4 +1,5 @@
 using System.Collections.Concurrent;
+
 using NewsSniffer.Core.Models;
 
 namespace NewsSniffer.Core.Prediction;
@@ -9,10 +10,10 @@ public class NaiveBayesModel : IPredictionModel
     private double _positiveGage = 10;
     private double _negativeGage = -10;
 
-    public async Task<string> PredictAsync(Ngram ngram)
-        => await PredictAsync(ngram, _weightedTerms);
+    public Task<string> PredictAsync(Ngram ngram)
+        => new(() => Predict(ngram, _weightedTerms));
 
-    public async Task<string> PredictAsync(Ngram ngram, List<Term> weighted)
+    public string Predict(Ngram ngram, List<Term> weighted)
     {
         var weightedTerms = new ConcurrentDictionary<string, double>();
 
@@ -38,17 +39,16 @@ public class NaiveBayesModel : IPredictionModel
         );
 
         if (!weightedTerms.Any())
-            return Impressions.Neuteral;
+            return Impressions.Neutral;
 
         var conclusion = weightedTerms.DistinctBy(t => t.Key)
             .Select(t => t.Value).Sum();
 
-        if (conclusion > _positiveGage)
-            return Impressions.Positive;
-        if (conclusion > _negativeGage)
-            return Impressions.Neuteral;
-        else
-            return Impressions.Negative;
+        return conclusion > _positiveGage
+            ? Impressions.Positive :
+                conclusion > _negativeGage
+                    ? Impressions.Neutral
+                    : Impressions.Negative;
     }
 
     public async Task<(double, List<Term>)> TrainAsync(Corpus training, Corpus testing)
@@ -59,13 +59,13 @@ public class NaiveBayesModel : IPredictionModel
         var negativeNgrams = ngrams.Where(ngram => ngram.Impression == Impressions.Negative).ToList();
 
         var weighted = new List<Term>();
-        await Parallel.ForEachAsync<string>(
+        await Parallel.ForEachAsync(
             training.GetUniqueTerms(),
-            async (term, token) =>
+            (term, token) =>
             {
                 var positiveValue = positiveNgrams.Where(ngram =>
-                    ngram.ContainsTerm(term)
-                    ).Count() / (double)ngramsCount;
+                                                 ngram.ContainsTerm(term)
+                                                 ).Count() / (double)ngramsCount;
                 var negativeValue = negativeNgrams.Where(ngram =>
                     ngram.ContainsTerm(term)
                     ).Count() / (double)ngramsCount;
@@ -75,6 +75,7 @@ public class NaiveBayesModel : IPredictionModel
                     Value = term,
                     Impression = positiveValue - negativeValue
                 });
+                return new ValueTask();
             });
 
         var max = weighted.Max(term => term.Impression);
@@ -89,7 +90,7 @@ public class NaiveBayesModel : IPredictionModel
             testing.GetAllNgrams(),
             async (ngram, token) =>
             {
-                if (ngram.Impression == await PredictAsync(ngram, weighted))
+                if (ngram.Impression == await Task.Run(() => Predict(ngram, weighted)))
                     correct++;
             });
 

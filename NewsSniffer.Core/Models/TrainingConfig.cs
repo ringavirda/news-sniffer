@@ -10,10 +10,10 @@ public class TrainingConfig
     
     // Model
     public string Model { get; set; } = null!;
-    // Bayas
-    public double BayasPositiveGage { get; set; }
-    public double BayasNegativeGage { get; set; }
-    public string BayasMode { get; set; } = null!;
-    public List<Term> BayasDefaultDictionary { get; set; } = new List<Term>();
-    public List<Term> BayasTrainedDictionary { get; set; }  = new List<Term>();
+    // Bayes
+    public double BayesPositiveGage { get; set; }
+    public double BayesNegativeGage { get; set; }
+    public string BayesMode { get; set; } = null!;
+    public List<Term> BayesDefaultDictionary { get; set; } = new List<Term>();
+    public List<Term> BayesTrainedDictionary { get; set; }  = new List<Term>();
 }

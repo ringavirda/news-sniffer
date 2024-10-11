@@ -16,13 +16,13 @@ public class Corpus
 
             foreach (var article in articles)
             {
-                if (corpusProto.Keys.Contains(article.Item1))
-                    corpusProto[article.Item1].Add((article.Item2, article.Item3));
+                if (corpusProto.TryGetValue(article.Item1, out List<(string, string)>? value))
+                    value.Add((article.Item2, article.Item3));
                 else
-                    corpusProto.Add(article.Item1, new List<(string, string)> { (article.Item2, article.Item3) });
+                    corpusProto.Add(article.Item1, [(article.Item2, article.Item3)]);
 
             }
-            
+
             corpus = new Corpus(corpusProto);
         });
         return corpus;
@@ -52,12 +52,14 @@ public class Corpus
     public List<Ngram> GetAllNgrams()
         => OutletsNgrams.Values.SelectMany(ngram => ngram).ToList();
 
-    private Dictionary<string, List<Ngram>> ToNgrams(Dictionary<string, List<(string, string)>> outlets)
+    private static Dictionary<string, List<Ngram>>
+        ToNgrams(Dictionary<string, List<(string, string)>> outlets)
     {
         var ngrams = new Dictionary<string, List<Ngram>>();
 
         foreach (var outlet in outlets.Keys)
-            ngrams.Add(outlet, outlets[outlet].Select(raw => {
+            ngrams.Add(outlet, outlets[outlet].Select(raw =>
+            {
                 var ngram = Utils.ParseNgramFromString(raw.Item2);
                 ngram.Impression = raw.Item1;
                 return ngram;
